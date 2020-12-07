@@ -17,6 +17,12 @@ public class LoginController {
 	@FXML 
 	private TextField textoContrasena;
 	
+	static final int MONITOR = 0; 
+	
+	static final int PADRE = 1;
+	
+	static final int HIJO = 2;
+	
 	
 	public void login() throws InvalidLoginException{
 		
@@ -33,24 +39,26 @@ public class LoginController {
 		if(tipoUsuario != -1) {
 			//login correcto
 			
-			try {			
+			try {		
+				
 				BorderPane ventana = null;
 				System.out.println(tipoUsuario);
+				
 				switch (tipoUsuario) {
 				
-					case 0: { //Es un monitor
+					case MONITOR: {
 						System.out.println("Monitor loggeado");
 						ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/MonitorInicio.fxml"));
 						break;
 					}
 					
-					case 1: { //Es un padre
+					case PADRE: {
 						System.out.println("Padre loggeado");
 						ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/PadreInicio.fxml"));
 						break;
 					}
 					
-					case 2: { //Es un hijo
+					case HIJO: {
 						System.out.println("Hijo loggeado");
 						ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/HijoInicio.fxml"));
 						break;
@@ -60,7 +68,7 @@ public class LoginController {
 				Scene scene = new Scene(ventana,600,400);
 				Stage stage = new Stage();
 				stage.setScene(scene);
-				stage.setResizable(false);
+				stage.setResizable(false); 
 				stage.show();
 				
 			}catch(Exception e) {
@@ -72,13 +80,15 @@ public class LoginController {
 			//porque puede que no valga el login porque no exista el user, no porque este mal la passwd
 			//TODO en que paquete se meten las excepciones??? modelo??
 			//Por algun motivo esta excpecion no funciona no se que pasa jeje
+			System.out.println("He entrado en el else");
+			System.err.println("Las credenciales no corresponden con ningun usuario registrado.");
 			//throw new InvalidLoginException("Las credenciales no corresponden con ningun usuario registrado.");
 		}
 	}
 	
 	private int comprobarCredencialesOK(String usuario, String contrasena) {
 		// TODO consultar el tipo de usuario con la base de datos
-		return 0;
+		return -1;
 	}
 
 	public void registrar() {

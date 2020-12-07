@@ -17,7 +17,7 @@
          <left>
             <ImageView fitHeight="177.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../../../Desktop/kidhub.png" />
+                  <Image url="@../../etc/logo.png" />
                </image>
             </ImageView>
          </left>
