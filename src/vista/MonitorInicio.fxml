@@ -33,17 +33,17 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button layoutX="48.0" layoutY="37.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="155.0" text="Crear actividad">
+                        <Button fx:id="crear" layoutX="48.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#crearActividad" prefHeight="73.0" prefWidth="155.0" text="Crear actividad">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button layoutX="125.0" layoutY="137.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="182.0" text="Modificar Actividad">
+                        <Button fx:id="modificar" layoutX="125.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#modificarActividad" prefHeight="71.0" prefWidth="182.0" text="Modificar Actividad">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button layoutX="230.0" layoutY="37.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="155.0" text="Borrar actividad">
+                        <Button fx:id="borrar" layoutX="230.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#borrarActividad" prefHeight="73.0" prefWidth="155.0" text="Borrar actividad">
                            <font>
                               <Font size="18.0" />
                            </font>

@@ -33,12 +33,12 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button layoutX="51.0" layoutY="58.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="147.0" text="Actividades">
+                        <Button fx:id="actividades" layoutX="51.0" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#mostrarActividades" prefHeight="73.0" prefWidth="147.0" text="Actividades">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button layoutX="246.0" layoutY="59.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="142.0" text="Trayectos">
+                        <Button fx:id="trayectos" layoutX="246.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#mostrarTrayectos" prefHeight="71.0" prefWidth="142.0" text="Trayectos">
                            <font>
                               <Font size="18.0" />
                            </font>

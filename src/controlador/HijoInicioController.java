@@ -1,26 +1,21 @@
 package controlador;
 
-import java.awt.Button;
-import java.awt.Label;
-
 import javafx.fxml.FXML;
-import javafx.scene.*;
+import javafx.scene.control.Button;
+import javafx.scene.input.*;
 
 public class HijoInicioController {
-	
-	@FXML
-	private Button actividades;
-	
-	@FXML
-	private Button trayectos;
-	
-	
-	public void mostrarActividades() {
-		System.out.println("Aqui se mostraran las actividades del hijo.");
-	}
-	
-	
-	public void mostrarTrayectos() {
-		System.out.println("Aqui se mostraran los trayectos del hijo.");
-	}
+
+    @FXML
+    private Button actividades;
+
+    @FXML
+    public void mostrarActividades(MouseEvent event) {
+    	System.out.println("Mostrando actividades");
+    }
+    
+    @FXML
+    void mostrarTrayectos(MouseEvent event) {
+    	System.out.println("Mostrando trayectos ");
+    }
 }
