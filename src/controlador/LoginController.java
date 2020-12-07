@@ -88,7 +88,7 @@ public class LoginController {
 	
 	private int comprobarCredencialesOK(String usuario, String contrasena) {
 		// TODO consultar el tipo de usuario con la base de datos
-		return -1;
+		return PADRE;
 	}
 
 	public void registrar() {
