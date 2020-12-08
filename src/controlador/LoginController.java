@@ -1,13 +1,18 @@
 package controlador;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import modelo.InvalidLoginException;
+import modelo.KidHubException;
 
 public class LoginController {
 	
@@ -17,6 +22,9 @@ public class LoginController {
 	@FXML 
 	private TextField textoContrasena;
 	
+	@FXML
+    private Button logOut;
+	
 	static final int MONITOR = 0; 
 	
 	static final int PADRE = 1;
@@ -24,7 +32,7 @@ public class LoginController {
 	static final int HIJO = 2;
 	
 	
-	public void login() throws InvalidLoginException{
+	public void login(MouseEvent event) throws KidHubException{
 		
 		String usuario, contrasena;
 		int tipoUsuario;
@@ -49,18 +57,21 @@ public class LoginController {
 					case MONITOR: {
 						System.out.println("Monitor loggeado");
 						ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/MonitorInicio.fxml"));
+						this.cerrarVentana(event);
 						break;
 					}
 					
 					case PADRE: {
 						System.out.println("Padre loggeado");
 						ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/PadreInicio.fxml"));
+						this.cerrarVentana(event);
 						break;
 					}
 					
 					case HIJO: {
 						System.out.println("Hijo loggeado");
 						ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/HijoInicio.fxml"));
+						this.cerrarVentana(event);
 						break;
 					}
 				}
@@ -76,22 +87,35 @@ public class LoginController {
 				e.printStackTrace();
 			}
 		}else {
-			//throw new WrongPassWordException, yo (bayon) diria que la excepcion fuera mejor algo como credenciales invalidas
-			//porque puede que no valga el login porque no exista el user, no porque este mal la passwd
-			//TODO en que paquete se meten las excepciones??? modelo??
-			//Por algun motivo esta excpecion no funciona no se que pasa jeje
-			System.out.println("He entrado en el else");
-			System.err.println("Las credenciales no corresponden con ningun usuario registrado.");
-			//throw new InvalidLoginException("Las credenciales no corresponden con ningun usuario registrado.");
+			//TODO hacen falta excepciones?? en que paquete se meten las excepciones??? modelo??
+			//throw new KidHubException("Las credenciales no corresponden con ningun usuario registrado.");
+			//TODO refactorizar esto en un metodo??
+			System.out.println();
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setHeaderText("Se produjo un error.");
+			alert.setContentText("Credenciales invalidas.");
+			alert.showAndWait();
 		}
 	}
 	
 	private int comprobarCredencialesOK(String usuario, String contrasena) {
 		// TODO consultar el tipo de usuario con la base de datos
-		return PADRE;
+		return MONITOR;
 	}
 
 	public void registrar() {
 		//TODO lanzar la ventana de registro
+	}
+	
+	@FXML
+    void logOut(MouseEvent event) {
+		
+	}
+	
+	private void cerrarVentana(MouseEvent event) {
+		Node source = (Node) event.getSource();
+	    Stage stage = (Stage) source.getScene().getWindow();
+	    stage.close();
 	}
 }

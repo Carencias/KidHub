@@ -85,6 +85,9 @@
                </font>
             </Label>
          </center>
+         <bottom>
+            <Button fx:id="cerrarSesion" mnemonicParsing="false" onMouseClicked="#logOut" text="Cerrar sesion" BorderPane.alignment="CENTER" />
+         </bottom>
       </BorderPane>
    </top>
 </BorderPane>
