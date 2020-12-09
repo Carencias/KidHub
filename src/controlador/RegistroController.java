@@ -1,5 +1,7 @@
 package controlador;
 
+import java.util.ArrayList;
+
 import javafx.fxml.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -24,14 +26,17 @@ public class RegistroController extends Controller{
 		System.out.println("Registrando");
 		//TODO crear una tabla en la BBDD con los datos del nuevo usuario
 		
-		String error[] = null;
+		String errores[] = new String[1];
 		
-		if(!comprobarDatosCorrectos(error)) {
-			this.muestraError("ERROR", "Se produjo un error", error[0]);
+		if(!comprobarDatosCorrectos(errores)) {
+			this.muestraError("ERROR", "Se produjo un error", errores[0]);
 		}else {
 			if(monitor.isSelected()) {
 				System.out.println("Es monitor");
-				//TODO mostrar ventana especialidad
+				this.mostrarVentana("MonitorInicio");
+			} else {
+				System.out.println("Es padre");
+				this.mostrarVentana("PadreInicio");
 			}
 		}
 		
@@ -39,10 +44,11 @@ public class RegistroController extends Controller{
 		
 	}
 	
-	private boolean comprobarDatosCorrectos(String[] error) {
-		
+	private boolean comprobarDatosCorrectos(String errores[]) {
+		System.out.println("COmprobando datos");
 		if(!contra1.getText().equals(contra2.getText())) {
-			error[0] = "Las contraseñas no son iguales";
+			System.out.println("Son distintas");
+			errores[0] = "Las contrasenas no son iguales";
 			return false;
 		}
 		
