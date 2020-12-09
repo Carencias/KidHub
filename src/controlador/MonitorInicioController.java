@@ -12,13 +12,8 @@ import javafx.stage.Stage;
 public class MonitorInicioController extends Controller{
 
     @FXML
-    private Button crear;
+    private Button crear, modificar, borrar;
 
-    @FXML
-    private Button modificar;
-
-    @FXML
-    private Button borrar;
 
     @FXML
     void borrarActividad(MouseEvent event) {
@@ -33,24 +28,6 @@ public class MonitorInicioController extends Controller{
     @FXML
     void modificarActividad(MouseEvent event) {
     	System.out.println("Modificando actividad");
-    }
-
-    
-    @FXML
-    public  void logOut(MouseEvent event) {
-    	System.out.println("Cerrando la sesion y volviendo al login.");
-    	try {
-    		BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/Login.fxml"));
-			Scene scene = new Scene(root,600,400);
-			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
-    	}catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	this.cerrarVentana(event);
     }
     
 }

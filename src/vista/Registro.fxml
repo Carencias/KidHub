@@ -68,10 +68,10 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="textoNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="textoApellidos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="textoDNI" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="textoEmail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="nombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="apellidos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="dni" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Apellidos" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="13.0" />
@@ -116,18 +116,18 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="textoTfno" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="textoUsuario" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="textoContra1" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="textoContra2" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="telefono" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="usuario" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="contra1" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="contra2" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <DatePicker fx:id="nacimiento" prefHeight="26.0" prefWidth="287.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
                <children>
-                  <RadioButton fx:id="botonPadre" mnemonicParsing="false" prefHeight="29.0" prefWidth="126.0" selected="true" text="Padre">
+                  <RadioButton fx:id="padre" mnemonicParsing="false" prefHeight="29.0" prefWidth="126.0" selected="true" text="Padre">
                      <toggleGroup>
                         <ToggleGroup fx:id="grupo1" />
                      </toggleGroup></RadioButton>
-                  <RadioButton fx:id="botonMonitor" mnemonicParsing="false" prefHeight="44.0" prefWidth="125.0" text="Monitor" toggleGroup="$grupo1" />
+                  <RadioButton fx:id="monitor" mnemonicParsing="false" prefHeight="44.0" prefWidth="125.0" text="Monitor" toggleGroup="$grupo1" />
                </children>
             </HBox>
          </children>

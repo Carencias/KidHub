@@ -1,5 +1,7 @@
 package controlador;
 	
+import java.io.IOException;
+
 import javafx.application.Application;
 
 import javafx.stage.Stage;
@@ -11,6 +13,14 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		mostrarLogin(primaryStage);
+	}
+	
+	public static void main(String[] args) {
+			launch(args);
+	}
+	
+    private void mostrarLogin(Stage primaryStage) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/Login.fxml"));
 			Scene scene = new Scene(root,600,400);
@@ -21,9 +31,6 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args) {
-			launch(args);
-	}
+
+    }
 }

@@ -1,12 +1,19 @@
 package controlador;
 
+import java.io.IOException;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Controller {
+	
 	protected void cerrarVentana(MouseEvent event) {
 		Node source = (Node) event.getSource();
 	    Stage stage = (Stage) source.getScene().getWindow();
@@ -20,4 +27,29 @@ public class Controller {
 		alert.setContentText(contenido);
 		alert.showAndWait();
 	}
+	
+    protected void mostrarVentana(String ventana) {
+		BorderPane root;
+		try {
+			root = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/" + ventana + ".fxml"));
+			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root,600,400));
+			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    }
+    
+    @FXML
+    protected void logOut(MouseEvent event) {
+    	System.out.println("Cerrando la sesion y volviendo al login.");
+
+    	this.mostrarVentana("Login");
+    	
+    	this.cerrarVentana(event);
+    }
 }

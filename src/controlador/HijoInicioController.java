@@ -1,5 +1,7 @@
 package controlador;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,22 +26,7 @@ public class HijoInicioController extends Controller{
     public void mostrarTrayectos(MouseEvent event) {
     	System.out.println("Mostrando trayectos.");
     }
-    
-    @FXML
-    public  void logOut(MouseEvent event) {
-    	System.out.println("Cerrando la sesion y volviendo al login.");
-    	try {
-    		BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/Login.fxml"));
-			Scene scene = new Scene(root,600,400);
-			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
-			Stage stage = new Stage();
-			stage.setScene(scene);
-			stage.setResizable(false);
-			stage.show();
-    	}catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	this.cerrarVentana(event);
-    }
+   
+   
     
 }
