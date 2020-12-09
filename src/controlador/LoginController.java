@@ -1,5 +1,7 @@
 package controlador;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,7 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import modelo.KidHubException;
 
-public class LoginController {
+public class LoginController extends Controller{
 	
 	@FXML
 	private TextField textoUsuario;
@@ -101,8 +103,21 @@ public class LoginController {
 		return LOGIN_INCORRECTO;
 	}
 
-	public void registrar() {
-		//TODO lanzar la ventana de registro
+	public void registrar(MouseEvent event) {
+		
+		try {
+			BorderPane ventana = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/Registro.fxml"));
+			this.cerrarVentana(event);
+			Scene scene = new Scene(ventana,600,400);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setResizable(false); 
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	@FXML
@@ -110,17 +125,4 @@ public class LoginController {
 		
 	}
 	
-	private void cerrarVentana(MouseEvent event) {
-		Node source = (Node) event.getSource();
-	    Stage stage = (Stage) source.getScene().getWindow();
-	    stage.close();
-	}
-	
-	private void muestraError(String titulo, String encabezado, String contenido) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle(titulo);
-		alert.setHeaderText(encabezado);
-		alert.setContentText(contenido);
-		alert.showAndWait();
-	}
 }

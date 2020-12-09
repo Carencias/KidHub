@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class MonitorInicioController {
+public class MonitorInicioController extends Controller{
 
     @FXML
     private Button crear;
@@ -53,9 +53,4 @@ public class MonitorInicioController {
     	this.cerrarVentana(event);
     }
     
-    private void cerrarVentana(MouseEvent event) {
-		Node source = (Node) event.getSource();
-	    Stage stage = (Stage) source.getScene().getWindow();
-	    stage.close();
-	}
 }

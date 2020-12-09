@@ -10,7 +10,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class HijoInicioController {
+public class HijoInicioController extends Controller{
 
     @FXML
     private Button actividades;
@@ -42,9 +42,4 @@ public class HijoInicioController {
     	this.cerrarVentana(event);
     }
     
-    private void cerrarVentana(MouseEvent event) {
-		Node source = (Node) event.getSource();
-	    Stage stage = (Stage) source.getScene().getWindow();
-	    stage.close();
-	}
 }
