@@ -1,6 +1,5 @@
 package controlador;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -31,6 +30,8 @@ public class LoginController {
 	
 	static final int HIJO = 2;
 	
+	static final int LOGIN_INCORRECTO = -1;
+	
 	
 	public void login(MouseEvent event) throws KidHubException{
 		
@@ -44,8 +45,14 @@ public class LoginController {
 		
 		tipoUsuario = comprobarCredencialesOK(usuario, contrasena);
 		
-		if(tipoUsuario != -1) {
-			//login correcto
+		if(tipoUsuario == LOGIN_INCORRECTO) {
+			//TODO hacen falta excepciones?? en que paquete se meten las excepciones??? modelo??
+			//throw new KidHubException("Las credenciales no corresponden con ningun usuario registrado.");
+			//TODO refactorizar esto en un metodo??
+			System.out.println();
+			muestraError("ERROR","Se produjo un error.", "Credenciales inválidas.");
+			
+		}else {
 			
 			try {		
 				
@@ -86,22 +93,12 @@ public class LoginController {
 				System.err.println("Error al abrir la ventana de usuario");
 				e.printStackTrace();
 			}
-		}else {
-			//TODO hacen falta excepciones?? en que paquete se meten las excepciones??? modelo??
-			//throw new KidHubException("Las credenciales no corresponden con ningun usuario registrado.");
-			//TODO refactorizar esto en un metodo??
-			System.out.println();
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("ERROR");
-			alert.setHeaderText("Se produjo un error.");
-			alert.setContentText("Credenciales invalidas.");
-			alert.showAndWait();
 		}
 	}
 	
 	private int comprobarCredencialesOK(String usuario, String contrasena) {
 		// TODO consultar el tipo de usuario con la base de datos
-		return MONITOR;
+		return LOGIN_INCORRECTO;
 	}
 
 	public void registrar() {
@@ -117,5 +114,13 @@ public class LoginController {
 		Node source = (Node) event.getSource();
 	    Stage stage = (Stage) source.getScene().getWindow();
 	    stage.close();
+	}
+	
+	private void muestraError(String titulo, String encabezado, String contenido) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(titulo);
+		alert.setHeaderText(encabezado);
+		alert.setContentText(contenido);
+		alert.showAndWait();
 	}
 }
