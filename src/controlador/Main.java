@@ -1,6 +1,7 @@
 package controlador;
 	
 import java.io.IOException;
+import modelo.dao.*;
 
 import javafx.application.Application;
 
@@ -17,6 +18,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+			//Prueba p = new Prueba();
 			launch(args);
 	}
 	
