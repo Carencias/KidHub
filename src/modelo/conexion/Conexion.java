@@ -18,14 +18,15 @@ public class Conexion {
 			 String port = "3306";
 			 String url = "jdbc:mysql://"+hostname+":"+port+"/"+dbname+"?serverTimezone=UTC";
 			 //String url = "jdbc:mysql://"+hostname+"/"+dbname+"?serverTimezone=UTC"; //Sometimes, also valid without specifying the port
-			 Class.forName("com.mysql.cj.jdbc.Driver");
+			 Class.forName("com.mysql.fabric.jdbc.FabricMySQLDriver");
 			 con = DriverManager.getConnection(url, userName, password);
 		
 			 System.out.println("Connection to the database done: " + con.getClass().getName());
 		 }
 		 catch(Exception e) {
 			 System.out.println("Error in the connection. Detailed message:\n");
-			 System.out.println(e.getMessage()); 
+			 System.out.println(e.getMessage());
+			 e.printStackTrace();
 		 }
 	 }
 
