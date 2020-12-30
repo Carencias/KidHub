@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class MonitorInicioController extends Controller{
 
     @FXML
-    private Button crear, modificar, borrar;
+    private Button cerrar;
 
 
     @FXML
@@ -28,6 +28,11 @@ public class MonitorInicioController extends Controller{
     @FXML
     void modificarActividad(MouseEvent event) {
     	System.out.println("Modificando actividad");
+    }
+    
+    @FXML 
+    void cerrarSesion(MouseEvent event) {
+    	this.logOut(event);
     }
     
 }

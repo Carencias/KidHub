@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -29,12 +29,12 @@ public class Controller {
 	}
 	
     protected void mostrarVentana(String ventana) {
-		BorderPane root;
+		AnchorPane root;
 		try {
-			root = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/" + ventana + ".fxml"));
+			root = (AnchorPane) FXMLLoader.load(getClass().getResource("../vista/" + ventana + ".fxml"));
 			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
 			Stage stage = new Stage();
-			stage.setScene(new Scene(root,600,400));
+			stage.setScene(new Scene(root));
 			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e) {

@@ -1,93 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.MonitorInicioController">
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <left>
-            <ImageView fitHeight="177.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="950.0" style="-fx-background-color: #045ccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.MonitorInicioController">
+   <children>
+      <VBox layoutY="1.0" prefHeight="500.0" prefWidth="240.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../etc/logo.png" />
+                  <Image url="@../../etc/trainer.png" />
                </image>
             </ImageView>
-         </left>
-         <center>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <top>
-                  <Label text="¿Qué desea hacer?" BorderPane.alignment="CENTER">
+            <Label text="Nombre de usuario">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <JFXButton prefHeight="26.0" prefWidth="249.0" text="Inicio">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton prefHeight="26.0" prefWidth="249.0" text="Actividades">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/actividades.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton prefHeight="26.0" prefWidth="249.0" text="Cerrar sesion">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/cerrarSesion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <StackPane layoutX="239.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion? ">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-               </top>
-               <center>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="crear" layoutX="48.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#crearActividad" prefHeight="73.0" prefWidth="155.0" text="Crear actividad">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="modificar" layoutX="125.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#modificarActividad" prefHeight="71.0" prefWidth="182.0" text="Modificar Actividad">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="borrar" layoutX="230.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#borrarActividad" prefHeight="73.0" prefWidth="155.0" text="Borrar actividad">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
-         </center>
-      </BorderPane>
-   </center>
-   <top>
-      <BorderPane prefHeight="143.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </top>
-         <center>
-            <Label text="¡Bienvenido a la zona de monitores!" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-         </center>
-         <bottom>
-            <Button fx:id="cerrarSesion" mnemonicParsing="false" onMouseClicked="#logOut" text="Cerrar sesion" BorderPane.alignment="CENTER" />
-         </bottom>
-      </BorderPane>
-   </top>
-</BorderPane>
+                  <Label layoutX="88.0" layoutY="181.0" text="Al pulsar el boton, regresara a la ventana principal.">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#cerrarSesion" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+      <Separator layoutX="233.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="12.0" />
+   </children>
+</AnchorPane>

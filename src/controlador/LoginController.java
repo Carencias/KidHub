@@ -2,6 +2,8 @@ package controlador;
 
 import java.io.IOException;
 
+import com.jfoenix.controls.JFXTextField;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,10 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import modelo.KidHubException;
 
+
 public class LoginController extends Controller{
 	
 	@FXML
-	private TextField textoUsuario, textoContrasena;
+	private JFXTextField textoUsuario, textoContrasena;
 	
 	@FXML
     private Button logOut;
@@ -56,7 +59,7 @@ public class LoginController extends Controller{
 	private int obtenerTipoUsuario(String usuario, String contrasena) {
 		if(comprobarCredencialesOK(usuario, contrasena)) {
 			//TODO comprobar usuario con BBDD
-			return HIJO;
+			return MONITOR;
 		}else {
 			return LOGIN_INCORRECTO;
 		}
@@ -72,6 +75,7 @@ public class LoginController extends Controller{
 	public void registrar(MouseEvent event) {
 		
 		this.mostrarVentana("Registro");
+		this.cerrarVentana(event);
 
 	}
 	

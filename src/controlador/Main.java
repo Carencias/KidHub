@@ -9,7 +9,7 @@ import javafx.application.Application;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 
 
@@ -20,6 +20,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		Conexion con = new Conexion();
 		ResultSet resultSet;
 		con.openConnection();
@@ -39,13 +40,14 @@ public class Main extends Application {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		*/
 		launch(args);
 	}
 	
     private void mostrarLogin(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../vista/Login.fxml"));
-			Scene scene = new Scene(root,600,400);
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("../vista/Login.fxml"));
+			Scene scene = new Scene(root);
 			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

@@ -1,31 +1,42 @@
 package controlador;
 
-import java.util.ArrayList;
-
-import javafx.fxml.*;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 
 public class RegistroController extends Controller{
-	@FXML
-	TextField nombre, apellidos, dni, email, telefono, usuario, contra1, contra2;
-	
-	@FXML
-	DatePicker nacimiento;
-	
-	@FXML
-	RadioButton monitor, padre;
 
-	@FXML
-	Button confirmar, cancelar;
-	
-	public void registrar() {
+    @FXML
+    private JFXTextField nombre, dni, apellidos, contra2, usuario, email, telefono, contra1, ano, mes, dia;
+
+    @FXML
+    private JFXRadioButton padre, monitor;
+
+    @FXML
+    private ToggleGroup grupo1;
+
+    @FXML
+    private Button confirmar, cancelar;
+        
+    @FXML
+    void cancelar(MouseEvent event) {
+		System.out.println("Cancelando");
+		this.cerrarVentana(event);
+		this.mostrarVentana("Login");
+    }
+
+    
+    
+    @FXML
+    void registrar(MouseEvent event) {
 		System.out.println("Registrando");
 		//TODO crear una tabla en la BBDD con los datos del nuevo usuario
-		
+		/*
 		String errores[] = new String[1];
 		
 		if(!comprobarDatosCorrectos(errores)) {
@@ -39,11 +50,10 @@ public class RegistroController extends Controller{
 				this.mostrarVentana("PadreInicio");
 			}
 		}
-		
-
-		
-	}
+		*/
+    }
 	
+    
 	private boolean comprobarDatosCorrectos(String errores[]) {
 		System.out.println("COmprobando datos");
 		if(!contra1.getText().equals(contra2.getText())) {
@@ -57,10 +67,4 @@ public class RegistroController extends Controller{
 		return true;
 	}
 
-	public void cancelar(MouseEvent event) {
-		System.out.println("Cancelando");
-		this.cerrarVentana(event);
-	}
-	
-	
 }
