@@ -1,5 +1,5 @@
 package modelo.vo;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ActividadVO {
@@ -7,8 +7,8 @@ public class ActividadVO {
 	
 	private int idActividad;
 	private String nombre;
-	private String fechaInicio;
-	private String fechaFin;
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
 	private int duracion;
 	private int capacidad;
 	private Direccion direccion;
@@ -32,19 +32,19 @@ public class ActividadVO {
 		this.nombre = nombre;
 	}
 	
-	public String getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 	
-	public void setFechaInicio(String fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 	
-	public String getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 	
-	public void setFechaFin(String fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	

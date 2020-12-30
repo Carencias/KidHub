@@ -1,4 +1,5 @@
 package modelo.vo;
+import java.time.LocalDate;
 
 public class ParadaVO {
 	
@@ -8,7 +9,7 @@ public class ParadaVO {
 	
 	private TrayectoVO trayecto;
 	private int numero;
-	private String fecha;
+	private LocalDate fecha;
 	private int duracion;
 	private tipoParada tipo;
 	private Direccion direccion;
@@ -29,11 +30,11 @@ public class ParadaVO {
 		this.numero = numero;
 	}
 	
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 	
-	public void setFecha(String fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	
@@ -61,4 +62,3 @@ public class ParadaVO {
 		this.direccion = direccion;
 	}
 }
-//mirar enums, tipos date, 

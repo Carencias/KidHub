@@ -1,4 +1,5 @@
 package modelo.vo;
+import java.time.LocalDate;
 
 public class UsuarioVO {
 	
@@ -12,7 +13,7 @@ public class UsuarioVO {
 	private String email;
 	private String nombre;
 	private String apellidos;
-	private String fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private int edad;
 	private tipoUsuario tipo;
 	
@@ -64,11 +65,11 @@ public class UsuarioVO {
 		this.apellidos = apellidos;
 	}
 	
-	public String getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 	
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	

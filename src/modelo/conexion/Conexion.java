@@ -3,8 +3,6 @@ import java.sql.*;
 
 public class Conexion {
 	 Connection con;
-	 Statement st;
-	 ResultSet rs;
 	 
 	 public Conexion() {
 	 }
@@ -12,9 +10,9 @@ public class Conexion {
 	 public void openConnection() {
 		 try {
 			 String userName = "kidhub"; //Change if you used a different one
-			 String password = "Parapapa@10"; //Change if you used a different one
+			 String password = "kidhub"; //Change if you used a different one
 			 String dbname = "kidhub";
-			 String hostname = "localhost";
+			 String hostname = "spreding.online";
 			 String port = "3306";
 			 String url = "jdbc:mysql://"+hostname+":"+port+"/"+dbname+"?serverTimezone=UTC";
 			 //String url = "jdbc:mysql://"+hostname+"/"+dbname+"?serverTimezone=UTC"; //Sometimes, also valid without specifying the port
@@ -40,26 +38,14 @@ public class Conexion {
 			 System.out.println("Error when closing connection");
 		 }
 	 }
-	 
-	 public void showDataUser() {
-		 try {
-			 while (rs.next()) {
-				 String strPlat = rs.getString("username");
-				 String strBrand = rs.getString("password");
-				 System.out.println(strPlat + ", " + strBrand);
-			 }
-		 } catch (Exception e) {
-			 System.out.println("Error visualizing data");
-		 }
+
+	public Statement getSt() {
+		try {
+			return con.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	 
-	 public void getDataUser() {
-		 try {
-			 st = con.createStatement();
-			 rs = st.executeQuery("SELECT * FROM user");
-			 System.out.println("Table opened");
-		 } catch (SQLException e) {
-			 System.out.println("Error when opening table");
-		 }
-		}
+		return null;
+	}
 }

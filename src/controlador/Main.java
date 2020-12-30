@@ -1,6 +1,8 @@
 package controlador;
-	
 import java.io.IOException;
+import java.sql.*;
+
+import modelo.conexion.Conexion;
 import modelo.dao.*;
 
 import javafx.application.Application;
@@ -18,8 +20,26 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-			//Prueba p = new Prueba();
-			launch(args);
+		Conexion con = new Conexion();
+		ResultSet resultSet;
+		con.openConnection();
+		Statement statement = con.getSt();
+			
+            // Create and execute a SELECT SQL statement.
+            String selectSql = "SELECT Username, UserPassword FROM USERS;";
+            String insert = "INSERT INTO USERS(Username, DNI, UserPassword, Email, FirstName, SecondName, BirthDate, Type) VALUES('PACO', '02770768G', 'JUANCARLOS', 'sant@san.com', 'santi', 'poidaw', '2008-7-04', 'PADRE');";
+            try {
+				statement.executeUpdate(insert);
+            	resultSet = statement.executeQuery(selectSql);
+				
+				while (resultSet.next()) {
+				    System.out.println(resultSet.getString(1) + " " + resultSet.getString(2));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		launch(args);
 	}
 	
     private void mostrarLogin(Stage primaryStage) {
