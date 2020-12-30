@@ -13,7 +13,7 @@ public class ActividadVO {
 	private int capacidad;
 	private Direccion direccion;
 	private ArrayList<HijoVO> hijos;
-	private String monitor;
+	private MonitorVO monitor;
 	private String type;
 	
 	public int getIdActividad() {
@@ -80,11 +80,11 @@ public class ActividadVO {
 		this.hijos = hijos;
 	}
 	
-	public String getMonitor() {
+	public MonitorVO getMonitor() {
 		return monitor;
 	}
 	
-	public void setMonitor(String monitor) {
+	public void setMonitor(MonitorVO monitor) {
 		this.monitor = monitor;
 	}
 	
@@ -95,5 +95,4 @@ public class ActividadVO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
 }

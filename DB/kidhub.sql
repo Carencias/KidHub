@@ -1,0 +1,213 @@
+/*
+*SCRIPT PARA CREAR BBDD QUE UTILIZARA LA APLICACION KIDHUB
+*/
+CREATE DATABASE IF NOT EXISTS kidhub;
+
+use kidhub;
+
+/*
+*Primero borra todas las tablas por si existieran en la bbdd
+*/
+SET FOREIGN_KEY_CHECKS = 0;
+SET GROUP_CONCAT_MAX_LEN=32768;
+SET @tables = NULL;
+SELECT GROUP_CONCAT('`', table_name, '`') INTO @tables
+  FROM information_schema.tables
+  WHERE table_schema = (SELECT DATABASE());
+SELECT IFNULL(@tables,'dummy') INTO @tables;
+
+SET @tables = CONCAT('DROP TABLE IF EXISTS ', @tables);
+PREPARE stmt FROM @tables;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+SET FOREIGN_KEY_CHECKS = 1;
+
+/*
+*Creamos todas las tablas y sus columnas
+*/
+CREATE TABLE USERS(
+	Username NVARCHAR(30) not null,
+	DNI NVARCHAR(9) not null,
+	UserPassword NVARCHAR(30) not null,
+	Email NVARCHAR(40) not null,
+	FirstName NVARCHAR(30) not null,
+	SecondName NVARCHAR(60) not null,
+	BirthDate date null,
+	Age tinyint null,
+	Type NVARCHAR(7) not null,
+	constraint U_USERS_DNI UNIQUE(DNI),
+	constraint U_USERS_Email UNIQUE(Email),
+	constraint PK_USERS PRIMARY KEY(Username));
+
+CREATE TABLE PARENTS(
+	Username NVARCHAR(30) not null,
+	HouseNumber NVARCHAR(10) not null,
+	Street NVARCHAR(30) not null,
+	City NVARCHAR(20) not null,
+	Zip NVARCHAR(10) not null,
+	PhoneNumber NVARCHAR(9) not null,
+	constraint PK_PARENTS PRIMARY KEY(Username));
+
+
+CREATE TABLE KIDS(
+	Username NVARCHAR(30) not null,
+	constraint PK_KIDS PRIMARY KEY(Username));
+
+
+CREATE TABLE MONITORS(
+	Username NVARCHAR(30) not null,
+	constraint PK_MONITORS PRIMARY KEY(Username));
+
+
+CREATE TABLE PaKi(
+	ParentUsername NVARCHAR(30) not null,
+	KidUsername NVARCHAR(30) not null,
+	constraint PK_PaKi PRIMARY KEY(ParentUsername, KidUsername));
+
+
+CREATE TABLE SPECIALITIES(
+	MonitorUsername NVARCHAR(30) not null,
+	Speciality NVARCHAR(30) not null,
+	constraint PK_SPECIALITIES PRIMARY KEY(MonitorUsername, Speciality));
+
+
+CREATE TABLE PaAcKi(
+	ParentUsername NVARCHAR(30) not null,
+	KidUsername NVARCHAR(30) not null,
+	ActivityID int not null,
+	constraint PK_PaAcKi PRIMARY KEY(ParentUsername, KidUsername, ActivityID));
+
+CREATE TABLE ACTIVITIES(
+	ActivityID int not null AUTO_INCREMENT,
+	MonitorUsername NVARCHAR(30) not null,
+	Name NVARCHAR(30) not null,
+	StartDate date not null,
+	Duration int not null,
+	EndDate date not null,
+	Capacity int not null,
+	Address NVARCHAR(50) not null,
+	Town NVARCHAR(20) not null,
+	Type NVARCHAR(30) not null,
+	constraint PK_ACTIVITIES PRIMARY KEY(ActivityID, MonitorUsername));
+
+
+CREATE TABLE RIDES(
+	ActivityID int not null,
+	RideID int not null AUTO_INCREMENT,
+	ParentUsername NVARCHAR(30) not null,
+	Capacity tinyint not null,
+	Type NVARCHAR(6) not null,
+	constraint PK_RIDES PRIMARY KEY(RideID));
+
+
+CREATE TABLE RiKi(
+	RideID int not null,
+	KidUsername NVARCHAR(30) not null,
+	constraint PK_RiKi PRIMARY KEY(RideID, KidUsername));
+
+CREATE TABLE STOPS(
+	RideID int not null,
+	Number tinyint not null,
+	StopDate date not null,
+	Duration int not null,
+	Address NVARCHAR(50) not null,
+	Type NVARCHAR(10) not null,
+	constraint PK_STOPS PRIMARY KEY(RideID, Number));
+
+ALTER TABLE PARENTS
+ADD CONSTRAINT FK_PARENTS_Username FOREIGN KEY(Username) REFERENCES USERS(Username) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE KIDS
+ADD CONSTRAINT FK_KIDS_Username FOREIGN KEY(Username) REFERENCES USERS(Username) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE MONITORS
+ADD CONSTRAINT FK_MONITORS_Username FOREIGN KEY(Username) REFERENCES USERS(Username) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE PaKi
+ADD CONSTRAINT FK_PaKi_ParentUsername FOREIGN KEY(ParentUsername) REFERENCES PARENTS(Username) ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE PaKi
+ADD CONSTRAINT FK_PaKi_KidUsername FOREIGN KEY(KidUsername) REFERENCES KIDS(Username) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+ALTER TABLE SPECIALITIES
+ADD CONSTRAINT FK_SPECIALITIES_MonitorUsername FOREIGN KEY(MonitorUsername) REFERENCES MONITORS(Username) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE PaAcKi
+ADD CONSTRAINT FK_PaAcKi_ParentUsername FOREIGN KEY(ParentUsername) REFERENCES PARENTS(Username) ON UPDATE CASCADE ON DELETE RESTRICT;	
+ALTER TABLE PaAcKi
+ADD CONSTRAINT FK_PaAcKi_KidUsername FOREIGN KEY(KidUsername) REFERENCES KIDS(Username) ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE PaAcKi
+ADD CONSTRAINT FK_PaAcKi_ActivityID FOREIGN KEY(ActivityID) REFERENCES ACTIVITIES(ActivityID) ON UPDATE CASCADE ON DELETE RESTRICT;	
+
+ALTER TABLE ACTIVITIES
+ADD CONSTRAINT FK_ACTIVITIES_MonitorUsername FOREIGN KEY(MonitorUsername) REFERENCES MONITORS(Username) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+ALTER TABLE RIDES
+ADD CONSTRAINT FK_RIDES_ActivityID FOREIGN KEY(ActivityID) REFERENCES ACTIVITIES(ActivityID) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE RIDES
+ADD CONSTRAINT FK_RIDES_ParentUsername FOREIGN KEY(ParentUsername) REFERENCES PARENTS(Username) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE RiKi
+ADD CONSTRAINT FK_RiKi_RideID FOREIGN KEY(RideID) REFERENCES RIDES(RideID) ON UPDATE CASCADE ON DELETE RESTRICT;
+ALTER TABLE RiKi
+ADD CONSTRAINT FK_RiKi_KidUsername FOREIGN KEY(KidUsername) REFERENCES KIDS(Username) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+ALTER TABLE STOPS
+ADD CONSTRAINT FK_STOPS_RideID FOREIGN KEY(RideID) REFERENCES RIDES(RideID) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE USERS
+ADD CONSTRAINT CK_USERS_DNI CHECK(DNI LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]');
+
+ALTER TABLE USERS
+ADD CONSTRAINT CK_USERS_Email CHECK(Email LIKE '%@%.%');
+
+ALTER TABLE USERS
+ADD CONSTRAINT CK_USERS_BirthDate CHECK(BirthDate <= getdate());
+
+ALTER TABLE PARENTS
+ADD CONSTRAINT CK_PARENTS_PhoneNumber CHECK(PhoneNumber LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]');
+
+ALTER TABLE RIDES
+ADD CONSTRAINT CK_RIDES_Type CHECK(Type LIKE 'IDA' or Type LIKE 'VUELTA');
+
+ALTER TABLE STOPS
+ADD CONSTRAINT CK_STOPS_Type CHECK(Type LIKE 'SALIDA' or Type LIKE 'LLEGADA' or Type LIKE 'INTERMEDIA');
+
+ALTER TABLE ACTIVITIES
+ADD CONSTRAINT CK_ACTIVITIES_Duration CHECK(Duration >= 0);
+
+ALTER TABLE STOPS
+ADD CONSTRAINT CK_STOPS_Duration CHECK(Duration >= 0);
+
+ALTER TABLE ACTIVITIES
+ADD CONSTRAINT CK_ACTIVITIES_Capacity CHECK(Capacity >= 0);
+
+ALTER TABLE RIDES
+ADD CONSTRAINT CK_RIDES_Capacity CHECK(Capacity >= 0);
+/*
+*Trigger to calculate the year ages from the birthdate introduced
+*/
+DELIMITER $$
+
+CREATE TRIGGER TR_USERS_Age BEFORE INSERT 
+ON USERS FOR EACH ROW
+BEGIN
+	UPDATE USERS SET
+	USERS.Age = YEAR(curdate())-YEAR(NEW.BirthDate)
+	WHERE USERS.Username = NEW.Username;
+END;$$
+
+DELIMITER ;
+
+DELIMITER $$
+/*
+*Trigger to calculate the activities end date from strat date + duration
+*/
+CREATE TRIGGER TR_ACTIVITIES_EndDate BEFORE INSERT 
+ON ACTIVITIES FOR EACH ROW
+BEGIN
+	UPDATE ACTIVITIES SET
+	ACTIVITIES.EndDate = ADDDATE(NEW.StartDate, INTERVAL NEW.Duration minute)
+	WHERE ACTIVITIES.ActivityID = NEW.ActivityID;
+END;$$
+
+DELIMITER ;

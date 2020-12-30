@@ -10,12 +10,15 @@ public class HijoVO extends UsuarioVO{
 	public ArrayList<ActividadVO> getActividades() {
 		return actividades;
 	}
+	
 	public void setActividades(ArrayList<ActividadVO> actividades) {
 		this.actividades = actividades;
 	}
+	
 	public ArrayList<TrayectoVO> getTrayectos() {
 		return trayectos;
 	}
+	
 	public void setTrayectos(ArrayList<TrayectoVO> trayectos) {
 		this.trayectos = trayectos;
 	}

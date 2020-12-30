@@ -6,30 +6,37 @@ public class PadreVO extends UsuarioVO{
 	
 	private String telefono;
 	private Direccion direccion;
-	private String hijo;
+	private ArrayList<HijoVO> hijos;
 	private ArrayList<TrayectoVO> trayectos;
 	
 	public String getTelefono() {
 		return telefono;
 	}
+	
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+	
 	public Direccion getDireccion() {
 		return direccion;
 	}
+	
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
-	public String getHijo() {
-		return hijo;
+	
+	public ArrayList<HijoVO> getHijos() {
+		return hijos;
 	}
-	public void setHijo(String hijo) {
-		this.hijo = hijo;
+	
+	public void setHijo(ArrayList<HijoVO> hijos) {
+		this.hijos = hijos;
 	}
+	
 	public ArrayList<TrayectoVO> getTrayectos() {
 		return trayectos;
 	}
+	
 	public void setTrayectos(ArrayList<TrayectoVO> trayectos) {
 		this.trayectos = trayectos;
 	}
