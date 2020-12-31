@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import modelo.conexion.Conexion;
+import modelo.vo.HijoVO;
+import modelo.vo.MonitorVO;
+import modelo.vo.PadreVO;
 import modelo.vo.UsuarioVO;
 
 public class UsuarioDAO {
@@ -38,50 +41,57 @@ public class UsuarioDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+        
+        conexion.closeConnection();
+                
+		//registroEspecifico(usuario);
+        //TODO descomentar para registrar en las tabals de padre, hijo, monitor... Pero hay campos del padre que faltan por poner
 	}
 	
 	public void registroEspecifico(UsuarioVO usuario) {
 		switch(usuario.getTipo()) {
-		case PADRE:
-			this.registrarPadre(usuario);
-		case HIJO:
-			this.registrarHijo(usuario);
-		case MONITOR:
-			this.registrarMonitor(usuario);
+			case PADRE:
+				this.registrarPadre((PadreVO) usuario);
+			case HIJO:
+				this.registrarHijo((HijoVO)usuario);
+			case MONITOR:
+				this.registrarMonitor((MonitorVO)usuario);
 		}
 	}
 	
-	public void registrarPadre(UsuarioVO usuario) {
+	public void registrarPadre(PadreVO usuario) {
 		PadreDAO padreDAO = new PadreDAO();
 
-		padreDAO.registrarPadre(usuario);
+		padreDAO.registrarPadreDAO(usuario);
 	}
 	
-	public void registrarHijo(UsuarioVO usuario) {
+	public void registrarHijo(HijoVO usuario) {
 		HijoDAO hijoDAO = new HijoDAO();
 		
-		hijoDAO.registrarHijo(usuario);
+		hijoDAO.registrarHijoDAO(usuario);
 	}
 	
-	public void registrarMonitor(UsuarioVO usuario){
+	public void registrarMonitor(MonitorVO usuario){
 		MonitorDAO monitorDAO = new MonitorDAO();
 		
-		monitorDAO.registrarHijo(usuario);
+		monitorDAO.registrarMonitorDAO(usuario);
 	}
 	
 	public void mostrarUsuarios() { //TODO solo para probar
 		ResultSet resultSet = null;
-        String selectSql = "SELECT Username, UserPassword FROM USERS;";
+		conexion.openConnection();
+		statement = conexion.getSt();
+        String selectSql = "SELECT * FROM USERS;";
     	try {
 			resultSet = statement.executeQuery(selectSql);
+	    	
+	    	while(resultSet.next()) {
+	    		System.out.println(resultSet.getString(1));
+	    	}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	System.out.println(resultSet.toString()); //OJO AL NULLPOINTER
-    	
 
 	}
 	

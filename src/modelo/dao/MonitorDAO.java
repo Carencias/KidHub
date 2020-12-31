@@ -33,7 +33,7 @@ public class MonitorDAO extends UsuarioDAO{
 		
 	}*/
 	
-	public void registrarMonitor(MonitorVO monitor) {
+	public void registrarMonitorDAO(MonitorVO monitor) {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -41,7 +41,7 @@ public class MonitorDAO extends UsuarioDAO{
 		query.append("INSERT INTO MONITORS");
 		query.append("(Username) ");
 		query.append("VALUES(");
-		query.append("'" + monitor.getNombreUsuario() + "'");
+		query.append("'" + monitor.getNombreUsuario() + "');");
 		update(query.toString());
 	}
 	

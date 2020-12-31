@@ -26,12 +26,13 @@ public class Main extends Application {
 		
 		//LocalDate fecha = new LocalDate();
 		
-		PadreVO usuario = new PadreVO("usuario2", "09816624B", "hol2a@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "699066552");
+		PadreVO usuario = new PadreVO("usuario6", "03816694B", "passwd","hSol2wfa@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "792016552");
 		
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("'" + usuario.getNombreUsuario() + "', '" + usuario.getDni() + "', '" + usuario.getContrasena() + "', '" + usuario.getEmail() + "', '");
 		insertQuery.append(usuario.getNombre() + "', '" + usuario.getApellidos() + "', '" + usuario.getFechaNacimiento() + "', '" + usuario.getEmail() + "'");
 		
+		//TODO al registrar padre no se mete el usuario en la tabla padres porque no se meten los datos de la direccion (yo los quitaria en el padre)
 		
 		System.out.println(insertQuery.toString());
 		

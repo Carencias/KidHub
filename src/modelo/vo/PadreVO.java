@@ -15,9 +15,10 @@ public class PadreVO extends UsuarioVO{
 		
 	}
 	
-	public PadreVO(String nombreUsuario, String dni, String email, String nombre, String apellidos, LocalDate fechaNacimiento, TipoUsuario tipo, String telefono) {
+	public PadreVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, LocalDate fechaNacimiento, TipoUsuario tipo, String telefono) {
 		this.setNombreUsuario(nombreUsuario);
 		this.setDni(dni);
+		this.setContrasena(contrasena);
 		this.setEmail(email);
 		this.setNombre(nombre);
 		this.setApellidos(apellidos);

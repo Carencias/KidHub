@@ -6,7 +6,7 @@ import modelo.vo.HijoVO;
 
 public class HijoDAO extends UsuarioDAO{
 	
-	public void registrarHijo(HijoVO hijo) {
+	public void registrarHijoDAO(HijoVO hijo) {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -14,7 +14,7 @@ public class HijoDAO extends UsuarioDAO{
 		query.append("INSERT INTO KIDS");
 		query.append("(Username) ");
 		query.append("VALUES(");
-		query.append("'" + hijo.getNombreUsuario() + "'");
+		query.append("'" + hijo.getNombreUsuario() + "');");
 		update(query.toString());
 	}
 	
