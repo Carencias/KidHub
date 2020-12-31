@@ -14,7 +14,7 @@ public class ActividadVO {
 	private Direccion direccion;
 	private ArrayList<HijoVO> hijos;
 	private MonitorVO monitor;
-	private String type;
+	private String tipo;
 	
 	public int getIdActividad() {
 		return idActividad;
@@ -88,11 +88,68 @@ public class ActividadVO {
 		this.monitor = monitor;
 	}
 	
-	public String getType() {
-		return type;
+	public String getTipo() {
+		return tipo;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		this.tipo = type;
 	}
+	
+	
+	/*public String campo(int n) { //OJO EMPIEZA EN 1
+		String campo = "";
+		
+		switch(n) {
+		
+			case 1:
+				campo = "ActivityID";
+				break;
+				
+			case 2:
+				campo = "MonitorUsername";
+				break;
+
+			case 3:
+				campo = "Name";
+				break;
+
+			case 4:
+				campo = "StartDate";
+				break;
+
+			case 5:
+				campo = "EndDate";
+				break;
+
+			case 6:
+				campo = "Address";
+				break;
+
+			case 7:
+				campo = "Town";
+				break;
+
+			case 8:
+				campo = "Type";
+
+			//default:
+				//error
+		}
+		
+		return campo;
+		
+		
+	}*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

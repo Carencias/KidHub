@@ -3,7 +3,7 @@ import java.time.LocalDate;
 
 public class UsuarioVO {
 	
-	public enum tipoUsuario{
+	public enum TipoUsuario{
 		PADRE,HIJO,MONITOR
 	}
 	
@@ -15,7 +15,7 @@ public class UsuarioVO {
 	private String apellidos;
 	private LocalDate fechaNacimiento;
 	private int edad;
-	private tipoUsuario tipo;
+	private TipoUsuario tipo;
 	
 	public String getNombreUsuario() {
 		return nombreUsuario;
@@ -67,7 +67,7 @@ public class UsuarioVO {
 	
 	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
-	}
+	} //TODO cuidado con lo que devuelve esto al meterlo en la BBDD
 	
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
@@ -81,11 +81,11 @@ public class UsuarioVO {
 		this.edad = edad;
 	}
 	
-	public tipoUsuario getTipo() {
+	public TipoUsuario getTipo() {
 		return tipo;
 	}
 	
-	public void setTipo(tipoUsuario tipo) {
+	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
 }
