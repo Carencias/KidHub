@@ -186,7 +186,7 @@ ADD CONSTRAINT CK_RIDES_Capacity CHECK(Capacity >= 0);
 /*
 *Trigger to calculate the year ages from the birthdate introduced
 */
-DELIMITER $$
+/*DELIMITER $$
 
 CREATE TRIGGER TR_USERS_Age BEFORE INSERT 
 ON USERS FOR EACH ROW
@@ -198,11 +198,11 @@ END;$$
 
 DELIMITER ;
 
-DELIMITER $$
+DELIMITER $$*/
 /*
 *Trigger to calculate the activities end date from strat date + duration
 */
-CREATE TRIGGER TR_ACTIVITIES_EndDate BEFORE INSERT 
+/*CREATE TRIGGER TR_ACTIVITIES_EndDate BEFORE INSERT 
 ON ACTIVITIES FOR EACH ROW
 BEGIN
 	UPDATE ACTIVITIES SET
@@ -210,4 +210,4 @@ BEGIN
 	WHERE ACTIVITIES.ActivityID = NEW.ActivityID;
 END;$$
 
-DELIMITER ;
+DELIMITER ;*/

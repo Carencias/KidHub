@@ -26,7 +26,7 @@ public class Main extends Application {
 		
 		//LocalDate fecha = new LocalDate();
 		
-		PadreVO usuario = new PadreVO("usuario6", "03816694B", "passwd","hSol2wfa@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "792016552");
+		/*PadreVO usuario = new PadreVO("usuario6", "03816694B", "passwd","hSol2wfa@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "792016552");
 		
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("'" + usuario.getNombreUsuario() + "', '" + usuario.getDni() + "', '" + usuario.getContrasena() + "', '" + usuario.getEmail() + "', '");
@@ -37,7 +37,7 @@ public class Main extends Application {
 		System.out.println(insertQuery.toString());
 		
 		Logica.registrarPadre(usuario);
-		Logica.mostrarUsuarios();
+		Logica.mostrarUsuarios();*/
 
 		launch(args);
 	}
