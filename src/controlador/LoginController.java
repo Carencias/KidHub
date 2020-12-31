@@ -1,27 +1,26 @@
 package controlador;
 
-import java.io.IOException;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import modelo.KidHubException;
 
 
 public class LoginController extends Controller{
 	
 	@FXML
-	private JFXTextField textoUsuario, textoContrasena;
+	private JFXTextField textoUsuario, contrasenaVisible;
+	
+	@FXML
+	private JFXPasswordField textoContrasena;
+	
+	@FXML
+	private JFXCheckBox mostrar;
 	
 	@FXML
     private Button logOut;
@@ -34,7 +33,22 @@ public class LoginController extends Controller{
 	
 	static final int LOGIN_INCORRECTO = -1;
 	
+	@FXML
+	public void cambiarCaracteres() {
+		
+		if(this.mostrar.isSelected()) {			
+			this.contrasenaVisible.setText(this.textoContrasena.getText());
+			this.textoContrasena.setVisible(false);
+			this.contrasenaVisible.setVisible(true);
+		}else {
+			this.textoContrasena.setText(this.contrasenaVisible.getText());
+			this.textoContrasena.setVisible(true);
+			this.contrasenaVisible.setVisible(false);
+		}
+	}
+
 	
+	@FXML
 	public void login(MouseEvent event) throws KidHubException{
 		
 		String usuario, contrasena;
@@ -48,7 +62,7 @@ public class LoginController extends Controller{
 		tipoUsuario = obtenerTipoUsuario(usuario, contrasena);
 		
 		if(tipoUsuario == LOGIN_INCORRECTO) {
-			muestraError("ERROR","Se produjo un error.", "Credenciales inv√°lidas.");
+			muestraError("ERROR","Se produjo un error.", "Credenciales inv·lidas.");
 		}else {
 			this.mostrarVentana(elegirVentana(tipoUsuario));
 			this.cerrarVentana(event);
@@ -71,7 +85,7 @@ public class LoginController extends Controller{
 		return true;
 	}
 	
-
+	@FXML
 	public void registrar(MouseEvent event) {
 		
 		this.mostrarVentana("Registro");

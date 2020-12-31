@@ -1,20 +1,14 @@
 package controlador;
 
-import java.io.IOException;
 
 import com.jfoenix.controls.JFXButton;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class HijoInicioController extends Controller{
 
@@ -25,10 +19,40 @@ public class HijoInicioController extends Controller{
     private JFXButton inicio, actividades, trayectos, cerrarSesion, crear;
     
     @FXML
-    private Pane panoInicio, panoActividades, panoCerrar;
+    private Pane panoInicio, panoActividades, panoTrayectos, panoCerrar;
     
     @FXML
     private Label nombre;
+    
+    
+    @FXML
+    public void elegirPanel(ActionEvent actionEvent) {
+    	
+        if (actionEvent.getSource() == inicio) {      	
+        	panoInicio.setVisible(true);
+        	panoCerrar.setVisible(false);
+        	panoActividades.setVisible(false);
+        	panoTrayectos.setVisible(false);
+        	
+        } else if (actionEvent.getSource() == actividades) {
+        	panoActividades.setVisible(true);       	
+        	panoCerrar.setVisible(false);
+        	panoInicio.setVisible(false);
+        	panoTrayectos.setVisible(false);
+        	
+        }else if (actionEvent.getSource() == trayectos) {
+        	panoTrayectos.setVisible(true);
+        	panoCerrar.setVisible(false);  
+        	panoInicio.setVisible(false);
+        	panoActividades.setVisible(false);
+    	
+    	}else if (actionEvent.getSource() == cerrarSesion) {
+        	panoCerrar.setVisible(true);  
+        	panoInicio.setVisible(false);
+        	panoActividades.setVisible(false);
+        	panoTrayectos.setVisible(false);
+        }
+    } 
 
     @FXML
     public void mostrarActividades(MouseEvent event) {

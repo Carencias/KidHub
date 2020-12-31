@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,6 +12,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="688.0" style="-fx-background-color: #045ccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.LoginController">
    <children>
+      <JFXPasswordField fx:id="textoContrasena" layoutX="284.0" layoutY="215.0" prefHeight="26.0" prefWidth="169.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXPasswordField>     
+      <JFXTextField fx:id="contrasenaVisible" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      
       <ImageView fitHeight="119.0" fitWidth="119.0" layoutX="288.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../etc/logo.png" />
@@ -21,12 +34,12 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="45.0" fitWidth="32.0" layoutX="236.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="45.0" fitWidth="32.0" layoutX="236.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../etc/user.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="32.0" layoutX="236.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="45.0" fitWidth="32.0" layoutX="236.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../etc/padlock.png" />
          </image>
@@ -36,15 +49,15 @@
             <Font size="22.0" />
          </font>
       </Button>
-      <JFXTextField fx:id="textoUsuario" focusColor="#bef0ff" layoutX="288.0" layoutY="185.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="textoUsuario" focusColor="#bef0ff" layoutX="287.0" layoutY="165.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="textoContrasena" focusColor="#bef0ff" layoutX="288.0" layoutY="244.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXCheckBox fx:id="mostrar" checkedColor="#175084" layoutX="284.0" layoutY="256.0" onMouseClicked="#cambiarCaracteres" text="Mostrar contrasena" textFill="#bef0ff" unCheckedColor="#bcf4fc">
          <font>
             <Font size="15.0" />
          </font>
-      </JFXTextField>
+      </JFXCheckBox>
    </children>
 </AnchorPane>

@@ -33,7 +33,7 @@ public class MonitorInicioController extends Controller{
     }
 
 
-
+    @FXML
     public void elegirPanel(ActionEvent actionEvent) {
 
         if (actionEvent.getSource() == inicio) {      	
