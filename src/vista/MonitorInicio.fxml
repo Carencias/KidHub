@@ -12,22 +12,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="950.0" style="-fx-background-color: #045ccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.MonitorInicioController">
    <children>
-      <VBox layoutY="1.0" prefHeight="500.0" prefWidth="240.0">
+      <VBox alignment="TOP_CENTER" layoutY="1.0" prefHeight="500.0" prefWidth="240.0" style="-fx-background-color: #045ccc;">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../etc/trainer.png" />
-               </image>
+               </image>       
             </ImageView>
-            <Label text="Nombre de usuario">
+            <Label text="Nombre de monitor">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <JFXButton prefHeight="26.0" prefWidth="249.0" text="Inicio">
+            <JFXButton fx:id="inicio" alignment="BASELINE_LEFT" onAction="#elegirPanel" prefHeight="26.0" prefWidth="249.0" text="Inicio" textFill="#bcf4fc">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -39,7 +38,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton prefHeight="26.0" prefWidth="249.0" text="Actividades">
+            <JFXButton fx:id="actividades" alignment="BASELINE_LEFT" onAction="#elegirPanel" prefHeight="26.0" prefWidth="249.0" text="Actividades" textFill="#bcf4fc">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,7 +50,7 @@
                   <Font size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton prefHeight="26.0" prefWidth="249.0" text="Cerrar sesion">
+            <JFXButton fx:id="cerrarSesion" alignment="BASELINE_LEFT" onAction="#elegirPanel" prefHeight="26.0" prefWidth="249.0" text="Cerrar sesion" textFill="#bcf4fc">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,7 +66,7 @@
       </VBox>
       <StackPane layoutX="239.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="panoCerrar" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion? ">
                      <font>
@@ -84,6 +83,23 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+               </children>
+            </Pane>
+            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label text="ESTO ES INICIO">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane fx:id="panoActividades" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="165.0" layoutY="376.0" prefHeight="55.0" prefWidth="286.0" text="ESTO ES ACTIVIDADES">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>

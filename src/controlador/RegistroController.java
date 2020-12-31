@@ -35,8 +35,7 @@ public class RegistroController extends Controller{
     @FXML
     void registrar(MouseEvent event) {
 		System.out.println("Registrando");
-		//TODO crear una tabla en la BBDD con los datos del nuevo usuario
-		/*
+		
 		String errores[] = new String[1];
 		
 		if(!comprobarDatosCorrectos(errores)) {
@@ -50,7 +49,6 @@ public class RegistroController extends Controller{
 				this.mostrarVentana("PadreInicio");
 			}
 		}
-		*/
     }
 	
     
