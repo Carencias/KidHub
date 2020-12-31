@@ -43,11 +43,13 @@ public class RegistroController extends Controller{
 		}else {
 			if(monitor.isSelected()) {
 				System.out.println("Es monitor");
-				this.mostrarVentana("MonitorInicio");
+				this.mostrarVentana("MonitorInicio");			
 			} else {
 				System.out.println("Es padre");
 				this.mostrarVentana("PadreInicio");
 			}
+			
+			this.cerrarVentana(event);
 		}
     }
 	

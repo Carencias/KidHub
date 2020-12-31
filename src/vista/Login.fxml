@@ -31,7 +31,7 @@
             <Image url="@../../etc/padlock.png" />
          </image>
       </ImageView>
-      <Button fx:id="botonLogin" layoutX="315.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: #175084;" text="Login" textFill="#bcf4fc">
+      <Button fx:id="botonLogin" layoutX="315.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: #175084;" text="Acceder" textFill="#bcf4fc">
          <font>
             <Font size="22.0" />
          </font>

@@ -69,7 +69,7 @@
             <ToggleGroup fx:id="grupo1" />
          </toggleGroup>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="monitor" layoutX="354.0" layoutY="345.0" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc;" text="Monitor" textFill="#bef0ff" toggleGroup="$grupo1" />
+      <JFXRadioButton fx:id="monitor" layoutX="354.0" layoutY="345.0" selected="true" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc;" text="Monitor" textFill="#bef0ff" toggleGroup="$grupo1" />
       <Button fx:id="confirmar" layoutX="46.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#registrar" style="-fx-background-color: #175084;" text="Confirmar" textFill="#bcf4fc">
          <font>
             <Font size="18.0" />
