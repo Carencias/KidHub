@@ -22,7 +22,7 @@
                   <Image url="@../../etc/trainer.png" />
                </image>       
             </ImageView>
-            <Label fx:id="nombre" text="Nombre de monitor">
+            <Label fx:id="nombre" textFill="#bcf4fc" text="Nombre de monitor">
                <font>
                   <Font size="15.0" />
                </font>
@@ -69,12 +69,12 @@
          <children>
             <Pane fx:id="panoCerrar" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion? ">
+                  <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion?" textFill="#bcf4fc">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="88.0" layoutY="181.0" text="Al pulsar el boton, regresara a la ventana principal.">
+                  <Label layoutX="88.0" layoutY="181.0" text="Al pulsar el boton, regresara a la ventana principal." textFill="#bcf4fc">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -86,7 +86,7 @@
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="panoActividades" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <Pane fx:id="panoActividades" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE ACTIVIDADES" textFill="#bcf4fc">
                      <font>
@@ -118,9 +118,21 @@
                            </font></Label>
                      </children>
                   </HBox>
+                  <JFXButton fx:id="crear" layoutX="571.0" layoutY="25.0" onMouseClicked="#crearActividad" prefHeight="45.0" prefWidth="101.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Crear" textAlignment="LEFT" textFill="#e7e5e5">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </Pane>
-            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <Label layoutX="165.0" layoutY="140.0" text="¡Bienvenido a la zona de monitores!">
                      <font>

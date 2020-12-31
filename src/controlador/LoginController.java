@@ -59,7 +59,7 @@ public class LoginController extends Controller{
 	private int obtenerTipoUsuario(String usuario, String contrasena) {
 		if(comprobarCredencialesOK(usuario, contrasena)) {
 			//TODO comprobar usuario con BBDD
-			return MONITOR;
+			return HIJO;
 		}else {
 			return LOGIN_INCORRECTO;
 		}
