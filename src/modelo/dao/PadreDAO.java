@@ -4,24 +4,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import modelo.conexion.Conexion;
+import modelo.vo.HijoVO;
 import modelo.vo.PadreVO;
 
 public class PadreDAO extends UsuarioDAO{
 	
-	private static PadreDAO padreDAO = new PadreDAO();
 	
-	/*private Conexion conexion;
-	
-	private PadreDAO() {
-		this.conexion = new Conexion();
-	}*/
-	
-	public PadreDAO getPadreDAO() {
-		return padreDAO;
-	}
-	
-	
-	public void registrarPadre(PadreVO padre) {
+	/*public void registrarPadre(PadreVO padre) {
 		Statement statement;
 		
 		conexion.openConnection();
@@ -45,5 +34,30 @@ public class PadreDAO extends UsuarioDAO{
 			e.printStackTrace();
 		}
 		
+	}*/
+	
+	
+	public void registrarPadre(PadreVO padre) {
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO PARENTS");
+		query.append("(Username, PhoneNumber) ");
+		query.append("VALUES(");
+		query.append("'" + padre.getNombreUsuario() + "', " + padre.getTelefono() + "'");
+		update(query.toString());
 	}
+	
+	public void update(String query) {
+        try {
+			statement.executeUpdate(query.toString());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

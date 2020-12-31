@@ -4,28 +4,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import modelo.conexion.Conexion;
+import modelo.vo.MonitorVO;
 import modelo.vo.PadreVO;
 
 public class MonitorDAO extends UsuarioDAO{
 	
-	private static MonitorDAO monitorDAO = new MonitorDAO();
 	
-	//private Conexion conexion;
-	
-	/*private MonitorDAO() {
-		this.conexion = new Conexion();
-	}*/
-	
-	public MonitorDAO getMonitorDAO() {
-		return monitorDAO;
-	}
-	
-	
-	public void registrarMonitor(PadreVO monitor) {
-		Statement statement;
-		
-		conexion.openConnection();
-		statement = conexion.getSt();
+	/*public void registrarMonitor(PadreVO monitor) {
+
 		
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO MONITORS");
@@ -45,5 +31,27 @@ public class MonitorDAO extends UsuarioDAO{
 			e.printStackTrace();
 		}
 		
+	}*/
+	
+	public void registrarMonitor(MonitorVO monitor) {
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO MONITORS");
+		query.append("(Username) ");
+		query.append("VALUES(");
+		query.append("'" + monitor.getNombreUsuario() + "'");
+		update(query.toString());
+	}
+	
+	public void update(String query) {
+        try {
+			statement.executeUpdate(query.toString());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -85,6 +85,21 @@ public class UsuarioVO {
 		return tipo;
 	}
 	
+	public String getTextoTipo() {
+		String textoTipo = "";
+		
+		switch(this.tipo) {
+			case PADRE:
+				textoTipo = "Padre";
+			case MONITOR:
+				textoTipo = "Monitor";
+			case HIJO:
+				textoTipo = "Hijo";
+		}
+		
+		return textoTipo;
+	}
+	
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}

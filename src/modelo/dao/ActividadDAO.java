@@ -71,15 +71,6 @@ public class ActividadDAO {
 		
 	}
 	
-	
-	/*public String[] getColumnNames(ActividadVO actividad) {
-		ArrayList<String> columnNames = new ArrayList<String>();//Tantos como campos tiene la actividad 
-	
-		String[] defaultNames = {"ActivityID", "MonitorUsername", "Name", "StartDate", "Duration", "EndDate", "Capacity", "Address", "Town", "Type"};
-		
-	
-	}*/
-	
 	public String getSet(ActividadVO actividad) {
 		
 		StringBuilder set = new StringBuilder();

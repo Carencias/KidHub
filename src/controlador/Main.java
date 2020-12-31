@@ -1,10 +1,13 @@
 package controlador;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 
+import modelo.Logica;
 import modelo.conexion.Conexion;
 import modelo.dao.*;
-
+import modelo.vo.PadreVO;
+import modelo.vo.UsuarioVO.TipoUsuario;
 import javafx.application.Application;
 
 import javafx.stage.Stage;
@@ -20,6 +23,20 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		
+		//LocalDate fecha = new LocalDate();
+		
+		PadreVO usuario = new PadreVO("usuario2", "09816624B", "hol2a@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "699066552");
+		
+		StringBuilder insertQuery = new StringBuilder();
+		insertQuery.append("'" + usuario.getNombreUsuario() + "', '" + usuario.getDni() + "', '" + usuario.getContrasena() + "', '" + usuario.getEmail() + "', '");
+		insertQuery.append(usuario.getNombre() + "', '" + usuario.getApellidos() + "', '" + usuario.getFechaNacimiento() + "', '" + usuario.getEmail() + "'");
+		
+		
+		System.out.println(insertQuery.toString());
+		
+		Logica.registrarPadre(usuario);
+		Logica.mostrarUsuarios();
 
 		launch(args);
 	}
