@@ -63,12 +63,5 @@ public class HijoInicioController extends Controller{
     public void mostrarTrayectos(MouseEvent event) {
     	System.out.println("Mostrando trayectos.");
     }
-   
-    
-   @FXML
-   public void cerrarSesion(MouseEvent event) {
-	   this.logOut(event);
-   }
-   
     
 }

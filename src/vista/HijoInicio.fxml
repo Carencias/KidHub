@@ -115,7 +115,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#cerrarSesion" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
+                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#logOut" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
                      <font>
                         <Font size="18.0" />
                      </font>

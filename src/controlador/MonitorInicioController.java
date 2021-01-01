@@ -68,10 +68,5 @@ public class MonitorInicioController extends Controller{
     void modificarActividad(MouseEvent event) {
     	System.out.println("Modificando actividad");
     }
-    
-    @FXML 
-    void cerrarSesion(MouseEvent event) {
-    	this.logOut(event);
-    }
-    
+
 }

@@ -15,7 +15,7 @@
    <children>
       <Label layoutX="14.0" layoutY="28.0" prefHeight="54.0" prefWidth="149.0" text="Registro" textFill="#bef0ff">
          <font>
-            <Font size="36.0" />
+            <Font name="Arial Nova Italic" size="36.0" />
          </font>
       </Label>
       <Separator layoutX="14.0" layoutY="80.0" prefHeight="10.0" prefWidth="379.0" />
@@ -26,42 +26,42 @@
       </ImageView>
       <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="14.0" layoutY="109.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="14.0" layoutY="168.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="257.0" layoutY="109.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="14.0" layoutY="276.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="14.0" layoutY="222.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="257.0" layoutY="276.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="telefono" focusColor="#bef0ff" layoutX="14.0" layoutY="329.0" promptText="Telefono" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="257.0" layoutY="222.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXRadioButton fx:id="padre" layoutX="264.0" layoutY="345.0" selected="true" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc;" text="Padre" textFill="#bef0ff">
@@ -72,32 +72,32 @@
       <JFXRadioButton fx:id="monitor" layoutX="354.0" layoutY="345.0" selected="true" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc;" text="Monitor" textFill="#bef0ff" toggleGroup="$grupo1" />
       <Button fx:id="confirmar" layoutX="46.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#registrar" style="-fx-background-color: #175084;" text="Confirmar" textFill="#bcf4fc">
          <font>
-            <Font size="18.0" />
+            <Font name="Arial Nova Italic" size="18.0" />
          </font>
       </Button>
       <Button fx:id="cancelar" layoutX="308.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#cancelar" style="-fx-background-color: #175084;" text="Cancelar" textFill="#bcf4fc">
          <font>
-            <Font size="18.0" />
+            <Font name="Arial Nova Italic" size="18.0" />
          </font>
       </Button>
       <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="257.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="308.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="363.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial Nova Italic" size="15.0" />
          </font>
       </JFXTextField>
       <Label layoutX="257.0" layoutY="141.0" prefHeight="54.0" prefWidth="149.0" text="Fecha de nacimiento:" textFill="#bef0ff">
          <font>
-            <Font size="15.0" />
+            <Font size="15.0" name="Arial Nova Italic"/>
          </font>
       </Label>
    </children>

@@ -1,100 +1,317 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.PadreInicioController">
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <left>
-            <ImageView fitHeight="177.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="950.0" style="-fx-background-color: #045ccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.PadreInicioController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutY="1.0" prefHeight="500.0" prefWidth="170.0" style="-fx-background-color: #045ccc;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../etc/logo.png" />
+                  <Image url="@../../etc/father.png" />
                </image>
             </ImageView>
-         </left>
-         <center>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <top>
-                  <Label text="Elija lo que desea consultar" BorderPane.alignment="CENTER">
+            <Label text="Nombre del padre" textFill="#bcf4fc">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="inicio" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Inicio" textFill="#bcf4fc">
+              <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="actividades" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Actividades" textFill="#bcf4fc">
+              <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/actividades.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="trayectos" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Trayectos" textFill="#bcf4fc">
+              <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/coche.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="registrarHijo" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Hijos" textFill="#bcf4fc">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="actividadesHijo" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Actividades" textFill="#bcf4fc">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/kid_byn.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="trayectosHijo" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Trayectos" textFill="#bcf4fc">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/kid_byn.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="cerrarSesion" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Cerrar Sesion" textFill="#bcf4fc">
+              <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/cerrarSesion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+         </children></VBox>
+      <StackPane layoutX="171.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
+         <children>
+            <Pane fx:id="panoInicio" prefHeight="500.0" prefWidth="710.0" visible="false">
+               <children>
+                  <Label layoutX="183.0" layoutY="140.0" text="¡Bienvenido a la zona de padres!" textFill="#bcf4fc">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-               </top>
-               <center>
-                  <GridPane BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <Label layoutX="35.0" layoutY="175.0" text="Aqui podras visualizar todas tus actividades y trayectos y los de tus hijos." textFill="#bcf4fc">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="120.0" layoutY="205.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="242.0" layoutY="235.0" text="¡Gracias por usar KidHub!" textFill="#bcf4fc">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="panoTrayectos" prefHeight="500.0" prefWidth="710.0" visible="false">  
+              <children>
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE TRAYECTOS" textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="38.0" layoutY="94.0" prefHeight="42.0" prefWidth="635.0" spacing="50.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="3" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="2" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="1" />
-                        <Button fx:id="cerrarSesion" mnemonicParsing="false" onMouseClicked="#logOut" text="Cerrar Sesion" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" text="Crear trayecto" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label text="Actividad" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Inicio" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Fin" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Tipo" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Aforo disponible" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Padre" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
                      </children>
-                  </GridPane>
-               </center>
-            </BorderPane>
-         </center>
-      </BorderPane>
-   </center>
-   <top>
-      <BorderPane prefHeight="143.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </top>
-         <center>
-            <Label text="¡Bienvenido a la zona de padres!" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-         </center>
-      </BorderPane>
-   </top>
-</BorderPane>
+                  </HBox>                  
+               </children>          
+            </Pane>
+            <Pane fx:id="panoActividades" prefHeight="500.0" prefWidth="710.0" visible="false">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE ACTIVIDADES" textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="38.0" layoutY="94.0" prefHeight="42.0" prefWidth="635.0" spacing="80.0">
+                     <children>
+                        <Label text="Nombre" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Inicio" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Fin" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Lugar" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Aforo disponible" textFill="#e7e5e5">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                     </children>
+                  </HBox>                  
+               </children>
+             </Pane>
+            <Pane fx:id="panoActividadesHijo" prefHeight="200.0" prefWidth="200.0" visible="false" />
+            <Pane fx:id="panoTrayectosHijo" prefHeight="200.0" prefWidth="200.0" visible="false" />
+            
+            <Pane fx:id="panoCerrar" prefHeight="500.0" prefWidth="710.0" visible="false">
+            	<children>
+                  <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion?" textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="88.0" layoutY="181.0" text="Al pulsar el boton, regresara a la ventana principal." textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#logOut" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane fx:id="panoRegistrarHijo" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE REGISTRO" textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
+                  
+                  <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="35.0" layoutY="139.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+           			 <Font size="15.0" />
+         			</font>
+      			  </JFXTextField>
+      			  
+      			  <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="269.0" layoutY="139.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+           			 <Font size="15.0" />
+         			</font>
+      			  </JFXTextField>
+                  <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="35.0" layoutY="203.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="269.0" layoutY="203.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+            			<Font size="15.0" />
+         			</font>
+      			  </JFXTextField>
+      			  <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="338.0" layoutY="203.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+            			<Font size="15.0" />
+         			</font>
+      			  </JFXTextField>
+      			  <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="402.0" layoutY="203.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+            			<Font size="15.0" />
+         			</font>
+      			  </JFXTextField>
+      			  <Label layoutX="269.0" layoutY="170.0" prefHeight="35.0" prefWidth="149.0" text="Fecha de nacimiento:" textFill="#bef0ff">
+         			<font>
+            			<Font size="15.0" />
+         			</font>
+      			  </Label>
+                  <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="35.0" layoutY="264.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="269.0" layoutY="264.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="35.0" layoutY="330.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="269.0" layoutY="330.0" promptText="email" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <ImageView fitHeight="227.0" fitWidth="286.0" layoutX="502.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/father_kid.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="11.0" layoutY="82.0" prefHeight="55.0" prefWidth="666.0" text="Registra desde aqui a tus hijos para que puedan disfrutar de KidHub." textFill="#bcf4fc">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+      <Separator layoutX="170.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="12.0" />
+   </children>
+</AnchorPane>
