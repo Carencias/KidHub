@@ -37,7 +37,7 @@ public class PadreDAO extends UsuarioDAO{
 	}*/
 	
 	
-	public void registrarPadreDAO(PadreVO padre) {
+	public void registrarPadre(PadreVO padre) {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
