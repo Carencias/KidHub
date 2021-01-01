@@ -41,10 +41,6 @@ CREATE TABLE USERS(
 
 CREATE TABLE PARENTS(
 	Username NVARCHAR(30) not null,
-	HouseNumber NVARCHAR(10) not null,
-	Street NVARCHAR(30) not null,
-	City NVARCHAR(20) not null,
-	Zip NVARCHAR(10) not null,
 	PhoneNumber NVARCHAR(9) not null,
 	constraint PK_PARENTS PRIMARY KEY(Username));
 
@@ -56,6 +52,8 @@ CREATE TABLE KIDS(
 
 CREATE TABLE MONITORS(
 	Username NVARCHAR(30) not null,
+	PhoneNumber NVARCHAR(9) not null,
+	Specialty NVARCHAR(30),
 	constraint PK_MONITORS PRIMARY KEY(Username));
 
 
@@ -81,9 +79,9 @@ CREATE TABLE ACTIVITIES(
 	ActivityID int not null AUTO_INCREMENT,
 	MonitorUsername NVARCHAR(30) not null,
 	Name NVARCHAR(30) not null,
-	StartDate date not null,
+	StartDate NVARCHAR(16) not null,
 	Duration int not null,
-	EndDate date not null,
+	EndDate NVARCHAR(16) not null,
 	Capacity int not null,
 	Address NVARCHAR(50) not null,
 	Town NVARCHAR(20) not null,

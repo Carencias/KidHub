@@ -9,20 +9,16 @@ import modelo.vo.ActividadVO;
 import modelo.vo.MonitorVO;
 
 public class ActividadDAO {
-	
-	private static ActividadDAO actividadDAO = new ActividadDAO();
-	
+		
 	private Conexion conexion;
 	
-	private ActividadDAO() {
-		this.conexion  = new Conexion();
+	private Statement statement;
+	
+	public ActividadDAO() {
+		this.conexion = new Conexion();
 	}
 	
-	public ActividadDAO getActividadDAO() {
-		return actividadDAO;
-	}
-	
-	public void crearActividad(MonitorVO monitor, ActividadVO actividad) {
+	public void crearActividad(ActividadVO actividad) {
 		Statement statement;
 		
 		conexion.openConnection();
@@ -30,16 +26,11 @@ public class ActividadDAO {
 		
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO ACTIVITIES");
-		insertQuery.append("(ActivityID, MonitorUsername, Name, StartDate, EndDate, Capacity, Address, Town, Type) ");
+		insertQuery.append("(ActivityID, MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, Address, Town, Type) ");
 		insertQuery.append("VALUES(");
-		insertQuery.append("'" + actividad.getIdActividad() + "', '" + monitor.getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getFechaInicio() + "', '");
-		insertQuery.append(actividad.getFechaFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getTipo() + "'");
-		
-		//TODO CAMPOS PARA LA DIRECCION?? @DIEGO CREE QUE SOBRAN
-		//TODO OJO CON EL getTipo en el string
-		//NO INSERTO DURATION PORQUE SE CALCULA EN UN TRIGGER SUPUESTAMENTE
-		//DIRECCION???
-
+		insertQuery.append("'" + actividad.getIdActividad() + "', '" + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
+		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
+				
         try {
 			statement.executeUpdate(insertQuery.toString());
 			
@@ -78,11 +69,11 @@ public class ActividadDAO {
 		if(!actividad.getNombre().equals("")) {
 			set.append("Name=" + actividad.getNombre() + ", ");
 		}
-		if(actividad.getFechaInicio()!=null) {
-			set.append("StartDate=" + actividad.getFechaInicio() + ", ");
+		if(actividad.getInicio()!=null) {
+			set.append("StartDate=" + actividad.getInicio() + ", ");
 		}
-		if(actividad.getFechaFin()!=null) {
-			set.append("EndDate=" + actividad.getFechaFin() + ", ");
+		if(actividad.getFin()!=null) {
+			set.append("EndDate=" + actividad.getFin() + ", ");
 		}
 		if(actividad.getCapacidad()!=-1) { //TODO SI NO SE CAMBIA LA ACTIVIDAD PONER UN -1
 			set.append("Capacity=" + actividad.getCapacidad() + ", ");

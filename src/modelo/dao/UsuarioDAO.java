@@ -21,7 +21,6 @@ public class UsuarioDAO {
 		
 	}
 	
-	
 	public void registrarUsuario(UsuarioVO usuario) {
 		
 		conexion.openConnection();
@@ -44,37 +43,21 @@ public class UsuarioDAO {
         
         conexion.closeConnection();
                 
-		//registroEspecifico(usuario);
-        //TODO descomentar para registrar en las tabals de padre, hijo, monitor... Pero hay campos del padre que faltan por poner
+		registroEspecifico(usuario);
+        //TODO descomentar para registrar en las tablas de padre, hijo, monitor... Pero hay campos del padre que faltan por poner
 	}
 	
 	public void registroEspecifico(UsuarioVO usuario) {
 		switch(usuario.getTipo()) {
 			case PADRE:
-				this.registrarPadre((PadreVO) usuario);
+				new PadreDAO().registrarPadre((PadreVO) usuario);
+				break;
 			case HIJO:
-				this.registrarHijo((HijoVO)usuario);
+				new HijoDAO().registrarHijo((HijoVO) usuario);
+				break;
 			case MONITOR:
-				this.registrarMonitor((MonitorVO)usuario);
+				new MonitorDAO().registrarMonitor((MonitorVO) usuario);
 		}
-	}
-	
-	public void registrarPadre(PadreVO usuario) {
-		PadreDAO padreDAO = new PadreDAO();
-
-		padreDAO.registrarPadreDAO(usuario);
-	}
-	
-	public void registrarHijo(HijoVO usuario) {
-		HijoDAO hijoDAO = new HijoDAO();
-		
-		hijoDAO.registrarHijoDAO(usuario);
-	}
-	
-	public void registrarMonitor(MonitorVO usuario){
-		MonitorDAO monitorDAO = new MonitorDAO();
-		
-		monitorDAO.registrarMonitorDAO(usuario);
 	}
 	
 	public void mostrarUsuarios() { //TODO solo para probar
@@ -95,16 +78,4 @@ public class UsuarioDAO {
 
 	}
 	
-	/*
-	Conexion con = new Conexion();
-	ResultSet resultSet;
-	con.openConnection();
-	Statement statement = con.getSt();
-		
-        // Create and execute a SELECT SQL statement.
-        String selectSql = "SELECT Username, UserPassword FROM USERS;";
-        String insert = "INSERT INTO USERS(Username, DNI, UserPassword, Email, FirstName, SecondName, BirthDate, Type) VALUES('PACO', '02770768G', 'JUANCARLOS', 'sant@san.com', 'santi', 'poidaw', '2008-7-04', 'PADRE');";
-        	resultSet = statement.executeQuery(selectSql);
-
-	*/
 }

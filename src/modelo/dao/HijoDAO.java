@@ -6,7 +6,7 @@ import modelo.vo.HijoVO;
 
 public class HijoDAO extends UsuarioDAO{
 	
-	public void registrarHijoDAO(HijoVO hijo) {
+	public void registrarHijo(HijoVO hijo) {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
