@@ -135,61 +135,6 @@ public class ActividadVO {
 	private void setDuracion() {
 		this.duracion = this.fin.getHour()*60 + this.fin.getMinute() - this.inicio.getHour()*60 + this.inicio.getMinute();
 	}
-	
-	
-	/*public String campo(int n) { //OJO EMPIEZA EN 1
-		String campo = "";
-		
-		switch(n) {
-		
-			case 1:
-				campo = "ActivityID";
-				break;
-				
-			case 2:
-				campo = "MonitorUsername";
-				break;
 
-			case 3:
-				campo = "Name";
-				break;
-
-			case 4:
-				campo = "StartDate";
-				break;
-
-			case 5:
-				campo = "EndDate";
-				break;
-
-			case 6:
-				campo = "Address";
-				break;
-
-			case 7:
-				campo = "Town";
-				break;
-
-			case 8:
-				campo = "Type";
-
-			//default:
-				//error
-		}
-		
-		return campo;
-		
-		
-	}*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

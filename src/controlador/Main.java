@@ -32,7 +32,7 @@ public class Main extends Application {
 		//TODO estos metodos son para probar los DAO
 		//crearMonitor();
 		//crearActividad();
-		crearHijo();
+		//crearHijo();
 		launch(args);
 	}
 	
@@ -76,6 +76,8 @@ public class Main extends Application {
     public static void crearHijo() {
 		
 		Logica logica = new Logica();
+		
+		logica.setUsuarioActual(new PadreVO("usuario6", "03816694B", "passwd","hSol2wfa@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "792016552"));
 		
 		HijoVO usuario = new HijoVO("usuario2", "01816654B", "passwd","hSo3l2wfa@adios.com", "Alberto", "Leon", LocalDate.of(2000, 2, 5) ,TipoUsuario.HIJO);
 		
