@@ -9,6 +9,7 @@ import modelo.vo.HijoVO;
 import modelo.vo.MonitorVO;
 import modelo.vo.PadreVO;
 import modelo.vo.UsuarioVO;
+import modelo.vo.UsuarioVO.TipoUsuario;
 
 public class UsuarioDAO {
 	
@@ -58,6 +59,37 @@ public class UsuarioDAO {
 			case MONITOR:
 				new MonitorDAO().registrarMonitor((MonitorVO) usuario);
 		}
+	}
+	
+	public UsuarioVO loguearUsuario(UsuarioVO usuario) throws SQLException{
+		ResultSet resultSet = null;
+		conexion.openConnection();
+		StringBuilder selectQuery = new StringBuilder();
+		selectQuery.append("SELECT * FROM USERS");
+		selectQuery.append("WHERE Username="+ usuario.getNombreUsuario()+";");
+		resultSet = statement.executeQuery(selectQuery.toString());
+		
+		switch(resultSet.getString(8)) {
+		case "PADRE":
+			PadreVO padre = new PadreVO();
+			padre.setNombreUsuario(resultSet.getString(1));
+			padre.setContrasena(resultSet.getString(3));
+			padre.setTipo(TipoUsuario.PADRE);
+			return padre;
+		case "HIJO":
+			HijoVO hijo = new HijoVO();
+			hijo.setNombreUsuario(resultSet.getString(1));
+			hijo.setContrasena(resultSet.getString(3));
+			hijo.setTipo(TipoUsuario.HIJO);
+			return hijo;
+		case "MONITOR":
+			MonitorVO monitor = new MonitorVO();
+			monitor.setNombreUsuario(resultSet.getString(1));
+			monitor.setContrasena(resultSet.getString(3));
+			monitor.setTipo(TipoUsuario.MONITOR);
+			return monitor;
+		}
+		return null;
 	}
 	
 	public void mostrarUsuarios() { //TODO solo para probar

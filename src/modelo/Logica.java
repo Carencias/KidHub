@@ -1,5 +1,7 @@
 package modelo;
 
+import java.sql.SQLException;
+
 import controlador.Controller;
 import modelo.dao.ActividadDAO;
 import modelo.dao.PadreDAO;
@@ -47,6 +49,20 @@ public class Logica {
 		new ActividadDAO().crearActividad(actividadVO);
 	}
 	
+	public void loguearUsuario(UsuarioVO usuario) {
+		try {
+			String contrasena = usuario.getContrasena();
+			this.usuarioActual = new UsuarioDAO().loguearUsuario(usuario);
+			if(usuarioActual.getContrasena() == contrasena) {
+				//TODO mostrar ventana usuario llamando controlador
+			}else {
+				//TODO mostrar error contrasena o usuario incorrecto llamando controlador
+			}
+		}catch(SQLException e){
+				//TODO mostrar error activando al controlador
+			
+		}
+	}
 	
 	public void mostrarUsuarios() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();

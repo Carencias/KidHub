@@ -49,7 +49,7 @@ public class ActividadDAO {
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE ACTIVITIES SET");
 		query.append(this.getSet(actividad));
-		query.append(" WHERE ActivityID=" + actividad.getIdActividad());
+		query.append(" WHERE ActivityID=" + actividad.getIdActividad()+";");
 		
         try {
 			statement.executeUpdate(query.toString());

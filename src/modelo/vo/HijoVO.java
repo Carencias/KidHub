@@ -21,6 +21,10 @@ public class HijoVO extends UsuarioVO{
 		this.setTipo(tipo);
 	}
 	
+	public HijoVO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<ActividadVO> getActividades() {
 		return actividades;
 	}

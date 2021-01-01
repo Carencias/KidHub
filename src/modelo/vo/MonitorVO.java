@@ -28,6 +28,10 @@ public class MonitorVO extends UsuarioVO{
 		this.setNombreUsuario(nombreUsuario);
 	}
 
+	public MonitorVO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getTelefono() {
 		return telefono;
 	}
