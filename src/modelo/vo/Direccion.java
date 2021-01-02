@@ -17,12 +17,24 @@ public class Direccion {
 		this.ciudad = ciudad;
 	}
 	
-	public String getTextoDireccion() {
-		return calle + "," + Integer.toString(numero) +"," + Integer.toString(codigoPostal);
+	public String getCalle() {
+		return calle;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public int getCodigoPostal() {
+		return codigoPostal;
 	}
 	
 	public String getCiudad() {
-		return ciudad;
+			return ciudad;
+	}
+	
+	public String getTextoDireccion() {
+		return calle + "," + Integer.toString(numero) +"," + Integer.toString(codigoPostal);
 	}
 	
 	public String toString() {

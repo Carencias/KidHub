@@ -16,13 +16,13 @@
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
-      </JFXPasswordField>     
-      <JFXTextField fx:id="contrasenaVisible" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff" visible="false">
+      </JFXPasswordField>
+      <JFXTextField fx:id="textoUsuario" focusColor="#bef0ff" layoutX="287.0" layoutY="165.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
-      </JFXTextField>
-      <JFXTextField fx:id="textoUsuario" focusColor="#bef0ff" layoutX="287.0" layoutY="165.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      </JFXTextField>     
+      <JFXTextField fx:id="contrasenaVisible" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff" visible="false">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>

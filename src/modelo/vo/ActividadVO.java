@@ -27,6 +27,10 @@ public class ActividadVO {
 		this.setDuracion();
 	}
 	
+	public ActividadVO() {
+		
+	}
+
 	public int getIdActividad() {
 		return idActividad;
 	}
@@ -101,6 +105,10 @@ public class ActividadVO {
 	
 	public String getTipo() {
 		return tipo;
+	}
+	
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public void setType(String type) {

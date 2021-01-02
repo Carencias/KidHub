@@ -22,7 +22,7 @@
                   <Image url="@../../etc/trainer.png" />
                </image>       
             </ImageView>
-            <Label fx:id="nombre" text="Nombre de monitor" textFill="#bcf4fc">
+            <Label fx:id="nombreMonitor" text="Nombre de monitor" textFill="#bcf4fc">
                <font>
                   <Font size="15.0" />
                </font>

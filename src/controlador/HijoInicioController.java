@@ -62,7 +62,7 @@ public class HijoInicioController extends Controller{
     @FXML
     public void initialize() {
     	//TODO pedir el nombre a la base de datos
-    	nombre.setText("Nombre del guaje");
+    	//nombre.setText(this.logica.getUsuarioActual().getNombre());
 
     	ArrayList<TrayectoVO> trayectosPrueba = new ArrayList<TrayectoVO>();
     	trayectosPrueba.add(new TrayectoVO());

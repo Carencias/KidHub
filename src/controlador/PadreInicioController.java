@@ -39,7 +39,7 @@ public class PadreInicioController extends Controller{
     @FXML
     public void initialize() {
     	//TODO pedir el nombre a la base de datos
-    	nombreLabel.setText("Nombre del padre"); 
+    	//nombreLabel.setText(this.logica.getUsuarioActual().getNombre()); 
     }
     
     

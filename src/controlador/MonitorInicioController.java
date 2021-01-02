@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
@@ -14,19 +15,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
 import vista.ActividadTabla;
 
 public class MonitorInicioController extends Controller{
-
+	
+	//Ventana de monitor
+	
     @FXML
     private Button cerrar;
     
@@ -37,18 +42,31 @@ public class MonitorInicioController extends Controller{
     private Pane panoInicio, panoActividades, panoCerrar;
     
     @FXML
-    private Label nombre;
+    private Label nombreMonitor;
     
     @FXML
     private JFXTreeTableView<ActividadTabla> actividadesTree;
     
+    //Para saber si creo actividad o modifico ya que es la misma ventana
+    private boolean modificacion = false;
+    
+    
+    //Ventana de crear/modificar actividad
+    
+    @FXML
+    private JFXTextField nombreAct, tipo, ciudad, calle, num, codPostal,
+    					 aforo, diaInicio, mesInicio, anoInicio, horaInicio, minInicio,
+    					 diaFin, mesFin, anoFin, horaFin, minFin;
+    
+    @FXML
+    private Button confirmar, cancelar;
     
     
     @FXML
     public void initialize() {
 
     	//TODO pedir el nombre a la base de datos
-    	nombre.setText("Nombre del monitor"); 
+    	//nombreMonitor.setText(Logica.getUsuarioActual().getNombre()); 
     	
     }
     
@@ -58,6 +76,8 @@ public class MonitorInicioController extends Controller{
     	/**
     	 * CREACION DE LOS HEADERS DE LA TABLA
     	 */
+    	
+    	//TODO incluir el tipo de la actividad
     	JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
     	nameCol.setPrefWidth(138);
     	nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
@@ -157,10 +177,14 @@ public class MonitorInicioController extends Controller{
     @FXML
     void borrarActividad(MouseEvent event) {
     	System.out.println("Borrando actividad");
+    	ActividadTabla actividadTabla;
+    	ActividadVO actividad = new ActividadVO();
     	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
     		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
     	}else {
-    		System.out.println("El elemento seleccionado es:\n + " + actividadesTree.getSelectionModel().getSelectedItem().toString());
+    		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
+    		actividad.setIdActividad(actividadTabla.getId());
+    		this.logica.borrarActividad(actividad);
     	}
     	    	
     }
@@ -168,23 +192,87 @@ public class MonitorInicioController extends Controller{
     @FXML
     void crearActividad(MouseEvent event) {
     	System.out.println("Creando actividad");
-    	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
-    		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
-    	}else {
-    		System.out.println("El elemento seleccionado es:\n + " + actividadesTree.getSelectionModel().getSelectedItem().toString());
-    	}
+    	this.cerrarVentana(event);
+    	this.mostrarVentana("Actividad");
     }
 
     @FXML
     void modificarActividad(MouseEvent event) {
     	System.out.println("Modificando actividad");
+    	ActividadTabla actividadTabla;
+    	ActividadVO actividad = new ActividadVO();
     	
     	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
     		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
     	}else {
-    		System.out.println("El elemento seleccionado es:\n + " + actividadesTree.getSelectionModel().getSelectedItem().toString());
+    		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
+    		System.out.println("La actividad seleccionada es:\n + " + actividadTabla.getNombre());
+    		this.cerrarVentana(event);
+        	this.mostrarVentana("Actividad");
+        	actividad.setIdActividad(actividadTabla.getId());
+        	//TODO this.logica.rellenarActividad(actividad);
+        	this.setDatosActividad(actividad);
+    	}
+    }
+
+	private void setDatosActividad(ActividadVO actividad) {
+		
+		this.nombreAct.setText(actividad.getNombre());
+    	this.tipo.setText(actividad.getTipo());
+    	this.ciudad.setText(actividad.getDireccion().getCiudad());
+    	this.calle.setText(actividad.getDireccion().getCalle());
+    	this.num.setText(Integer.toString(actividad.getDireccion().getNumero()));
+    	this.codPostal.setText(Integer.toString(actividad.getDireccion().getCodigoPostal()));
+    	this.diaInicio.setText(Integer.toString(actividad.getInicio().getDayOfMonth()));
+    	this.mesInicio.setText(Integer.toString(actividad.getInicio().getMonthValue()));
+    	this.anoInicio.setText(Integer.toString(actividad.getInicio().getYear()));
+    	this.diaFin.setText(Integer.toString(actividad.getFin().getDayOfMonth()));
+    	this.mesFin.setText(Integer.toString(actividad.getFin().getMonthValue()));
+    	this.anoFin.setText(Integer.toString(actividad.getFin().getYear()));
+	}
+	
+	
+	private void getDatosActividad(ActividadVO actividad) {
+		actividad.setNombre(this.nombreAct.getText());
+		actividad.setTipo(this.tipo.getText());
+		Direccion direccion = new Direccion(this.calle.getText(), Integer.parseInt(this.num.getText()), Integer.parseInt(this.codPostal.getText()), this.ciudad.getText());
+		actividad.setDireccion(direccion);
+		LocalDateTime inicio = LocalDateTime.of(Integer.parseInt(this.anoInicio.getText()), Integer.parseInt(this.mesInicio.getText()), Integer.parseInt(this.diaInicio.getText()), Integer.parseInt(this.horaInicio.getText()), Integer.parseInt(this.minInicio.getText()));
+		LocalDateTime fin = LocalDateTime.of(Integer.parseInt(this.anoFin.getText()), Integer.parseInt(this.mesFin.getText()), Integer.parseInt(this.diaFin.getText()), Integer.parseInt(this.horaFin.getText()), Integer.parseInt(this.minFin.getText()));
+		actividad.setInicio(inicio);
+		actividad.setFin(fin);
+		actividad.setCapacidad(Integer.parseInt(this.aforo.getText()));
+		//TODO actividad.setMonitor(this.logica.getUsuarioActual());
+	}
+    
+	
+    
+    /**
+     * Metodos para controlar ventana actividad
+     */
+    @FXML
+    void confirmar(MouseEvent event) {
+    	System.out.println("Confirmando");
+    	ActividadVO actividad = null;
+    	this.getDatosActividad(actividad);  
+    	
+    	if(this.modificacion) {
+    		this.logica.modificarActividad(actividad);
+    		this.modificacion = false;
+    	}else {
+    		this.logica.crearActividad(actividad);
     	}
     	
+    	this.cerrarVentana(event);
+    	this.mostrarVentana("MonitorInicio");
+    }
+    
+    
+    @FXML
+    void cancelar(MouseEvent event) {
+    	System.out.println("Cancelando");
+    	this.cerrarVentana(event);
+    	this.mostrarVentana("MonitorInicio");
     }
 
 }
