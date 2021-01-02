@@ -70,19 +70,19 @@ public class UsuarioDAO {
 		resultSet = statement.executeQuery(selectQuery.toString());
 		
 		switch(resultSet.getString(8)) {
-		case "PADRE":
+		case "Padre":
 			PadreVO padre = new PadreVO();
 			padre.setNombreUsuario(resultSet.getString(1));
 			padre.setContrasena(resultSet.getString(3));
 			padre.setTipo(TipoUsuario.PADRE);
 			return padre;
-		case "HIJO":
+		case "Hijo":
 			HijoVO hijo = new HijoVO();
 			hijo.setNombreUsuario(resultSet.getString(1));
 			hijo.setContrasena(resultSet.getString(3));
 			hijo.setTipo(TipoUsuario.HIJO);
 			return hijo;
-		case "MONITOR":
+		case "Monitor":
 			MonitorVO monitor = new MonitorVO();
 			monitor.setNombreUsuario(resultSet.getString(1));
 			monitor.setContrasena(resultSet.getString(3));

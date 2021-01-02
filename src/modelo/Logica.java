@@ -44,9 +44,19 @@ public class Logica {
 	
 	public void crearActividad(ActividadVO actividadVO) {
 				
-		actividadVO.setMonitor((MonitorVO) new MonitorVO("usuario6"));
+		actividadVO.setMonitor((MonitorVO) this.usuarioActual); //TODO comprobar esto
 		
 		new ActividadDAO().crearActividad(actividadVO);
+	}
+	
+	public void modificarActividad(ActividadVO actividadVO) {
+		actividadVO.setMonitor((MonitorVO) this.usuarioActual); //TODO comprobar esto
+		
+		new ActividadDAO().modificarActividad(actividadVO);
+	}
+	
+	public void borrarActividad(ActividadVO actividadVO) {		
+		new ActividadDAO().borrarActividad(actividadVO);
 	}
 	
 	public void loguearUsuario(UsuarioVO usuario) {

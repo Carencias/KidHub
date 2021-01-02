@@ -47,10 +47,17 @@ public class ActividadDAO {
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
-		query.append("UPDATE ACTIVITIES SET");
-		query.append(this.getSet(actividad));
-		query.append(" WHERE ActivityID=" + actividad.getIdActividad()+";");
-		
+		query.append("UPDATE ACTIVITIES SET ");
+		query.append("Name='" + actividad.getNombre() + "', ");
+		query.append("StartDate='" + actividad.getTextoInicio() + "', ");
+		query.append("Duration='" + actividad.getDuracion() + "', ");
+		query.append("EndDate='" + actividad.getTextoFin() + "', ");
+		query.append("Capacity='" + actividad.getCapacidad() + "', ");
+		query.append("Address='" + actividad.getDireccion().getTextoDireccion() + "', ");
+		query.append("Town='" + actividad.getDireccion().getCiudad() + "', ");
+		query.append("Type='" + actividad.getTipo() + "'");
+		query.append(" WHERE ActivityID='" + actividad.getIdActividad()+"';");
+				
         try {
 			statement.executeUpdate(query.toString());
 			
@@ -59,36 +66,25 @@ public class ActividadDAO {
 			e.printStackTrace();
 		}
 		
-		
 	}
 	
-	public String getSet(ActividadVO actividad) {
+	public void borrarActividad(ActividadVO actividad) {
+		Statement statement;
 		
-		StringBuilder set = new StringBuilder();
+		conexion.openConnection();
+		statement = conexion.getSt();
 		
-		if(!actividad.getNombre().equals("")) {
-			set.append("Name=" + actividad.getNombre() + ", ");
+		StringBuilder query = new StringBuilder();
+		query.append("DELETE FROM ACTIVITIES WHERE ");
+		query.append("ActivityID='" + actividad.getIdActividad() + "'; ");
+				
+        try {
+			statement.executeUpdate(query.toString());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if(actividad.getInicio()!=null) {
-			set.append("StartDate=" + actividad.getInicio() + ", ");
-		}
-		if(actividad.getFin()!=null) {
-			set.append("EndDate=" + actividad.getFin() + ", ");
-		}
-		if(actividad.getCapacidad()!=-1) { //TODO SI NO SE CAMBIA LA ACTIVIDAD PONER UN -1
-			set.append("Capacity=" + actividad.getCapacidad() + ", ");
-		}
-		if(!actividad.getDireccion().getTextoDireccion().equals("")) { //TODO SI NO SE CAMBIA LA ACTIVIDAD PONER UN -1
-			set.append("Address=" + actividad.getDireccion().getTextoDireccion() + ", ");
-		}
-		if(!actividad.getDireccion().getCiudad().equals("")) {
-			set.append("Town=" + actividad.getNombre() + ", ");
-		}
-		if(!actividad.getTipo().equals("")) {
-			set.append("Type=" + actividad.getNombre() + ", ");
-		}
-		
-		return set.substring(0, set.length()-2);
 	}
 	
 	
