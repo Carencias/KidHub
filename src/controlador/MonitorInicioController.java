@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
+import modelo.vo.MonitorVO;
 import vista.ActividadTabla;
 
 public class MonitorInicioController extends Controller{
@@ -210,7 +211,7 @@ public class MonitorInicioController extends Controller{
     		this.cerrarVentana(event);
         	this.mostrarVentana("Actividad");
         	actividad.setIdActividad(actividadTabla.getId());
-        	//TODO this.logica.rellenarActividad(actividad);
+        	this.logica.rellenarActividad(actividad);
         	this.setDatosActividad(actividad);
     	}
     }
@@ -242,7 +243,7 @@ public class MonitorInicioController extends Controller{
 		actividad.setInicio(inicio);
 		actividad.setFin(fin);
 		actividad.setCapacidad(Integer.parseInt(this.aforo.getText()));
-		//TODO actividad.setMonitor(this.logica.getUsuarioActual());
+		actividad.setMonitor((MonitorVO) this.logica.getUsuarioActual());
 	}
     
 	

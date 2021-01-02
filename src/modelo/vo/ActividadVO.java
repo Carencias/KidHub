@@ -1,5 +1,7 @@
 package modelo.vo;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class ActividadVO {
@@ -67,9 +69,6 @@ public class ActividadVO {
 		return duracion;
 	}
 	
-	/*public void setDuracion(int duracion) {
-		this.duracion = duracion;
-	}*/
 	
 	public int getCapacidad() {
 		return capacidad;
@@ -140,8 +139,10 @@ public class ActividadVO {
 		return texto.toString();
 	}
 	
-	private void setDuracion() {
-		this.duracion = this.fin.getHour()*60 + this.fin.getMinute() - this.inicio.getHour()*60 + this.inicio.getMinute();
+	public void setDuracion() {
+		
+		this.duracion = (int) this.inicio.until(this.fin, ChronoUnit.MINUTES);
+
 	}
 
 	

@@ -10,6 +10,8 @@ public class Direccion {
 	
 	private String ciudad;
 	
+	private String direccionCompleta;
+	
 	public Direccion(String calle, int numero, int codigoPostal, String ciudad ) {
 		this.calle = calle;
 		this.numero = numero;

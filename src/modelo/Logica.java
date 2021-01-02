@@ -109,4 +109,22 @@ public class Logica {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public void rellenarActividad(ActividadVO actividad) {
+		new ActividadDAO().rellenarActividad(actividad);
+	}
+	
+	public UsuarioVO getUsuarioActual() {
+		return this.usuarioActual;
+	}
 }
+
+
+
+
+
+
+
+
+
+
