@@ -218,7 +218,7 @@ public class HijoInicioController extends Controller{
         	
         } else if (actionEvent.getSource() == actividades) {
         	//ININICIALIZAR LA TABLA
-        	Direccion palomera = new Direccion("av. universidad", 3, 24008, "leon");
+        	Direccion palomera = new Direccion("av. universidad", 3, "24008", "leon");
         	
         	ArrayList<ActividadVO> actividadesPrueba = new ArrayList<ActividadVO>();
         	actividadesPrueba.add(new ActividadVO("Baloncesto", LocalDateTime.now(), LocalDateTime.now(), 3, palomera, "baloncesto"));

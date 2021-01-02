@@ -1,16 +1,11 @@
 package modelo;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import controlador.Controller;
-import modelo.dao.ActividadDAO;
-import modelo.dao.PadreDAO;
-import modelo.dao.UsuarioDAO;
-import modelo.vo.ActividadVO;
-import modelo.vo.HijoVO;
-import modelo.vo.MonitorVO;
-import modelo.vo.PadreVO;
-import modelo.vo.UsuarioVO;
+import modelo.vo.*;
+import modelo.dao.*;
 import modelo.vo.UsuarioVO.TipoUsuario;
 
 public class Logica {
@@ -83,9 +78,16 @@ public class Logica {
 		new PadreDAO().agregarHijoAPadre(hijo, (PadreVO) this.usuarioActual);
 	}
 	
-	public void crearActividad(ActividadVO actividadVO) {
-				
-		actividadVO.setMonitor((MonitorVO) this.usuarioActual); //TODO comprobar esto
+	public void crearActividad(ActividadVO actividadVO) throws SQLException, KidHubException{
+		StringBuffer error = new StringBuffer();
+		if(actividadVO.getNombre().equals("") || actividadVO.getTipo().equals("") || actividadVO.getCapacidad() < 0) {
+			error.append("Campos sin rellenar");
+		}
+		//TODO mas comprobaciones?
+		if(error.length() != 0) {
+			throw new KidHubException(error.toString());
+		}
+		actividadVO.setMonitor((MonitorVO) this.usuarioActual);
 		
 		new ActividadDAO().crearActividad(actividadVO);
 	}
@@ -116,6 +118,10 @@ public class Logica {
 	
 	public UsuarioVO getUsuarioActual() {
 		return this.usuarioActual;
+	}
+
+	public ArrayList<ActividadVO> getActividades() {
+		return new MonitorDAO().mostrarActividades((MonitorVO)this.usuarioActual);
 	}
 }
 

@@ -79,9 +79,9 @@ public class RegistroController extends Controller{
 				}catch(Exception e) {
 					if(e instanceof KidHubException) {
 						muestraError("ERROR","Se produjo un error.", e.getMessage());
-					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062)
+					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
 						muestraError("ERROR","Se produjo un error.", "El usuario ya existe.");
-					else if(e instanceof SQLException){
+					}else if(e instanceof SQLException){
 						System.out.println(((SQLException) e).getErrorCode());
 						muestraError("ERROR","Se produjo un error.", "Campos invalidos");
 					}
@@ -103,8 +103,8 @@ public class RegistroController extends Controller{
 		if(mes.getText().length() == 1) {
 			mes.setText("0"+mes.getText());
 		}
-		String fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String fechaString = dia.getText()+"/"+mes.getText()+"/"+ano.getText();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate fecha = LocalDate.parse(fechaString, formatter);
 		usuariovo.setFechaNacimiento(fechaString);
 		LocalDate ahora = LocalDate.now();

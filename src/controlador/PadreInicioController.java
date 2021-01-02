@@ -106,8 +106,8 @@ public class PadreInicioController extends Controller{
 			if(mes.getText().length() == 1) {
 				mes.setText("0"+mes.getText());
 			}
-			fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			fechaString = dia.getText()+"/"+mes.getText()+"/"+ano.getText();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			fecha = LocalDate.parse(fechaString, formatter);
 			hijovo.setFechaNacimiento(fechaString);
 			LocalDate ahora = LocalDate.now();

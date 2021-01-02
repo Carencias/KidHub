@@ -22,7 +22,7 @@ public class ActividadDAO {
 		this.conexion = new Conexion();
 	}
 	
-	public void crearActividad(ActividadVO actividad) {
+	public void crearActividad(ActividadVO actividad) throws SQLException{
 		Statement statement;
 		
 		conexion.openConnection();
@@ -35,13 +35,7 @@ public class ActividadDAO {
 		insertQuery.append("'" + actividad.getIdActividad() + "', '" + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
 		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
 				
-        try {
-			statement.executeUpdate(insertQuery.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		statement.executeUpdate(insertQuery.toString());
 	}
 	
 	public void modificarActividad(ActividadVO actividad) {
@@ -127,7 +121,7 @@ public class ActividadDAO {
 				String codigoPostal = direccionCompleta.split(",")[2];
 				String ciudad = resultSet.getString("Town");
 				
-				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), Integer.parseInt(codigoPostal), ciudad));
+				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad));
 				actividad.setTipo(resultSet.getString("Type"));
 
 			}
@@ -152,13 +146,6 @@ public class ActividadDAO {
 		return LocalDateTime.of(year, month, day, hour, min);
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

@@ -6,13 +6,13 @@ public class Direccion {
 	
 	private int numero;
 	
-	private int codigoPostal;
+	private String codigoPostal;
 	
 	private String ciudad;
 	
 	private String direccionCompleta;
 	
-	public Direccion(String calle, int numero, int codigoPostal, String ciudad ) {
+	public Direccion(String calle, int numero, String codigoPostal, String ciudad ) {
 		this.calle = calle;
 		this.numero = numero;
 		this.codigoPostal = codigoPostal;
@@ -27,16 +27,36 @@ public class Direccion {
 		return numero;
 	}
 
-	public int getCodigoPostal() {
+	public String getCodigoPostal() {
 		return codigoPostal;
 	}
 	
 	public String getCiudad() {
-			return ciudad;
+		return ciudad;
+	}
+	
+	public String getDireccionCompleta() {
+		return calle + "," + Integer.toString(numero) +"," + ciudad + " (" +codigoPostal +")";
+	}
+	
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 	
 	public String getTextoDireccion() {
-		return calle + "," + Integer.toString(numero) +"," + Integer.toString(codigoPostal);
+		return calle + "," + Integer.toString(numero) +"," + " (" +codigoPostal +")";
 	}
 	
 	public String toString() {

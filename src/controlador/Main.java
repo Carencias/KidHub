@@ -27,7 +27,7 @@ public class Main extends Application {
 	static PadreVO padre = new PadreVO("usuario1", "03216694B", "passwd","padre@kidhub.com", "Alberto", "Perez", "12/12/2000" ,TipoUsuario.PADRE, "792016552");
 	static MonitorVO monitor = new MonitorVO("usuario2", "03815694B", "passwd","monitor@kidhub.com", "Juan", "Lebron", "12/12/2000" ,TipoUsuario.MONITOR, "799016552", "Deporte");
 	static HijoVO hijo = new HijoVO("usuario3", "01816654Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
-	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, 24007, "Leon"), "Deportiva");
+	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Deportiva");
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -37,10 +37,10 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//TODO estos metodos son para probar los DAO
-		crearMonitor();
+		//crearMonitor();
 		//crearActividad();
-		crearPadre();
-		crearHijo();
+		//crearPadre();
+		//crearHijo();
 		//modificarActividad();
 		//borrarActividad();
 		launch(args);
@@ -118,7 +118,15 @@ public class Main extends Application {
     	
     	logica.setUsuarioActual(monitor);
     	
-    	logica.crearActividad(actividad);
+    	try {
+			logica.crearActividad(actividad);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KidHubException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void modificarActividad() {
