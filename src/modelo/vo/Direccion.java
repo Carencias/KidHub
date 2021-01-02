@@ -25,5 +25,9 @@ public class Direccion {
 		return ciudad;
 	}
 	
+	public String toString() {
+		return calle + "," + ciudad;
+	}
+	
 	
 }
