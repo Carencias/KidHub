@@ -62,6 +62,12 @@ public class RegistroController extends Controller{
 				padrevo.setDni(dni.getText());
 				padrevo.setEmail(email.getText());
 				
+				if(dia.getText().length() == 1) {
+					dia.setText("0"+dia.getText());
+				}
+				if(mes.getText().length() == 1) {
+					mes.setText("0"+mes.getText());
+				}
 				fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
 				formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				fecha = LocalDate.parse(fechaString, formatter);
@@ -95,6 +101,12 @@ public class RegistroController extends Controller{
 				monitorvo.setDni(dni.getText());
 				monitorvo.setEmail(email.getText());
 				
+				if(dia.getText().length() == 1) {
+					dia.setText("0"+dia.getText());
+				}
+				if(mes.getText().length() == 1) {
+					mes.setText("0"+mes.getText());
+				}
 				fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
 				formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				fecha = LocalDate.parse(fechaString, formatter);

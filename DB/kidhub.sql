@@ -36,7 +36,6 @@ CREATE TABLE USERS(
 	Age int null,
 	Type NVARCHAR(7) not null,
 	constraint U_USERS_DNI UNIQUE(DNI),
-	constraint U_USERS_Email UNIQUE(Email),
 	constraint PK_USERS PRIMARY KEY(Username));
 
 CREATE TABLE PARENTS(

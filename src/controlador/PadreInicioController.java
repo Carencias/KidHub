@@ -95,10 +95,17 @@ public class PadreInicioController extends Controller{
     	hijovo.setDni(dni.getText());
     	hijovo.setNombreUsuario(usuario.getText());
     	hijovo.setEmail(email.getText());
+    	hijovo.setContrasena(contra1.getText());
     	
     	if(!contra1.getText().equals(contra2.getText())) {
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
 		}else {
+			if(dia.getText().length() == 1) {
+				dia.setText("0"+dia.getText());
+			}
+			if(mes.getText().length() == 1) {
+				mes.setText("0"+mes.getText());
+			}
 			fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			fecha = LocalDate.parse(fechaString, formatter);
@@ -109,7 +116,7 @@ public class PadreInicioController extends Controller{
 			
 			try {
 				logica.registrarUsuario(hijovo);
-				this.mostrarVentana("HijoInicio");
+				this.mostrarVentana("PadreInicio");
 				this.cerrarVentana(event);
 			}catch(Exception e) {
 				if(e instanceof KidHubException) {

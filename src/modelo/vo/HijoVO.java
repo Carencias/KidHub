@@ -22,7 +22,7 @@ public class HijoVO extends UsuarioVO{
 	}
 	
 	public HijoVO() {
-		this.setTipo(TipoUsuario.PADRE);
+		this.setTipo(TipoUsuario.HIJO);
 	}
 
 	public ArrayList<ActividadVO> getActividades() {

@@ -29,7 +29,7 @@ public class MonitorVO extends UsuarioVO{
 	}
 
 	public MonitorVO() {
-		this.setTipo(TipoUsuario.PADRE);
+		this.setTipo(TipoUsuario.MONITOR);
 	}
 
 	public String getTelefono() {

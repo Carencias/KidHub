@@ -16,6 +16,6 @@ public class HijoDAO extends UsuarioDAO{
 		query.append("VALUES(");
 		query.append("'" + hijo.getNombreUsuario() + "');");
 		statement.executeUpdate(query.toString());
-		 conexion.closeConnection();
+		conexion.closeConnection();
 	}
 }

@@ -39,7 +39,7 @@ public class Logica {
 	
 	public void registrarUsuario(UsuarioVO usuario) throws KidHubException, SQLException{
 		StringBuffer error = new StringBuffer();
-		if(usuario.getNombre() == "" || usuario.getApellidos().equals("") || usuario.getContrasena().equals("") || usuario.getNombreUsuario().equals("") || usuario.getFechaNacimiento().equals("") || usuario.getDni().equals("") || usuario.getEmail().equals("")) {
+		if(usuario.getNombre().equals("") || usuario.getApellidos().equals("") || usuario.getContrasena().equals("") || usuario.getNombreUsuario().equals("") || usuario.getFechaNacimiento().equals("") || usuario.getDni().equals("") || usuario.getEmail().equals("")) {
 			error.append("Campos sin rellenar");
 		}
 		//TODO mas comprobaciones?
