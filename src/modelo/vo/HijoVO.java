@@ -10,7 +10,7 @@ public class HijoVO extends UsuarioVO{
 	private ArrayList<ActividadVO> actividades;
 	private ArrayList<TrayectoVO> trayectos;
 	
-	public HijoVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, LocalDate fechaNacimiento, TipoUsuario tipo) {
+	public HijoVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, String fechaNacimiento, TipoUsuario tipo) {
 		this.setNombreUsuario(nombreUsuario);
 		this.setDni(dni);
 		this.setContrasena(contrasena);
@@ -22,7 +22,7 @@ public class HijoVO extends UsuarioVO{
 	}
 	
 	public HijoVO() {
-		// TODO Auto-generated constructor stub
+		this.setTipo(TipoUsuario.PADRE);
 	}
 
 	public ArrayList<ActividadVO> getActividades() {

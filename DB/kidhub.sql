@@ -32,8 +32,8 @@ CREATE TABLE USERS(
 	Email NVARCHAR(40) not null,
 	FirstName NVARCHAR(30) not null,
 	SecondName NVARCHAR(60) not null,
-	BirthDate date null,
-	Age tinyint null,
+	BirthDate NVARCHAR(10) null,
+	Age int null,
 	Type NVARCHAR(7) not null,
 	constraint U_USERS_DNI UNIQUE(DNI),
 	constraint U_USERS_Email UNIQUE(Email),
@@ -93,7 +93,7 @@ CREATE TABLE RIDES(
 	ActivityID int not null,
 	RideID int not null AUTO_INCREMENT,
 	ParentUsername NVARCHAR(30) not null,
-	Capacity tinyint not null,
+	Capacity int not null,
 	Type NVARCHAR(6) not null,
 	constraint PK_RIDES PRIMARY KEY(RideID));
 
@@ -105,8 +105,8 @@ CREATE TABLE RideKid(
 
 CREATE TABLE STOPS(
 	RideID int not null,
-	Number tinyint not null,
-	StopDate date not null,
+	Number int not null,
+	StopDate NVARCHAR(16) not null,
 	Duration int not null,
 	Address NVARCHAR(50) not null,
 	Type NVARCHAR(10) not null,

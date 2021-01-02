@@ -22,33 +22,24 @@ public class UsuarioDAO {
 		
 	}
 	
-	public void registrarUsuario(UsuarioVO usuario) {
+	public void registrarUsuario(UsuarioVO usuario) throws SQLException{
 		
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO USERS");
-		insertQuery.append("(Username, DNI, UserPassword, Email, FirstName, SecondName, BirthDate, Type) ");
+		insertQuery.append("(Username, DNI, UserPassword, Email, FirstName, SecondName, BirthDate, Age, Type) ");
 		insertQuery.append("VALUES(");
 		insertQuery.append("'" + usuario.getNombreUsuario() + "', '" + usuario.getDni() + "', '" + usuario.getContrasena() + "', '" + usuario.getEmail() + "', '");
-		insertQuery.append(usuario.getNombre() + "', '" + usuario.getApellidos() + "', '" + usuario.getFechaNacimiento() + "', '" + usuario.getTextoTipo() + "');");
+		insertQuery.append(usuario.getNombre() + "', '" + usuario.getApellidos() + "', '" + usuario.getFechaNacimiento() + "', '" + usuario.getEdad() + "', '" + usuario.getTextoTipo() + "');");
 
-        try {
-			statement.executeUpdate(insertQuery.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        conexion.closeConnection();
-                
+		statement.executeUpdate(insertQuery.toString());
+			       
 		registroEspecifico(usuario);
-        //TODO descomentar para registrar en las tablas de padre, hijo, monitor... Pero hay campos del padre que faltan por poner
 	}
 	
-	public void registroEspecifico(UsuarioVO usuario) {
+	public void registroEspecifico(UsuarioVO usuario) throws SQLException{
 		switch(usuario.getTipo()) {
 			case PADRE:
 				new PadreDAO().registrarPadre((PadreVO) usuario);
@@ -79,7 +70,7 @@ public class UsuarioDAO {
 				case "Padre":
 					PadreVO padre = new PadreVO();
 					padre.setNombreUsuario(resultSet.getString("Username"));
-					padre.setContrasena(resultSet.getString("Password"));
+					padre.setContrasena(resultSet.getString("UserPassword"));
 					padre.setTipo(TipoUsuario.PADRE);
 					return padre;
 				case "Hijo":
@@ -91,7 +82,7 @@ public class UsuarioDAO {
 				case "Monitor":
 					MonitorVO monitor = new MonitorVO();
 					monitor.setNombreUsuario(resultSet.getString("Username"));
-					monitor.setContrasena(resultSet.getString("Password"));
+					monitor.setContrasena(resultSet.getString("UserPassword"));
 					monitor.setTipo(TipoUsuario.MONITOR);
 					return monitor;
 				default:

@@ -66,7 +66,7 @@ public class LoginController extends Controller{
 		usuario.setNombreUsuario(nombreUsuario);
 		usuario.setContrasena(contrasena);
 		
-		this.logica = new Logica();
+		this.logica = Logica.getLogica();
 		
 		tipoUsuario = logica.loguearUsuario(usuario);
 		
@@ -78,28 +78,10 @@ public class LoginController extends Controller{
 		}
 	}
 	
-	
-	/*private int obtenerTipoUsuario(String usuario, String contrasena) {
-		if(comprobarCredencialesOK(usuario, contrasena)) {
-			//TODO comprobar usuario con BBDD
-			return HIJO;
-		}else {
-			return LOGIN_INCORRECTO;
-		}
-	}*/
-	
-	
-	/*private boolean comprobarCredencialesOK(String usuario, String contrasena) {
-		//TODO comprobar si usuario y contrasena son correctos
-		return true;
-	}*/
-	
 	@FXML
 	public void registrar(MouseEvent event) {
-		
 		this.mostrarVentana("Registro");
 		this.cerrarVentana(event);
-
 	}
 	
 	

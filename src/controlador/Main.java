@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import modelo.KidHubException;
 import modelo.Logica;
 import modelo.conexion.Conexion;
 import modelo.dao.*;
@@ -23,9 +24,9 @@ import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
 	
-	static PadreVO padre = new PadreVO("usuario1", "03216694B", "passwd","padre@kidhub.com", "Alberto", "Perez", LocalDate.of(2000, 2, 5) ,TipoUsuario.PADRE, "792016552");
-	static MonitorVO monitor = new MonitorVO("usuario2", "03815694B", "passwd","monitor@kidhub.com", "Juan", "Lebron", LocalDate.of(2000, 2, 5) ,TipoUsuario.MONITOR, "799016552", "Deporte");
-	static HijoVO hijo = new HijoVO("usuario3", "01816654Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", LocalDate.of(2000, 2, 5) ,TipoUsuario.HIJO);
+	static PadreVO padre = new PadreVO("usuario1", "03216694B", "passwd","padre@kidhub.com", "Alberto", "Perez", "12/12/2000" ,TipoUsuario.PADRE, "792016552");
+	static MonitorVO monitor = new MonitorVO("usuario2", "03815694B", "passwd","monitor@kidhub.com", "Juan", "Lebron", "12/12/2000" ,TipoUsuario.MONITOR, "799016552", "Deporte");
+	static HijoVO hijo = new HijoVO("usuario3", "01816654Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
 	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, 24007, "Leon"), "Deportiva");
 	
 	@Override
@@ -63,33 +64,57 @@ public class Main extends Application {
     public static void crearPadre() {
 		//LocalDate fecha = new LocalDate();
 		
-		Logica logica = new Logica();
+		Logica logica = Logica.getLogica();
 				
-		logica.registrarUsuario(padre);
+		try {
+			logica.registrarUsuario(padre);
+		} catch (KidHubException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logica.mostrarUsuarios();
     }
     
     public static void crearMonitor() {
 		//LocalDate fecha = new LocalDate();
 		
-		Logica logica = new Logica();
+		Logica logica = Logica.getLogica();
 				
-		logica.registrarUsuario(monitor);
+		try {
+			logica.registrarUsuario(monitor);
+		} catch (KidHubException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logica.mostrarUsuarios();
     }
     
     public static void crearHijo() {
 		
-		Logica logica = new Logica();
+		Logica logica = Logica.getLogica();
 		
 		logica.setUsuarioActual(padre);
 				
-		logica.registrarUsuario(hijo);
+		try {
+			logica.registrarUsuario(hijo);
+		} catch (KidHubException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		logica.mostrarUsuarios();
     }
     
     public static void crearActividad() {
-    	Logica logica = new Logica();
+    	Logica logica = Logica.getLogica();
     	
     	logica.setUsuarioActual(monitor);
     	
@@ -97,7 +122,7 @@ public class Main extends Application {
     }
     
     public static void modificarActividad() {
-    	Logica logica = new Logica();
+    	Logica logica = Logica.getLogica();
     	
     	logica.setUsuarioActual(monitor);
     	
@@ -111,20 +136,10 @@ public class Main extends Application {
     }
     
     public static void borrarActividad() {
-    	Logica logica = new Logica();
+    	Logica logica = Logica.getLogica();
 
     	actividad.setIdActividad(1);
     	
     	logica.borrarActividad(actividad);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

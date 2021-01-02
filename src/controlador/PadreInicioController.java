@@ -1,5 +1,10 @@
 package controlador;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
@@ -9,6 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import modelo.KidHubException;
+import modelo.Logica;
+import modelo.vo.HijoVO;
 
 public class PadreInicioController extends Controller{
 
@@ -77,11 +85,65 @@ public class PadreInicioController extends Controller{
     @FXML
     public void registrar(MouseEvent event) {
     	System.out.println("Registrando hijo");
+    	String fechaString;
+		LocalDate fecha;
+    	HijoVO hijovo = new HijoVO();
+    	Logica logica = Logica.getLogica();
+    	hijovo.setNombre(nombre.getText());
+    	hijovo.setApellidos(apellidos.getText());
+    	hijovo.setDni(dni.getText());
+    	hijovo.setNombreUsuario(usuario.getText());
+    	hijovo.setEmail(email.getText());
+    	
+    	if(!contra1.getText().equals(contra2.getText())) {
+			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
+		}else {
+			fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			fecha = LocalDate.parse(fechaString, formatter);
+			hijovo.setFechaNacimiento(fechaString);
+			LocalDate ahora = LocalDate.now();
+			Period periodo = Period.between(fecha, ahora);
+			hijovo.setEdad(periodo.getYears());
+			
+			try {
+				logica.registrarUsuario(hijovo);
+				this.mostrarVentana("HijoInicio");
+				this.cerrarVentana(event);
+			}catch(Exception e) {
+				if(e instanceof KidHubException) {
+					muestraError("ERROR","Se produjo un error.", e.getMessage());
+				}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062)
+					muestraError("ERROR","Se produjo un error.", "El hijo ya existe, prueba a registrar hijo ya existente.");
+				else if(e instanceof SQLException){
+					System.out.println(((SQLException) e).getErrorCode());
+					muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
+				}
+			}	
+		}
     }
     
     @FXML
     public void agregarHijo(MouseEvent event) {
     	System.out.println("Agregando hijo existente");
+    	Logica logica = Logica.getLogica();
+    	HijoVO hijovo = new HijoVO();
+    	hijovo.setNombreUsuario(nombreExistente.getText());
+    	hijovo.setContrasena(contraExistente.getText());
+    	try {
+			logica.agregarHijoAPadre(hijovo);
+			this.mostrarVentana("PadreInicio");
+			this.cerrarVentana(event);
+		}catch(Exception e) {
+			if(e instanceof KidHubException) {
+				muestraError("ERROR","Se produjo un error.", e.getMessage());
+			}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062)
+				muestraError("ERROR","Se produjo un error.", "El hijo no existe");
+			else if(e instanceof SQLException){
+				System.out.println(((SQLException) e).getErrorCode());
+				muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
+			}
+		}	
     }
     
     @FXML

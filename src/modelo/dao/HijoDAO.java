@@ -6,7 +6,7 @@ import modelo.vo.HijoVO;
 
 public class HijoDAO extends UsuarioDAO{
 	
-	public void registrarHijo(HijoVO hijo) {
+	public void registrarHijo(HijoVO hijo) throws SQLException{
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -15,16 +15,7 @@ public class HijoDAO extends UsuarioDAO{
 		query.append("(Username) ");
 		query.append("VALUES(");
 		query.append("'" + hijo.getNombreUsuario() + "');");
-		update(query.toString());
-	}
-	
-	public void update(String query) {
-        try {
-			statement.executeUpdate(query.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		statement.executeUpdate(query.toString());
+		 conexion.closeConnection();
 	}
 }

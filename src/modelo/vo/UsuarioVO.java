@@ -1,5 +1,4 @@
 package modelo.vo;
-import java.time.LocalDate;
 
 public class UsuarioVO {
 	
@@ -13,7 +12,7 @@ public class UsuarioVO {
 	private String email;
 	private String nombre;
 	private String apellidos;
-	private LocalDate fechaNacimiento;
+	private String fechaNacimiento;
 	private int edad;
 	private TipoUsuario tipo;
 	
@@ -65,11 +64,11 @@ public class UsuarioVO {
 		this.apellidos = apellidos;
 	}
 	
-	public LocalDate getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	} //TODO cuidado con lo que devuelve esto al meterlo en la BBDD
 	
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
@@ -91,10 +90,13 @@ public class UsuarioVO {
 		switch(this.tipo) {
 			case PADRE:
 				textoTipo = "Padre";
+				break;
 			case MONITOR:
 				textoTipo = "Monitor";
+				break;
 			case HIJO:
 				textoTipo = "Hijo";
+				break;
 		}
 		
 		return textoTipo;

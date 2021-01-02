@@ -9,7 +9,7 @@ import modelo.vo.PadreVO;
 
 public class PadreDAO extends UsuarioDAO{
 	
-	public void registrarPadre(PadreVO padre) {
+	public void registrarPadre(PadreVO padre) throws SQLException{
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -19,25 +19,12 @@ public class PadreDAO extends UsuarioDAO{
 		query.append("VALUES(");
 		query.append("'" + padre.getNombreUsuario() + "', '" + padre.getTelefono() + "');");
 				
-		update(query.toString());
-	}
-	
-	
-	public void update(String query) {
-		conexion.openConnection();
-		statement = conexion.getSt();
-		
-        try {
-			statement.executeUpdate(query.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		statement.executeUpdate(query.toString());
+		conexion.closeConnection();
 	}
 
 
-	public void agregarHijoAPadre(HijoVO hijo, PadreVO padre) {
+	public void agregarHijoAPadre(HijoVO hijo, PadreVO padre) throws SQLException{
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -47,8 +34,8 @@ public class PadreDAO extends UsuarioDAO{
 		query.append("VALUES(");
 		query.append("'" + padre.getNombreUsuario() + "', '" + hijo.getNombreUsuario() + "');");
 				
-		update(query.toString());
-		
+		statement.executeUpdate(query.toString());
+		conexion.closeConnection();
 	}
 	
 	

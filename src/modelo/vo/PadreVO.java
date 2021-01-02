@@ -1,6 +1,5 @@
 package modelo.vo;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PadreVO extends UsuarioVO{
@@ -12,10 +11,10 @@ public class PadreVO extends UsuarioVO{
 	
 	
 	public PadreVO() {
-		
+		this.setTipo(TipoUsuario.PADRE);
 	}
 	
-	public PadreVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, LocalDate fechaNacimiento, TipoUsuario tipo, String telefono) {
+	public PadreVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, String fechaNacimiento, TipoUsuario tipo, String telefono) {
 		this.setNombreUsuario(nombreUsuario);
 		this.setDni(dni);
 		this.setContrasena(contrasena);

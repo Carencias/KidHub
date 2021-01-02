@@ -16,10 +16,17 @@ import modelo.vo.UsuarioVO.TipoUsuario;
 public class Logica {
 	
 	private UsuarioVO usuarioActual;
-	
+	private static Logica logica;
 	private Controller controlador;
 	
-	public Logica() {
+	private Logica() {
+	}
+	
+	public static Logica getLogica() {
+		if(logica == null) {
+			logica = new Logica();
+		}
+		return logica;
 	}
 	
 	public void setUsuarioActual(UsuarioVO usuario){
@@ -30,7 +37,15 @@ public class Logica {
 		this.controlador = controlador;
 	}
 	
-	public void registrarUsuario(UsuarioVO usuario) {		
+	public void registrarUsuario(UsuarioVO usuario) throws KidHubException, SQLException{
+		StringBuffer error = new StringBuffer();
+		if(usuario.getNombre() == "" || usuario.getApellidos().equals("") || usuario.getContrasena().equals("") || usuario.getNombreUsuario().equals("") || usuario.getFechaNacimiento().equals("") || usuario.getDni().equals("") || usuario.getEmail().equals("")) {
+			error.append("Campos sin rellenar");
+		}
+		//TODO mas comprobaciones?
+		if(error.length() != 0) {
+			throw new KidHubException(error.toString());
+		}
 		new UsuarioDAO().registrarUsuario(usuario);
 		
 		if(usuario.getTipo()==TipoUsuario.HIJO) {
@@ -38,7 +53,33 @@ public class Logica {
 		}
 	}
 	
-	public void agregarHijoAPadre(HijoVO hijo) {
+	public TipoUsuario loguearUsuario(UsuarioVO usuario) {
+		TipoUsuario tipo = TipoUsuario.INCORRECTO;
+		String contrasena = usuario.getContrasena();
+		
+		try {
+			this.usuarioActual = new UsuarioDAO().loguearUsuario(usuario);
+			if(usuarioActual.getContrasena().equals(contrasena)) {
+				tipo = this.usuarioActual.getTipo();
+			}else {
+				tipo = TipoUsuario.INCORRECTO;
+			}
+		}catch(SQLException e){
+			tipo = TipoUsuario.INCORRECTO;	
+		}
+		
+		return tipo;
+	}
+	
+	public void agregarHijoAPadre(HijoVO hijo) throws SQLException, KidHubException{
+		StringBuffer error = new StringBuffer();
+		if(hijo.getNombreUsuario().equals("") || hijo.getContrasena().equals("")) {
+			error.append("Campos sin rellenar");
+		}
+		//TODO mas comprobaciones?
+		if(error.length() != 0) {
+			throw new KidHubException(error.toString());
+		}
 		new PadreDAO().agregarHijoAPadre(hijo, (PadreVO) this.usuarioActual);
 	}
 	
@@ -58,29 +99,14 @@ public class Logica {
 	public void borrarActividad(ActividadVO actividadVO) {		
 		new ActividadDAO().borrarActividad(actividadVO);
 	}
-	
-	public TipoUsuario loguearUsuario(UsuarioVO usuario) {
-		TipoUsuario tipo = TipoUsuario.INCORRECTO;
-		String contrasena = usuario.getContrasena();
-		
-		try {
-			this.usuarioActual = new UsuarioDAO().loguearUsuario(usuario);
-			if(usuarioActual.getContrasena().equals(contrasena)) {
-				tipo = this.usuarioActual.getTipo();
-			}else {
-				tipo = TipoUsuario.INCORRECTO;
-			}
-		}catch(SQLException e){
-			tipo = TipoUsuario.INCORRECTO;
-			
-		}
-		
-		return tipo;
-		
-	}
-	
+
 	public void mostrarUsuarios() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.mostrarUsuarios();
+	}
+
+	public boolean comprobarDatosCorrectos() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -9,7 +9,7 @@ import modelo.vo.PadreVO;
 
 public class MonitorDAO extends UsuarioDAO{
 	
-	public void registrarMonitor(MonitorVO monitor) {
+	public void registrarMonitor(MonitorVO monitor) throws SQLException{
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -18,16 +18,8 @@ public class MonitorDAO extends UsuarioDAO{
 		query.append("(Username, PhoneNumber, Specialty) ");
 		query.append("VALUES(");
 		query.append("'" + monitor.getNombreUsuario() + "', '" + monitor.getTelefono() + "', '" + monitor.getEspecialidad() + "');");
-		update(query.toString());
+		statement.executeUpdate(query.toString());
+		conexion.closeConnection();
 	}
-	
-	public void update(String query) {
-        try {
-			statement.executeUpdate(query.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 }

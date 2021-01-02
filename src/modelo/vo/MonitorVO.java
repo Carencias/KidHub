@@ -11,7 +11,7 @@ public class MonitorVO extends UsuarioVO{
 	private String especialidad;
 	private ArrayList<ActividadVO> actividades;
 	
-	public MonitorVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, LocalDate fechaNacimiento, TipoUsuario tipo, String telefono, String especialidad) {
+	public MonitorVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, String fechaNacimiento, TipoUsuario tipo, String telefono, String especialidad) {
 		this.setNombreUsuario(nombreUsuario);
 		this.setDni(dni);
 		this.setContrasena(contrasena);
@@ -29,7 +29,7 @@ public class MonitorVO extends UsuarioVO{
 	}
 
 	public MonitorVO() {
-		// TODO Auto-generated constructor stub
+		this.setTipo(TipoUsuario.PADRE);
 	}
 
 	public String getTelefono() {
