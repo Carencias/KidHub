@@ -37,7 +37,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//TODO estos metodos son para probar los DAO
-		//crearMonitor();
+		crearMonitor();
 		//crearActividad();
 		//crearHijo();
 		//crearPadre();

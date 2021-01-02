@@ -86,7 +86,7 @@
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="panoActividades" prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="panoActividades" visible="false" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE ACTIVIDADES" textFill="#bcf4fc">
                      <font>
@@ -133,7 +133,7 @@
                   </JFXButton>
                </children>
             </Pane>
-            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label layoutX="165.0" layoutY="140.0" text="¡Bienvenido a la zona de monitores!" textFill="#bcf4fc">
                      <font>

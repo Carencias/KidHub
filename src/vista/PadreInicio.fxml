@@ -25,7 +25,7 @@
             </ImageView>
             <Label fx:id="nombreLabel" text="Nombre del padre" textFill="#bcf4fc">
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </Label>
             <JFXButton fx:id="inicio" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Inicio" textFill="#bcf4fc">
@@ -37,7 +37,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
             <JFXButton fx:id="actividades" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Actividades" textFill="#bcf4fc">
@@ -61,7 +61,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
             <JFXButton fx:id="registrarHijo" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Hijos" textFill="#bcf4fc">
@@ -73,7 +73,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
             <JFXButton fx:id="cerrarSesion" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Cerrar Sesion" textFill="#bcf4fc">
@@ -85,7 +85,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
          </children></VBox>
@@ -95,12 +95,12 @@
                <children>
                   <Label layoutX="183.0" layoutY="140.0" text="¡Bienvenido a la zona de padres!" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
                   <Label layoutX="35.0" layoutY="175.0" text="Aqui podras visualizar todas tus actividades y trayectos y los de tus hijos." textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font  size="20.0" />
                      </font>
                   </Label>
                   <Label layoutX="120.0" layoutY="205.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
@@ -244,33 +244,33 @@
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
                   
-                  <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="35.0" layoutY="128.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="35.0" layoutY="128.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          			<font>
            			 <Font size="15.0" />
          			</font>
       			  </JFXTextField>
       			  
-      			  <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="269.0" layoutY="128.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      			  <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="269.0" layoutY="128.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          			<font>
            			 <Font size="15.0" />
          			</font>
       			  </JFXTextField>
-                  <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="35.0" layoutY="192.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="35.0" layoutY="192.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="269.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="269.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          			<font>
             			<Font size="15.0" />
          			</font>
       			  </JFXTextField>
-      			  <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="338.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      			  <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="338.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          			<font>
             			<Font size="15.0" />
          			</font>
       			  </JFXTextField>
-      			  <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="402.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      			  <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="402.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          			<font>
             			<Font size="15.0" />
          			</font>
@@ -280,22 +280,22 @@
             			<Font size="15.0" />
          			</font>
       			  </Label>
-                  <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="35.0" layoutY="253.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="35.0" layoutY="253.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="269.0" layoutY="253.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="269.0" layoutY="253.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="35.0" layoutY="319.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="35.0" layoutY="319.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="269.0" layoutY="319.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="269.0" layoutY="319.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -315,12 +315,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="nombreExistente" focusColor="#bef0ff" layoutX="35.0" layoutY="435.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="nombreExistente" focusColor="#bef0ff" layoutX="35.0" layoutY="435.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="contraExistente" focusColor="#bef0ff" layoutX="254.0" layoutY="435.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <JFXTextField fx:id="contraExistente" focusColor="#bef0ff" layoutX="254.0" layoutY="435.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
                         <Font size="15.0" />
                      </font>

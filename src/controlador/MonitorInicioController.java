@@ -157,16 +157,34 @@ public class MonitorInicioController extends Controller{
     @FXML
     void borrarActividad(MouseEvent event) {
     	System.out.println("Borrando actividad");
+    	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+    		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
+    	}else {
+    		System.out.println("El elemento seleccionado es:\n + " + actividadesTree.getSelectionModel().getSelectedItem().toString());
+    	}
+    	    	
     }
 
     @FXML
     void crearActividad(MouseEvent event) {
     	System.out.println("Creando actividad");
+    	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+    		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
+    	}else {
+    		System.out.println("El elemento seleccionado es:\n + " + actividadesTree.getSelectionModel().getSelectedItem().toString());
+    	}
     }
 
     @FXML
     void modificarActividad(MouseEvent event) {
     	System.out.println("Modificando actividad");
+    	
+    	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+    		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
+    	}else {
+    		System.out.println("El elemento seleccionado es:\n + " + actividadesTree.getSelectionModel().getSelectedItem().toString());
+    	}
+    	
     }
 
 }

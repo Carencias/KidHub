@@ -24,47 +24,47 @@
             <Image url="@../../etc/logo.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="14.0" layoutY="109.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="14.0" layoutY="109.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="14.0" layoutY="168.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="14.0" layoutY="168.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="257.0" layoutY="109.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="257.0" layoutY="109.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="14.0" layoutY="276.0" prefHeight="30.0" prefWidth="170.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="14.0" layoutY="276.0" prefHeight="30.0" prefWidth="170.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="14.0" layoutY="222.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="14.0" layoutY="222.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="257.0" layoutY="276.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="257.0" layoutY="276.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="telefono" focusColor="#bef0ff" layoutX="14.0" layoutY="329.0" promptText="Telefono" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="telefono" focusColor="#bef0ff" layoutX="14.0" layoutY="329.0" promptText="Telefono" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="257.0" layoutY="222.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="257.0" layoutY="222.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXRadioButton fx:id="padre" layoutX="264.0" layoutY="345.0" selected="true" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc;" text="Padre" textFill="#bef0ff">
+      <JFXRadioButton fx:id="padre" layoutX="264.0" layoutY="345.0" selected="true" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc; -fx-text-fill: #bef0ff;" text="Padre" textFill="#bef0ff">
          <toggleGroup>
             <ToggleGroup fx:id="grupo1" />
          </toggleGroup>
@@ -80,17 +80,17 @@
             <Font name="Monospaced Regular" size="18.0" />
          </font>
       </Button>
-      <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="257.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="257.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="308.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="308.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="363.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="363.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
