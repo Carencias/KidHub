@@ -1,17 +1,14 @@
 package controlador;
 
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.*;
-import modelo.vo.UsuarioVO.TipoUsuario;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -44,9 +41,6 @@ public class RegistroController extends Controller{
     @FXML
     void registrar(MouseEvent event) {
 		System.out.println("Registrando");
-		String fechaString;
-		LocalDate fecha;
-		DateTimeFormatter formatter;
 		Logica logica = Logica.getLogica();
 		PadreVO padrevo = new PadreVO();
 		MonitorVO monitorvo = new MonitorVO();
@@ -55,28 +49,8 @@ public class RegistroController extends Controller{
 		}else {
 			if(padre.isSelected()) {
 				System.out.println("Es padre");
-				padrevo.setNombre(nombre.getText());
-				padrevo.setApellidos(apellidos.getText());
-				padrevo.setNombreUsuario(usuario.getText());
-				padrevo.setContrasena(contra1.getText());
-				padrevo.setDni(dni.getText());
-				padrevo.setEmail(email.getText());
-				
-				if(dia.getText().length() == 1) {
-					dia.setText("0"+dia.getText());
-				}
-				if(mes.getText().length() == 1) {
-					mes.setText("0"+mes.getText());
-				}
-				fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
-				formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				fecha = LocalDate.parse(fechaString, formatter);
-				padrevo.setFechaNacimiento(fechaString);
-				//TODO añadir al VO la el numero de telefono
-				LocalDate ahora = LocalDate.now();
-				Period periodo = Period.between(fecha, ahora);
-				padrevo.setEdad(periodo.getYears());
-				
+				rellenarVO(padrevo);
+				//TODO queda poner el telefono
 				try {
 					logica.registrarUsuario(padrevo);
 					logica.setUsuarioActual(padrevo);
@@ -92,30 +66,10 @@ public class RegistroController extends Controller{
 						muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
 					}
 				}			
-			}else {
+			}else{
 				System.out.println("Es monitor");
-				monitorvo.setNombre(nombre.getText());
-				monitorvo.setApellidos(apellidos.getText());
-				monitorvo.setNombreUsuario(usuario.getText());
-				monitorvo.setContrasena(contra1.getText());
-				monitorvo.setDni(dni.getText());
-				monitorvo.setEmail(email.getText());
-				
-				if(dia.getText().length() == 1) {
-					dia.setText("0"+dia.getText());
-				}
-				if(mes.getText().length() == 1) {
-					mes.setText("0"+mes.getText());
-				}
-				fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
-				formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				fecha = LocalDate.parse(fechaString, formatter);
-				monitorvo.setFechaNacimiento(fechaString);
-				//TODO añadir al VO la especialidad y no se porque no se crea el monitor en la bbdd mientras que el padre si se crea
-				LocalDate ahora = LocalDate.now();
-				Period periodo = Period.between(fecha, ahora);
-				monitorvo.setEdad(periodo.getYears());
-				
+				rellenarVO(monitorvo);
+				//TODO queda poner las especialidades
 				try {
 					logica.registrarUsuario(monitorvo);
 					logica.setUsuarioActual(monitorvo);
@@ -134,5 +88,27 @@ public class RegistroController extends Controller{
 				}	
 			}
 		}	
+    }
+    
+    private void rellenarVO(UsuarioVO usuariovo) {
+    	usuariovo.setNombre(nombre.getText());
+    	usuariovo.setApellidos(apellidos.getText());
+    	usuariovo.setNombreUsuario(usuario.getText());
+    	usuariovo.setContrasena(contra1.getText());
+    	usuariovo.setDni(dni.getText());
+    	usuariovo.setEmail(email.getText());
+		if(dia.getText().length() == 1) {
+			dia.setText("0"+dia.getText());
+		}
+		if(mes.getText().length() == 1) {
+			mes.setText("0"+mes.getText());
+		}
+		String fechaString = dia.getText()+"-"+mes.getText()+"-"+ano.getText();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		LocalDate fecha = LocalDate.parse(fechaString, formatter);
+		usuariovo.setFechaNacimiento(fechaString);
+		LocalDate ahora = LocalDate.now();
+		Period periodo = Period.between(fecha, ahora);
+		usuariovo.setEdad(periodo.getYears());
     }
 }
