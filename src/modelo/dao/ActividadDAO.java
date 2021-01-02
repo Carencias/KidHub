@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
+import modelo.vo.HijoVO;
 import modelo.vo.MonitorVO;
 import modelo.vo.UsuarioVO;
 
@@ -145,6 +146,44 @@ public class ActividadDAO {
 		
 		return LocalDateTime.of(year, month, day, hour, min);
 
+	}
+
+	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) {
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO ActivityKid");
+		query.append("(KidUsername, ActivityID) ");
+		query.append("VALUES(");
+		query.append("'" + hijo.getNombreUsuario() + "', '" + actividad.getIdActividad() + "');");
+				
+		try {
+			statement.executeUpdate(query.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conexion.closeConnection();
+	}
+
+	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) {
+		Statement statement;
+		
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("DELETE FROM ActivityKid WHERE ");
+		query.append("ActivityID='" + actividad.getIdActividad() + "'AND KidUsername='" + hijo.getNombreUsuario() + "';");
+				
+        try {
+			statement.executeUpdate(query.toString());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	

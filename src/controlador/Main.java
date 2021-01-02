@@ -41,6 +41,8 @@ public class Main extends Application {
 		//crearActividad();
 		//crearPadre();
 		//crearHijo();
+		//apuntarHijoAActividad();
+		//desapuntarHijoDeActividad();
 		//modificarActividad();
 		//borrarActividad();
 		launch(args);
@@ -150,4 +152,26 @@ public class Main extends Application {
     	
     	logica.borrarActividad(actividad);
     }
+    
+    public static void apuntarHijoAActividad() {
+    	actividad.setIdActividad(3);
+    	Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
+    }
+    
+    
+    public static void desapuntarHijoDeActividad() {
+    	actividad.setIdActividad(3);
+    	Logica.getLogica().desapuntarHijoDeActividad(hijo, actividad);
+    }
+    
+    
 }
+
+
+
+
+
+
+
+
+

@@ -123,6 +123,17 @@ public class Logica {
 	public ArrayList<ActividadVO> getActividades() {
 		return new MonitorDAO().mostrarActividades((MonitorVO)this.usuarioActual);
 	}
+	
+	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) {
+		new ActividadDAO().apuntarHijoAActividad(hijo, actividad);
+		//TODO tiene que recibir el nombreUsuario del hijo y la ID de la actividad
+	}
+	
+	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) {
+		new ActividadDAO().desapuntarHijoDeActividad(hijo, actividad);
+		//TODO tiene que recibir el nombreUsuario del hijo y la ID de la actividad
+	}
+	
 }
 
 
