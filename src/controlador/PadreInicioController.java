@@ -23,6 +23,7 @@ public class PadreInicioController extends Controller{
 	@FXML
     private Button cerrar, registrar, registrarExistente;
 	
+	@FXML
 	private JFXTextField nombre, nombreExistente, contraExistente, dni, apellidos, contra2, usuario, email, telefono, contra1, ano, mes, dia;
     
     @FXML
