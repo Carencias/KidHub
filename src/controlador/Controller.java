@@ -13,8 +13,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import modelo.Logica;
 
 public class Controller {
+	
+	protected Logica logica;
 	
 	protected void cerrarVentana(MouseEvent event) {
 		Node source = (Node) event.getSource();

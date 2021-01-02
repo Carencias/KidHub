@@ -4,7 +4,7 @@ import java.time.LocalDate;
 public class UsuarioVO {
 	
 	public enum TipoUsuario{
-		PADRE,HIJO,MONITOR
+		PADRE,HIJO,MONITOR,INCORRECTO
 	}
 	
 	private String nombreUsuario;

@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import modelo.KidHubException;
+import modelo.Logica;
+import modelo.vo.UsuarioVO;
+import modelo.vo.UsuarioVO.TipoUsuario;
 
 
 public class LoginController extends Controller{
@@ -51,18 +54,24 @@ public class LoginController extends Controller{
 	@FXML
 	public void login(MouseEvent event) throws KidHubException{
 		
-		String usuario, contrasena;
-		int tipoUsuario;
+		String nombreUsuario, contrasena;
+		TipoUsuario tipoUsuario;
 		
-		usuario = textoUsuario.getText();
+		nombreUsuario = textoUsuario.getText();
 		contrasena = textoContrasena.getText();
 		
-		System.out.println("Comprobando usuario:" + usuario + " " + contrasena);
+		System.out.println("Comprobando usuario:" + nombreUsuario + " " + contrasena);
+				
+		UsuarioVO usuario = new UsuarioVO();
+		usuario.setNombreUsuario(nombreUsuario);
+		usuario.setContrasena(contrasena);
 		
-		tipoUsuario = obtenerTipoUsuario(usuario, contrasena);
+		this.logica = new Logica();
 		
-		if(tipoUsuario == LOGIN_INCORRECTO) {
-			muestraError("ERROR","Se produjo un error.", "Credenciales inválidas.");
+		tipoUsuario = logica.loguearUsuario(usuario);
+		
+		if(tipoUsuario == TipoUsuario.INCORRECTO) {
+			muestraError("ERROR","Se produjo un error.", "Credenciales invalidas.");
 		}else {
 			this.mostrarVentana(elegirVentana(tipoUsuario));
 			this.cerrarVentana(event);
@@ -70,20 +79,20 @@ public class LoginController extends Controller{
 	}
 	
 	
-	private int obtenerTipoUsuario(String usuario, String contrasena) {
+	/*private int obtenerTipoUsuario(String usuario, String contrasena) {
 		if(comprobarCredencialesOK(usuario, contrasena)) {
 			//TODO comprobar usuario con BBDD
 			return HIJO;
 		}else {
 			return LOGIN_INCORRECTO;
 		}
-	}
+	}*/
 	
 	
-	private boolean comprobarCredencialesOK(String usuario, String contrasena) {
+	/*private boolean comprobarCredencialesOK(String usuario, String contrasena) {
 		//TODO comprobar si usuario y contrasena son correctos
 		return true;
-	}
+	}*/
 	
 	@FXML
 	public void registrar(MouseEvent event) {
@@ -94,7 +103,7 @@ public class LoginController extends Controller{
 	}
 	
 	
-	String elegirVentana(int tipoUsuario) {
+	String elegirVentana(TipoUsuario tipoUsuario) {
 		switch (tipoUsuario) {
 		
 		case MONITOR: 

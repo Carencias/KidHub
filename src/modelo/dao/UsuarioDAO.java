@@ -64,32 +64,44 @@ public class UsuarioDAO {
 	public UsuarioVO loguearUsuario(UsuarioVO usuario) throws SQLException{
 		ResultSet resultSet = null;
 		conexion.openConnection();
+		statement = conexion.getSt();
+		
 		StringBuilder selectQuery = new StringBuilder();
-		selectQuery.append("SELECT * FROM USERS");
-		selectQuery.append("WHERE Username="+ usuario.getNombreUsuario()+";");
+		selectQuery.append("SELECT * FROM USERS ");
+		selectQuery.append("WHERE Username='"+ usuario.getNombreUsuario()+"';");
+		
+		System.out.println(selectQuery);
+		
 		resultSet = statement.executeQuery(selectQuery.toString());
 		
-		switch(resultSet.getString(8)) {
-		case "Padre":
-			PadreVO padre = new PadreVO();
-			padre.setNombreUsuario(resultSet.getString(1));
-			padre.setContrasena(resultSet.getString(3));
-			padre.setTipo(TipoUsuario.PADRE);
-			return padre;
-		case "Hijo":
-			HijoVO hijo = new HijoVO();
-			hijo.setNombreUsuario(resultSet.getString(1));
-			hijo.setContrasena(resultSet.getString(3));
-			hijo.setTipo(TipoUsuario.HIJO);
-			return hijo;
-		case "Monitor":
-			MonitorVO monitor = new MonitorVO();
-			monitor.setNombreUsuario(resultSet.getString(1));
-			monitor.setContrasena(resultSet.getString(3));
-			monitor.setTipo(TipoUsuario.MONITOR);
-			return monitor;
+		if(resultSet.next()) {
+			switch(resultSet.getString("Type")) {
+				case "Padre":
+					PadreVO padre = new PadreVO();
+					padre.setNombreUsuario(resultSet.getString("Username"));
+					padre.setContrasena(resultSet.getString("Password"));
+					padre.setTipo(TipoUsuario.PADRE);
+					return padre;
+				case "Hijo":
+					HijoVO hijo = new HijoVO();
+					hijo.setNombreUsuario(resultSet.getString("Username"));
+					hijo.setContrasena(resultSet.getString("UserPassword"));
+					hijo.setTipo(TipoUsuario.HIJO);
+					return hijo;
+				case "Monitor":
+					MonitorVO monitor = new MonitorVO();
+					monitor.setNombreUsuario(resultSet.getString("Username"));
+					monitor.setContrasena(resultSet.getString("Password"));
+					monitor.setTipo(TipoUsuario.MONITOR);
+					return monitor;
+				default:
+					throw new SQLException("Unknown user or password");
+			}
+		}else {
+			throw new SQLException("Unknown user or password");
 		}
-		return null;
+		
+
 	}
 	
 	public void mostrarUsuarios() { //TODO solo para probar

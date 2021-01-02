@@ -59,19 +59,24 @@ public class Logica {
 		new ActividadDAO().borrarActividad(actividadVO);
 	}
 	
-	public void loguearUsuario(UsuarioVO usuario) {
+	public TipoUsuario loguearUsuario(UsuarioVO usuario) {
+		TipoUsuario tipo = TipoUsuario.INCORRECTO;
+		String contrasena = usuario.getContrasena();
+		
 		try {
-			String contrasena = usuario.getContrasena();
 			this.usuarioActual = new UsuarioDAO().loguearUsuario(usuario);
-			if(usuarioActual.getContrasena() == contrasena) {
-				//TODO mostrar ventana usuario llamando controlador
+			if(usuarioActual.getContrasena().equals(contrasena)) {
+				tipo = this.usuarioActual.getTipo();
 			}else {
-				//TODO mostrar error contrasena o usuario incorrecto llamando controlador
+				tipo = TipoUsuario.INCORRECTO;
 			}
 		}catch(SQLException e){
-				//TODO mostrar error activando al controlador
+			tipo = TipoUsuario.INCORRECTO;
 			
 		}
+		
+		return tipo;
+		
 	}
 	
 	public void mostrarUsuarios() {
