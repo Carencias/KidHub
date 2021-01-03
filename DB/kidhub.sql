@@ -92,7 +92,7 @@ CREATE TABLE RIDES(
 	RideID int not null AUTO_INCREMENT,
 	ParentUsername NVARCHAR(30) not null,
 	Capacity int not null,
-	Type NVARCHAR(6) not null,
+	Type NVARCHAR(6) not null, /*Ida o vuelta*/
 	constraint PK_RIDES PRIMARY KEY(RideID));
 
 
@@ -103,12 +103,12 @@ CREATE TABLE RideKid(
 
 CREATE TABLE STOPS(
 	RideID int not null,
-	Number int not null,
 	StopDate NVARCHAR(16) not null,
 	Duration int not null,
 	Address NVARCHAR(50) not null,
-	Type NVARCHAR(10) not null,
-	constraint PK_STOPS PRIMARY KEY(RideID, Number));
+	Town NVARCHAR(20) not null,
+	Type NVARCHAR(10) not null, /*Origen o destino*/
+	constraint PK_STOPS PRIMARY KEY(RideID, Type));
 
 ALTER TABLE PARENTS
 ADD CONSTRAINT FK_PARENTS_Username FOREIGN KEY(Username) REFERENCES USERS(Username) ON UPDATE CASCADE ON DELETE CASCADE;

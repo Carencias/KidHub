@@ -1,17 +1,17 @@
 package modelo.vo;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ParadaVO {
 	
-	public enum tipoParada{
-		INICIO, FIN, INTERMEDIA
+	public enum TipoParada{
+		ORIGEN, DESTINO
 	}
 	
 	private TrayectoVO trayecto;
 	private int numero;
-	private LocalDate fecha;
+	private LocalDateTime fecha;
 	private int duracion;
-	private tipoParada tipo;
+	private TipoParada tipo;
 	private Direccion direccion;
 	
 	public TrayectoVO getTrayecto() {
@@ -30,11 +30,11 @@ public class ParadaVO {
 		this.numero = numero;
 	}
 	
-	public LocalDate getFecha() {
+	public LocalDateTime getFecha() {
 		return fecha;
 	}
 	
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
 	
@@ -46,11 +46,11 @@ public class ParadaVO {
 		this.duracion = duracion;
 	}
 	
-	public tipoParada getTipo() {
+	public TipoParada getTipo() {
 		return tipo;
 	}
 	
-	public void setTipo(tipoParada tipo) {
+	public void setTipo(TipoParada tipo) {
 		this.tipo = tipo;
 	}
 	
@@ -60,5 +60,17 @@ public class ParadaVO {
 	
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+	
+	public String getTextoFecha() {
+		StringBuilder texto = new StringBuilder();
+		
+		texto.append(this.fecha.getDayOfMonth() + "/");
+		texto.append(this.fecha.getMonthValue() + "/");
+		texto.append(this.fecha.getYear() + " ");
+		texto.append(this.fecha.getHour() + ":");
+		texto.append(this.fecha.getMinute());
+		
+		return texto.toString();
 	}
 }
