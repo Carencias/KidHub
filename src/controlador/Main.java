@@ -53,8 +53,8 @@ public class Main extends Application {
 		//borrarActividad();
 		//crearTrayecto();
 		//apuntarHijoATrayecto();
-		desapuntarHijoDeTrayecto();
-		//launch(args);
+		//desapuntarHijoDeTrayecto();
+		launch(args);
 	}
 	
     private void mostrarLogin(Stage primaryStage) {
