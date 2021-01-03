@@ -115,13 +115,24 @@ public class ActividadVO {
 	}
 	
 	public String getTextoInicio() {
-
 		StringBuilder texto = new StringBuilder();
-		
+
+		if(this.inicio.getDayOfMonth() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.inicio.getDayOfMonth() + "/");
+		if(this.inicio.getMonthValue() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.inicio.getMonthValue() + "/");
 		texto.append(this.inicio.getYear() + " ");
+		if(this.inicio.getHour() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.inicio.getHour() + ":");
+		if(this.inicio.getMinute() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.inicio.getMinute());
 		
 		return texto.toString();
@@ -130,10 +141,22 @@ public class ActividadVO {
 	public String getTextoFin() {
 		StringBuilder texto = new StringBuilder();
 		
+		if(this.fin.getDayOfMonth() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.fin.getDayOfMonth() + "/");
+		if(this.fin.getMonthValue() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.fin.getMonthValue() + "/");
 		texto.append(this.fin.getYear() + " ");
+		if(this.fin.getHour() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.fin.getHour() + ":");
+		if(this.fin.getMinute() < 10) {
+			texto.append("0");
+		}
 		texto.append(this.fin.getMinute());
 		
 		return texto.toString();

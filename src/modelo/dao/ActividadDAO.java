@@ -12,6 +12,7 @@ import modelo.vo.Direccion;
 import modelo.vo.HijoVO;
 import modelo.vo.MonitorVO;
 import modelo.vo.UsuarioVO;
+import modelo.vo.UsuarioVO.TipoUsuario;
 
 public class ActividadDAO {
 		
@@ -103,8 +104,7 @@ public class ActividadDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 
 	private void rellenarActividad(ResultSet resultSet, ActividadVO actividad) {
@@ -178,13 +178,64 @@ public class ActividadDAO {
 		query.append("ActivityID='" + actividad.getIdActividad() + "'AND KidUsername='" + hijo.getNombreUsuario() + "';");
 				
         try {
-			statement.executeUpdate(query.toString());
-			
+			statement.executeUpdate(query.toString());		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
+	public ArrayList<ActividadVO> mostrarActividades(UsuarioVO usuarioActual) {
+		ResultSet resultSet = null;
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		
+		if(usuarioActual.getTipo() == TipoUsuario.MONITOR) {
+			query.append("SELECT * FROM ACTIVITIES ");
+			query.append("WHERE MonitorUsername='"+ usuarioActual.getNombreUsuario()+"';");
+		}else if(usuarioActual.getTipo() == TipoUsuario.HIJO) {
+			query.append("SELECT * FROM ACTIVITIES ");
+			query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID");
+			query.append("WHERE ActivityKid.KidUsername='"+ usuarioActual.getNombreUsuario()+"';");
+		}				
+		try {
+			resultSet = statement.executeQuery(query.toString());
+			return this.obtenerActividades(resultSet);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private ArrayList<ActividadVO> obtenerActividades(ResultSet resultSet) {
+		ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
+		ActividadVO actividad;
+		try {
+			while(resultSet.next()) {
+				actividad = new ActividadVO();
+				actividad.setIdActividad(Integer.parseInt(resultSet.getString("ActivityID")));
+				actividad.setNombre(resultSet.getString("Name"));
+				actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
+				actividad.setFin(convertToDate(resultSet.getString("EndDate")));
+				actividad.setDuracion();
+				actividad.setCapacidad(resultSet.getInt("Capacity"));
+				
+				String direccionCompleta = resultSet.getString("Address");
+				String calle = direccionCompleta.split(",")[0];
+				String numero = direccionCompleta.split(",")[1];
+				String codigoPostal = direccionCompleta.split(",")[2];
+				String ciudad = resultSet.getString("Town");
+				
+				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad));
+				actividad.setTipo(resultSet.getString("Type"));
+				actividades.add(actividad);
+			}
+			return actividades;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -31,6 +31,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.util.Callback;
 import javafx.util.converter.LocalDateTimeStringConverter;
+import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
 import modelo.vo.TrayectoVO;
@@ -61,8 +62,7 @@ public class HijoInicioController extends Controller{
     
     @FXML
     public void initialize() {
-    	//TODO pedir el nombre a la base de datos
-    	//nombre.setText(this.logica.getUsuarioActual().getNombre());
+    	nombre.setText(Logica.getLogica().getUsuarioActual().getNombre());
 
     	ArrayList<TrayectoVO> trayectosPrueba = new ArrayList<TrayectoVO>();
     	trayectosPrueba.add(new TrayectoVO());

@@ -71,18 +71,21 @@ public class UsuarioDAO {
 					PadreVO padre = new PadreVO();
 					padre.setNombreUsuario(resultSet.getString("Username"));
 					padre.setContrasena(resultSet.getString("UserPassword"));
+					padre.setNombre(resultSet.getString("FirstName"));
 					padre.setTipo(TipoUsuario.PADRE);
 					return padre;
 				case "Hijo":
 					HijoVO hijo = new HijoVO();
 					hijo.setNombreUsuario(resultSet.getString("Username"));
 					hijo.setContrasena(resultSet.getString("UserPassword"));
+					hijo.setNombre(resultSet.getString("FirstName"));
 					hijo.setTipo(TipoUsuario.HIJO);
 					return hijo;
 				case "Monitor":
 					MonitorVO monitor = new MonitorVO();
 					monitor.setNombreUsuario(resultSet.getString("Username"));
 					monitor.setContrasena(resultSet.getString("UserPassword"));
+					monitor.setNombre(resultSet.getString("FirstName"));
 					monitor.setTipo(TipoUsuario.MONITOR);
 					return monitor;
 				default:

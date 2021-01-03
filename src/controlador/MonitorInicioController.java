@@ -62,10 +62,7 @@ public class MonitorInicioController extends Controller{
     
     @FXML
     public void initialize() {
-
-    	//TODO pedir el nombre a la base de datos
-    	//nombreMonitor.setText(Logica.getUsuarioActual().getNombre()); 
-    	
+    	nombreMonitor.setText(Logica.getLogica().getUsuarioActual().getNombre());  	
     }
     
     
