@@ -134,18 +134,15 @@ public class Logica {
 		//TODO tiene que recibir el nombreUsuario del hijo y la ID de la actividad
 	}
 	
-	public void crearTrayecto(TrayectoVO trayecto, ParadaVO origen, ParadaVO destino) {
+	public void crearTrayecto(TrayectoVO trayecto) {
+		//TODO tiene que tener seteada la actividad a la que se va a agregar, ademas del padre y las paradas
 		trayecto.setPadre((PadreVO) this.usuarioActual);
-		//TODO tiene que tener seteada la actividad a la que se va a agregar
 		try {
 			new TrayectoDAO().crearTrayecto(trayecto);
 		} catch (SQLException e) {
 			// TODO Manejar errores
 			e.printStackTrace();
 		}
-		//TODO Aqui deberia estar seteado el ID del trayecto
-		new TrayectoDAO().agregarParadaATrayecto(origen); //TODO tiene que estar seteado el trayecto
-		new TrayectoDAO().agregarParadaATrayecto(destino);
 
 	}
 }

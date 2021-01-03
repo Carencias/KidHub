@@ -13,6 +13,10 @@ import modelo.vo.Direccion;
 import modelo.vo.HijoVO;
 import modelo.vo.MonitorVO;
 import modelo.vo.PadreVO;
+import modelo.vo.ParadaVO;
+import modelo.vo.TrayectoVO;
+import modelo.vo.ParadaVO.TipoParada;
+import modelo.vo.TrayectoVO.TipoTrayecto;
 import modelo.vo.UsuarioVO.TipoUsuario;
 import javafx.application.Application;
 
@@ -27,7 +31,9 @@ public class Main extends Application {
 	static PadreVO padre = new PadreVO("usuario1", "03216694B", "passwd","padre@kidhub.com", "Alberto", "Perez", "12/12/2000" ,TipoUsuario.PADRE, "792016552");
 	static MonitorVO monitor = new MonitorVO("usuario2", "03815694B", "passwd","monitor@kidhub.com", "Juan", "Lebron", "12/12/2000" ,TipoUsuario.MONITOR, "799016552", "Deporte");
 	static HijoVO hijo = new HijoVO("usuario3", "01816654Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
-	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Deportiva");
+	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, 24007, "Leon"), "Deportiva");
+	static TrayectoVO trayecto = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 00), new Direccion("Calle Santos", 9, 24008, "Leon"));
+
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -45,7 +51,8 @@ public class Main extends Application {
 		//desapuntarHijoDeActividad();
 		//modificarActividad();
 		//borrarActividad();
-		launch(args);
+		crearTrayecto();
+		//launch(args);
 	}
 	
     private void mostrarLogin(Stage primaryStage) {
@@ -162,6 +169,11 @@ public class Main extends Application {
     public static void desapuntarHijoDeActividad() {
     	actividad.setIdActividad(3);
     	Logica.getLogica().desapuntarHijoDeActividad(hijo, actividad);
+    }
+  
+    
+    public static void crearTrayecto() {
+    	Logica.getLogica().crearTrayecto(trayecto);
     }
     
     

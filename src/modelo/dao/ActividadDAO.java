@@ -30,6 +30,7 @@ public class ActividadDAO {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
+		//TODO el activityID no se mete aqui
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO ACTIVITIES");
 		insertQuery.append("(ActivityID, MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, Address, Town, Type) ");
@@ -38,6 +39,12 @@ public class ActividadDAO {
 		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
 				
 		statement.executeUpdate(insertQuery.toString());
+		
+		ResultSet generatedKeys = statement.getGeneratedKeys();
+		
+		if(generatedKeys.next()) {
+			actividad.setIdActividad(generatedKeys.getInt(1));
+		}
 	}
 	
 	public void modificarActividad(ActividadVO actividad) {
@@ -122,7 +129,7 @@ public class ActividadDAO {
 				String codigoPostal = direccionCompleta.split(",")[2];
 				String ciudad = resultSet.getString("Town");
 				
-				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad));
+				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), Integer.parseInt(codigoPostal), ciudad));
 				actividad.setTipo(resultSet.getString("Type"));
 
 			}
@@ -228,7 +235,7 @@ public class ActividadDAO {
 				String codigoPostal = direccionCompleta.split(",")[2];
 				String ciudad = resultSet.getString("Town");
 				
-				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad));
+				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), Integer.parseInt(codigoPostal), ciudad));
 				actividad.setTipo(resultSet.getString("Type"));
 				actividades.add(actividad);
 			}

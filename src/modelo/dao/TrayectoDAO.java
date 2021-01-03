@@ -39,9 +39,13 @@ public class TrayectoDAO {
 		if(generatedKeys.next()) {
 			trayecto.setIdTrayecto(generatedKeys.getInt(1));
 		}
+		
+		this.agregarParadaATrayecto(trayecto, trayecto.getOrigen());
+		this.agregarParadaATrayecto(trayecto, trayecto.getDestino());
+
 	}
 
-	public void agregarParadaATrayecto(ParadaVO parada) {
+	public void agregarParadaATrayecto(TrayectoVO trayecto, ParadaVO parada) {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -49,8 +53,8 @@ public class TrayectoDAO {
 		query.append("INSERT INTO STOPS");
 		query.append("(RideID, StopDate, Duration, Address, Town, Type) ");
 		query.append("VALUES(");
-		query.append("'" + parada.getTrayecto().getIdTrayecto() + "', '" + parada.getTextoFecha() + "', '");
-		query.append(parada.getDuracion() + "', '" + parada.getDireccion().getTextoDireccion() + "', '" + parada.getDireccion().getCiudad() + "', '");
+		query.append("'" + trayecto.getIdTrayecto() + "', '" + parada.getTextoFecha() + "', '");
+		query.append(trayecto.getDuracion() + "', '" + parada.getDireccion().getTextoDireccion() + "', '" + parada.getDireccion().getCiudad() + "', '");
 		
 		if(parada.getTipo() == TipoParada.ORIGEN) {
 			query.append("Origen');");

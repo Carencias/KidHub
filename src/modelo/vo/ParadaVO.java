@@ -7,27 +7,14 @@ public class ParadaVO {
 		ORIGEN, DESTINO
 	}
 	
-	private TrayectoVO trayecto;
-	private int numero;
 	private LocalDateTime fecha;
-	private int duracion;
 	private TipoParada tipo;
 	private Direccion direccion;
 	
-	public TrayectoVO getTrayecto() {
-		return trayecto;
-	}
-	
-	public void setTrayecto(TrayectoVO trayecto) {
-		this.trayecto = trayecto;
-	}
-	
-	public int getNumero() {
-		return numero;
-	}
-	
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public ParadaVO(LocalDateTime fecha, TipoParada tipo, Direccion direccion) {
+		this.fecha = fecha;
+		this.tipo = tipo;
+		this.direccion = direccion;
 	}
 	
 	public LocalDateTime getFecha() {
@@ -36,14 +23,6 @@ public class ParadaVO {
 	
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
-	}
-	
-	public int getDuracion() {
-		return duracion;
-	}
-	
-	public void setDuracion(int duracion) {
-		this.duracion = duracion;
 	}
 	
 	public TipoParada getTipo() {

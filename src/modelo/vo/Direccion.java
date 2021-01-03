@@ -6,13 +6,13 @@ public class Direccion {
 	
 	private int numero;
 	
-	private String codigoPostal;
+	private int codigoPostal;
 	
 	private String ciudad;
 	
 	private String direccionCompleta;
 	
-	public Direccion(String calle, int numero, String codigoPostal, String ciudad ) {
+	public Direccion(String calle, int numero, int codigoPostal, String ciudad ) {
 		this.calle = calle;
 		this.numero = numero;
 		this.codigoPostal = codigoPostal;
@@ -27,7 +27,7 @@ public class Direccion {
 		return numero;
 	}
 
-	public String getCodigoPostal() {
+	public int getCodigoPostal() {
 		return codigoPostal;
 	}
 	
@@ -47,7 +47,7 @@ public class Direccion {
 		this.numero = numero;
 	}
 
-	public void setCodigoPostal(String codigoPostal) {
+	public void setCodigoPostal(int codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
 
