@@ -217,17 +217,7 @@ public class HijoInicioController extends Controller{
         	panoTrayectos.setVisible(false);
         	
         } else if (actionEvent.getSource() == actividades) {
-        	//ININICIALIZAR LA TABLA
-        	Direccion palomera = new Direccion("av. universidad", 3, "24008", "leon");
-        	
-        	ArrayList<ActividadVO> actividadesPrueba = new ArrayList<ActividadVO>();
-        	actividadesPrueba.add(new ActividadVO("Baloncesto", LocalDateTime.now(), LocalDateTime.now(), 3, palomera, "baloncesto"));
-        	actividadesPrueba.add(new ActividadVO("Futbol", LocalDateTime.now(), LocalDateTime.now(), 7, palomera, "futbol"));
-        	actividadesPrueba.add(new ActividadVO("Hockey", LocalDateTime.now(), LocalDateTime.now(), 8, palomera, "hockey"));
-        	
-        	this.inicializarTablaActividades(actividadesPrueba);
-        	
-        	
+        	this.inicializarTablaActividades(Logica.getLogica().getActividades());        	
         	panoActividades.setVisible(true);       	
         	panoCerrar.setVisible(false);
         	panoInicio.setVisible(false);
@@ -250,6 +240,7 @@ public class HijoInicioController extends Controller{
     @FXML
     public void mostrarActividadTablaes(MouseEvent event) {
     	System.out.println("Mostrando Actividades");
+    	this.inicializarTablaActividades(Logica.getLogica().getActividades());
     }
     
     @FXML

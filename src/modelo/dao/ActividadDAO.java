@@ -196,7 +196,7 @@ public class ActividadDAO {
 			query.append("WHERE MonitorUsername='"+ usuarioActual.getNombreUsuario()+"';");
 		}else if(usuarioActual.getTipo() == TipoUsuario.HIJO) {
 			query.append("SELECT * FROM ACTIVITIES ");
-			query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID");
+			query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID ");
 			query.append("WHERE ActivityKid.KidUsername='"+ usuarioActual.getNombreUsuario()+"';");
 		}				
 		try {
