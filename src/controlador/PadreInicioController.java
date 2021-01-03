@@ -38,7 +38,7 @@ public class PadreInicioController extends Controller{
     
     @FXML
     public void initialize() {
-    	nombreLabel.setText(this.logica.getUsuarioActual().getNombre()); 
+    	nombreLabel.setText(Logica.getLogica().getUsuarioActual().getNombre()); 
     }
     
     
