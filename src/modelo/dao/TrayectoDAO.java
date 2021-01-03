@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import modelo.conexion.Conexion;
+import modelo.vo.HijoVO;
 import modelo.vo.ParadaVO;
 import modelo.vo.ParadaVO.TipoParada;
 import modelo.vo.TrayectoVO;
@@ -73,6 +74,43 @@ public class TrayectoDAO {
 			e.printStackTrace();
 		}
 		conexion.closeConnection();		
+	}
+
+	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) {
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO RideKid");
+		query.append("(RideID, KidUsername) ");
+		query.append("VALUES(");
+		query.append("'" + trayecto.getIdTrayecto() + "', '" + hijo.getNombreUsuario() + "');");
+				
+		try {
+			statement.executeUpdate(query.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conexion.closeConnection();
+		
+	}
+
+	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) {		
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("DELETE FROM RideKid WHERE ");
+		query.append("RideID='" + trayecto.getIdTrayecto() + "'AND KidUsername='" + hijo.getNombreUsuario() + "';");
+		
+		System.out.println(query);
+				
+        try {
+			statement.executeUpdate(query.toString());		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 }

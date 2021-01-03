@@ -31,8 +31,8 @@ public class Main extends Application {
 	static PadreVO padre = new PadreVO("usuario1", "03216694B", "passwd","padre@kidhub.com", "Alberto", "Perez", "12/12/2000" ,TipoUsuario.PADRE, "792016552");
 	static MonitorVO monitor = new MonitorVO("usuario2", "03815694B", "passwd","monitor@kidhub.com", "Juan", "Lebron", "12/12/2000" ,TipoUsuario.MONITOR, "799016552", "Deporte");
 	static HijoVO hijo = new HijoVO("usuario3", "01816654Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
-	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, 24007, "Leon"), "Deportiva");
-	static TrayectoVO trayecto = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 00), new Direccion("Calle Santos", 9, 24008, "Leon"));
+	static ActividadVO actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Deportiva");
+	static TrayectoVO trayecto = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 00), new Direccion("Calle Santos", 9, "24008", "Leon"));
 
 	
 	@Override
@@ -43,15 +43,17 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//TODO estos metodos son para probar los DAO
-		crearMonitor();
-		crearActividad();
-		crearPadre();
-		crearHijo();
-		apuntarHijoAActividad();
+		//crearMonitor();
+		//crearActividad();
+		//crearPadre();
+		//crearHijo();
+		//apuntarHijoAActividad();
 		//desapuntarHijoDeActividad();
-		modificarActividad();
+		//modificarActividad();
 		//borrarActividad();
-		crearTrayecto();
+		//crearTrayecto();
+		//apuntarHijoATrayecto();
+		desapuntarHijoDeTrayecto();
 		//launch(args);
 	}
 	
@@ -142,32 +144,27 @@ public class Main extends Application {
     	Logica logica = Logica.getLogica();
     	
     	logica.setUsuarioActual(monitor);
-    	
-    	//setters
-    	
+    	    	
     	actividad.setCapacidad(60);
     	actividad.setNombre("AjedrezModificado");
-    	actividad.setIdActividad(1);//TODO ojo esto habria que sacarlo de la BBDD
     	
     	logica.modificarActividad(actividad);
     }
     
     public static void borrarActividad() {
     	Logica logica = Logica.getLogica();
-
-    	actividad.setIdActividad(1);
     	
     	logica.borrarActividad(actividad);
     }
     
     public static void apuntarHijoAActividad() {
-    	//actividad.setIdActividad(1);
+    	Logica.getLogica().setUsuarioActual(padre);
     	Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
     }
     
     
     public static void desapuntarHijoDeActividad() {
-    	//actividad.setIdActividad(1);
+    	Logica.getLogica().setUsuarioActual(padre);
     	Logica.getLogica().desapuntarHijoDeActividad(hijo, actividad);
     }
   
@@ -175,6 +172,18 @@ public class Main extends Application {
     public static void crearTrayecto() {
     	Logica.getLogica().setUsuarioActual(padre);
     	Logica.getLogica().crearTrayecto(trayecto);
+    }
+    
+    public static void apuntarHijoATrayecto() {
+    	Logica.getLogica().setUsuarioActual(padre);
+    	Logica.getLogica().apuntarHijoATrayecto(hijo, trayecto);
+    }
+    
+    public static void desapuntarHijoDeTrayecto() {
+    	Logica.getLogica().setUsuarioActual(padre);
+    	//TODO aqui se le pasa TrayectoID=0, no se si es porque trayecto es estatico
+    	trayecto.setIdTrayecto(1);
+    	Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
     }
     
     

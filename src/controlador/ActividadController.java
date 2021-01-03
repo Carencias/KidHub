@@ -89,7 +89,7 @@ public class ActividadController extends Controller {
     	this.ciudad.setText(actividad.getDireccion().getCiudad());
     	this.calle.setText(actividad.getDireccion().getCalle());
     	this.num.setText(Integer.toString(actividad.getDireccion().getNumero()));
-    	this.codPostal.setText(Integer.toString(actividad.getDireccion().getCodigoPostal()));
+    	this.codPostal.setText(actividad.getDireccion().getCodigoPostal());
     	this.diaInicio.setText(Integer.toString(actividad.getInicio().getDayOfMonth()));
     	this.mesInicio.setText(Integer.toString(actividad.getInicio().getMonthValue()));
     	this.anoInicio.setText(Integer.toString(actividad.getInicio().getYear()));
@@ -106,7 +106,7 @@ public class ActividadController extends Controller {
 	private void getDatosActividad(ActividadVO actividad) {
 		actividad.setNombre(this.nombreAct.getText());
 		actividad.setTipo(this.tipo.getText());
-		Direccion direccion = new Direccion(this.calle.getText(), Integer.parseInt(this.num.getText()), Integer.parseInt(this.codPostal.getText()), this.ciudad.getText());
+		Direccion direccion = new Direccion(this.calle.getText(), Integer.parseInt(this.num.getText()), this.codPostal.getText(), this.ciudad.getText());
 		actividad.setDireccion(direccion);
 		if(diaInicio.getText().length() == 1) {
 			diaInicio.setText("0"+diaInicio.getText());

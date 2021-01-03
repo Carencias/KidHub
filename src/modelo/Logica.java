@@ -126,16 +126,13 @@ public class Logica {
 	
 	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) {
 		new ActividadDAO().apuntarHijoAActividad(hijo, actividad);
-		//TODO tiene que recibir el nombreUsuario del hijo y la ID de la actividad
 	}
 	
 	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) {
 		new ActividadDAO().desapuntarHijoDeActividad(hijo, actividad);
-		//TODO tiene que recibir el nombreUsuario del hijo y la ID de la actividad
 	}
 	
 	public void crearTrayecto(TrayectoVO trayecto) {
-		//TODO tiene que tener seteada la actividad a la que se va a agregar, ademas del padre y las paradas
 		trayecto.setPadre((PadreVO) this.usuarioActual);
 		try {
 			new TrayectoDAO().crearTrayecto(trayecto);
@@ -144,6 +141,16 @@ public class Logica {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) {
+		
+		new TrayectoDAO().apuntarHijoATrayecto(hijo,trayecto);
+		
+	}
+
+	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) {
+		new TrayectoDAO().desapuntarHijoDeTrayecto(hijo,trayecto);		
 	}
 }
 

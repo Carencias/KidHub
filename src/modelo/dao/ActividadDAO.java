@@ -30,12 +30,11 @@ public class ActividadDAO {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
-		//TODO el activityID no se mete aqui
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO ACTIVITIES");
 		insertQuery.append("(MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, Address, Town, Type) ");
 		insertQuery.append("VALUES(");
-		insertQuery.append("'" /*+ actividad.getIdActividad() + "', '"*/ + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
+		insertQuery.append("'" + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
 		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
 				
 		statement.executeUpdate(insertQuery.toString(), Statement.RETURN_GENERATED_KEYS);
@@ -116,22 +115,8 @@ public class ActividadDAO {
 
 	private void rellenarActividad(ResultSet resultSet, ActividadVO actividad) {
 		try {
-			if(resultSet.next()) {
-				actividad.setNombre(resultSet.getString("Name"));
-				actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
-				actividad.setFin(convertToDate(resultSet.getString("EndDate")));
-				actividad.setDuracion();
-				actividad.setCapacidad(resultSet.getInt("Capacity"));
-				
-				String direccionCompleta = resultSet.getString("Address");
-				String calle = direccionCompleta.split(",")[0];
-				String numero = direccionCompleta.split(",")[1];
-				String codigoPostal = direccionCompleta.split(",")[2];
-				String ciudad = resultSet.getString("Town");
-				
-				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), Integer.parseInt(codigoPostal), ciudad));
-				actividad.setTipo(resultSet.getString("Type"));
-
+			while(resultSet.next()) {
+				this.setDatosActividad(actividad, resultSet);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -183,6 +168,8 @@ public class ActividadDAO {
 		StringBuilder query = new StringBuilder();
 		query.append("DELETE FROM ActivityKid WHERE ");
 		query.append("ActivityID='" + actividad.getIdActividad() + "'AND KidUsername='" + hijo.getNombreUsuario() + "';");
+		
+		System.out.println(query);
 				
         try {
 			statement.executeUpdate(query.toString());		
@@ -222,27 +209,33 @@ public class ActividadDAO {
 		try {
 			while(resultSet.next()) {
 				actividad = new ActividadVO();
-				actividad.setIdActividad(Integer.parseInt(resultSet.getString("ActivityID")));
-				actividad.setNombre(resultSet.getString("Name"));
-				actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
-				actividad.setFin(convertToDate(resultSet.getString("EndDate")));
-				actividad.setDuracion();
-				actividad.setCapacidad(resultSet.getInt("Capacity"));
-				
-				String direccionCompleta = resultSet.getString("Address");
-				String calle = direccionCompleta.split(",")[0];
-				String numero = direccionCompleta.split(",")[1];
-				String codigoPostal = direccionCompleta.split(",")[2];
-				String ciudad = resultSet.getString("Town");
-				
-				actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), Integer.parseInt(codigoPostal), ciudad));
-				actividad.setTipo(resultSet.getString("Type"));
+				this.setDatosActividad(actividad, resultSet);
 				actividades.add(actividad);
 			}
 			return actividades;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return null; //TODO con esto no se liara??
 	}
+	
+	public void setDatosActividad(ActividadVO actividad, ResultSet resultSet) throws SQLException {
+		actividad.setIdActividad(Integer.parseInt(resultSet.getString("ActivityID")));
+		actividad.setNombre(resultSet.getString("Name"));
+		actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
+		actividad.setFin(convertToDate(resultSet.getString("EndDate")));
+		actividad.setDuracion();
+		actividad.setCapacidad(resultSet.getInt("Capacity"));
+		
+		String direccionCompleta = resultSet.getString("Address");
+		String calle = direccionCompleta.split(",")[0];
+		String numero = direccionCompleta.split(",")[1];
+		String codigoPostal = direccionCompleta.split(",")[2];
+		String ciudad = resultSet.getString("Town");
+		
+		actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad));
+		actividad.setTipo(resultSet.getString("Type"));
+	}
+	
+	
 }
