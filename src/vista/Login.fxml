@@ -22,7 +22,7 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>     
-      <JFXTextField fx:id="contrasenaVisible" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff" visible="false">
+      <JFXTextField fx:id="contrasenaVisible" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" prefHeight="30.0" prefWidth="112.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff" visible="false">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>

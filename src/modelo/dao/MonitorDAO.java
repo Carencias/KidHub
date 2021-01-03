@@ -54,6 +54,7 @@ public class MonitorDAO extends UsuarioDAO{
 		try {
 			while(resultSet.next()) {
 				actividad = new ActividadVO();
+				actividad.setIdActividad(Integer.parseInt(resultSet.getString("ActivityID")));
 				actividad.setNombre(resultSet.getString("Name"));
 				actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
 				actividad.setFin(convertToDate(resultSet.getString("EndDate")));
