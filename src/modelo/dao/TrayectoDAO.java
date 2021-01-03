@@ -27,12 +27,14 @@ public class TrayectoDAO {
 		
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO RIDES");
-		query.append("(ActivityID, ParentUsername, Capacity, Type");
+		query.append("(ActivityID, ParentUsername, Capacity, Type) ");
 		query.append("VALUES(");
 		query.append("'" + trayecto.getActividad().getIdActividad() + "', '" + trayecto.getPadre().getNombreUsuario() + "', '");
 		query.append(trayecto.getCapacidad() + "', '" + trayecto.getTipo() + "');");
 				
-		statement.executeUpdate(query.toString());
+		System.out.println(query.toString());
+		
+		statement.executeUpdate(query.toString(), Statement.RETURN_GENERATED_KEYS);
 		
 		ResultSet generatedKeys = statement.getGeneratedKeys();
 		

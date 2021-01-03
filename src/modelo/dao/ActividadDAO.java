@@ -25,7 +25,7 @@ public class ActividadDAO {
 	}
 	
 	public void crearActividad(ActividadVO actividad) throws SQLException{
-		Statement statement;
+		//Statement statement;
 		
 		conexion.openConnection();
 		statement = conexion.getSt();
@@ -33,12 +33,12 @@ public class ActividadDAO {
 		//TODO el activityID no se mete aqui
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO ACTIVITIES");
-		insertQuery.append("(ActivityID, MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, Address, Town, Type) ");
+		insertQuery.append("(MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, Address, Town, Type) ");
 		insertQuery.append("VALUES(");
-		insertQuery.append("'" + actividad.getIdActividad() + "', '" + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
+		insertQuery.append("'" /*+ actividad.getIdActividad() + "', '"*/ + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
 		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
 				
-		statement.executeUpdate(insertQuery.toString());
+		statement.executeUpdate(insertQuery.toString(), Statement.RETURN_GENERATED_KEYS);
 		
 		ResultSet generatedKeys = statement.getGeneratedKeys();
 		

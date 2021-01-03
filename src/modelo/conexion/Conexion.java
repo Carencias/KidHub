@@ -48,4 +48,8 @@ public class Conexion {
 		}
 		return null;
 	}
+	
+	public Connection getConnection() {
+		return this.con;
+	}
 }

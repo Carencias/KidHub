@@ -43,13 +43,13 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		
 		//TODO estos metodos son para probar los DAO
-		//crearMonitor();
-		//crearActividad();
-		//crearPadre();
-		//crearHijo();
-		//apuntarHijoAActividad();
+		crearMonitor();
+		crearActividad();
+		crearPadre();
+		crearHijo();
+		apuntarHijoAActividad();
 		//desapuntarHijoDeActividad();
-		//modificarActividad();
+		modificarActividad();
 		//borrarActividad();
 		crearTrayecto();
 		//launch(args);
@@ -161,18 +161,19 @@ public class Main extends Application {
     }
     
     public static void apuntarHijoAActividad() {
-    	actividad.setIdActividad(3);
+    	//actividad.setIdActividad(1);
     	Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
     }
     
     
     public static void desapuntarHijoDeActividad() {
-    	actividad.setIdActividad(3);
+    	//actividad.setIdActividad(1);
     	Logica.getLogica().desapuntarHijoDeActividad(hijo, actividad);
     }
   
     
     public static void crearTrayecto() {
+    	Logica.getLogica().setUsuarioActual(padre);
     	Logica.getLogica().crearTrayecto(trayecto);
     }
     
