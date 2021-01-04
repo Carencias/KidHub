@@ -334,8 +334,8 @@ public class PadreInicioController extends Controller{
     		
     		
     	}else if(usuario.getTipo().equals(TipoUsuario.PADRE)){    	
-    		this.apuntarTrayecto.setDisable(true);
-    		this.apuntarTrayecto.setVisible(false);
+    		this.apuntarTrayecto.setDisable(false);
+    		this.apuntarTrayecto.setVisible(true);
     		this.crear.setDisable(false);
     		this.crear.setVisible(true);
     		this.modificar.setDisable(false);
@@ -422,6 +422,7 @@ public class PadreInicioController extends Controller{
 		//TODO esta sin probar
 		System.out.println("Desapuntando hijo de trayecto");
 		TrayectoTabla trayectoTabla;
+		UsuarioVO usuario = new UsuarioVO();
 		HijoVO hijo = new HijoVO();
 		TrayectoVO trayecto = new TrayectoVO();
 		if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
@@ -433,10 +434,10 @@ public class PadreInicioController extends Controller{
 			
 			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
 		}else {
-			//Bayon dice que le hace el cast sin miedo porque al comprobar el tipo de usuario en el metodo
-			//hijoElegidoTrayecto se hara invisible este boton cuando el usuario no sea un hijo asique no se podra invocar
-			//este metodo si no es un hijo
-			hijo = (HijoVO) this.getUsuarioTrayecto();
+			//Solo cuando sea un hijo lo que este en el combo se va a poder invocar este metodo
+			usuario = this.getUsuarioTrayecto();
+			hijo.setNombreUsuario(usuario.getNombreUsuario());
+			hijo.setTipo(TipoUsuario.HIJO);
 			trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
 			trayecto.setIdTrayecto(trayectoTabla.getId());		
 			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
