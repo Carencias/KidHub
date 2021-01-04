@@ -37,7 +37,11 @@ import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.HijoVO;
+import modelo.vo.TrayectoVO;
+import modelo.vo.UsuarioVO;
+import modelo.vo.UsuarioVO.TipoUsuario;
 import vista.ActividadTabla;
+import vista.TrayectoTabla;
 
 public class PadreInicioController extends Controller{
 
@@ -45,24 +49,29 @@ public class PadreInicioController extends Controller{
     private Button cerrar, registrar, registrarExistente;
 	
 	@FXML
-	private JFXTextField nombre, nombreExistente, contraExistente, dni, apellidos, contra2, usuario, email, telefono, contra1, ano, mes, dia;
+	private JFXTextField nombre, nombreExistente, contraExistente, dni, apellidos, contra2, usuario,
+						 email, telefono, contra1, ano, mes, dia;
     
     @FXML
-    private JFXButton inicio, actividades, actividadesHijo, trayectos, trayectosHijo, registrarHijo, cerrarSesion, apuntarActividad, desapuntarActividad, apuntarTrayecto, desapuntarTrayecto;
+    private JFXButton inicio, actividades, actividadesHijo, trayectos, trayectosHijo, registrarHijo,
+    				  cerrarSesion, apuntarActividad, desapuntarActividad, apuntarTrayecto, desapuntarTrayecto, crear, modificar;
     
     @FXML
     private Pane panoInicio, panoActividades, panoTrayectos, panoRegistrarHijo, panoCerrar;
     
     @FXML
-    private Label nombreLabel, hijosVacio;
+    private Label nombreLabel, hijosVacio, trayectosVacio;
     
     @FXML
-    private JFXComboBox<String> selectHijos;
+    private JFXComboBox<String> selectHijoActividad, selectHijoTrayecto;
     
     @FXML
     private JFXTreeTableView<ActividadTabla> actividadesTree;
     
     private ArrayList<HijoVO> hijos; 
+    
+    @FXML
+    private JFXTreeTableView<TrayectoTabla> trayectosTree;
 	
     
     @FXML
@@ -72,101 +81,20 @@ public class PadreInicioController extends Controller{
     
     
     @FXML
-    public void elegirPanel(ActionEvent actionEvent) {
-    	
-    	if (actionEvent.getSource() == inicio) {      	
-        	panoInicio.setVisible(true);
-        	panoCerrar.setVisible(false);
-        	panoActividades.setVisible(false);
-        	panoTrayectos.setVisible(false);
-    		panoRegistrarHijo.setVisible(false); 
-        	
-        } else if (actionEvent.getSource() == actividades) {
-        	
-        	panoActividades.setVisible(true);       	
-        	panoCerrar.setVisible(false);
-        	panoInicio.setVisible(false);
-        	panoTrayectos.setVisible(false);
-    		panoRegistrarHijo.setVisible(false); 
-    		
-    		this.setHijosCombo();
-        	
-        }else if (actionEvent.getSource() == trayectos) {
-        	panoTrayectos.setVisible(true);
-        	panoCerrar.setVisible(false);  
-        	panoInicio.setVisible(false);
-        	panoActividades.setVisible(false);
-    		panoRegistrarHijo.setVisible(false); 
-    	
-    	}else if(actionEvent.getSource() == registrarHijo) {
-    		panoRegistrarHijo.setVisible(true);
-    		panoTrayectos.setVisible(false);
-        	panoCerrar.setVisible(false);  
-        	panoInicio.setVisible(false);
-        	panoActividades.setVisible(false);
-        
-    	}else if (actionEvent.getSource() == cerrarSesion) {
-        	panoCerrar.setVisible(true);  
-        	panoInicio.setVisible(false);
-        	panoActividades.setVisible(false);
-        	panoTrayectos.setVisible(false);
-    		panoRegistrarHijo.setVisible(false); 
-        }
-    }
-    
-    
-    private void setHijosCombo() {
-    	this.selectHijos.getItems().clear();
-    	this.selectHijos.getItems().add("Todos");
-    	this.hijos = Logica.getLogica().getHijos();
-    	for(HijoVO hijo: hijos) {
-    		this.selectHijos.getItems().add(hijo.getNombreUsuario());
-    	}    	
-    }
-    
-    private void cargarActividades(HijoVO hijo) {
-    	this.inicializarTablaActividades(Logica.getLogica().getActividades(hijo)); 
-    	this.hijosVacio.setVisible(false);
-    }
-    
-    @FXML
-    void hijoElegido(ActionEvent  event) {
-    	
-    	HijoVO hijo = this.getHijo();
-    	
-    	if(hijo.getNombreUsuario().equals("Todos")) {
-    		this.apuntarActividad.setDisable(false);
-    		this.desapuntarActividad.setDisable(true);
-    	}else {
-    		this.apuntarActividad.setDisable(true);
-    		this.desapuntarActividad.setDisable(false);
-    	}
-
-    	this.cargarActividades(hijo);
-    }
-    
-    private HijoVO getHijo() {
-    	String nombre = this.selectHijos.getSelectionModel().getSelectedItem();
-    	HijoVO hijo = new HijoVO();
-    	hijo.setNombreUsuario(nombre);
-    	return hijo;
-    }
-    
-    @FXML
-    public void registrar(MouseEvent event) {
-    	System.out.println("Registrando hijo");
-    	String fechaString;
+	public void registrar(MouseEvent event) {
+		System.out.println("Registrando hijo");
+		String fechaString;
 		LocalDate fecha;
-    	HijoVO hijovo = new HijoVO();
-    	Logica logica = Logica.getLogica();
-    	hijovo.setNombre(nombre.getText());
-    	hijovo.setApellidos(apellidos.getText());
-    	hijovo.setDni(dni.getText());
-    	hijovo.setNombreUsuario(usuario.getText());
-    	hijovo.setEmail(email.getText());
-    	hijovo.setContrasena(contra1.getText());
-    	
-    	if(!contra1.getText().equals(contra2.getText())) {
+		HijoVO hijovo = new HijoVO();
+		Logica logica = Logica.getLogica();
+		hijovo.setNombre(nombre.getText());
+		hijovo.setApellidos(apellidos.getText());
+		hijovo.setDni(dni.getText());
+		hijovo.setNombreUsuario(usuario.getText());
+		hijovo.setEmail(email.getText());
+		hijovo.setContrasena(contra1.getText());
+		
+		if(!contra1.getText().equals(contra2.getText())) {
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
 		}else {
 			if(dia.getText().length() == 1) {
@@ -197,16 +125,17 @@ public class PadreInicioController extends Controller{
 				}
 			}	
 		}
-    }
-    
-    @FXML
-    public void agregarHijo(MouseEvent event) {
-    	System.out.println("Agregando hijo existente");
-    	Logica logica = Logica.getLogica();
-    	HijoVO hijovo = new HijoVO();
-    	hijovo.setNombreUsuario(nombreExistente.getText());
-    	hijovo.setContrasena(contraExistente.getText());
-    	try {
+	}
+
+
+	@FXML
+	public void agregarHijo(MouseEvent event) {
+		System.out.println("Agregando hijo existente");
+		Logica logica = Logica.getLogica();
+		HijoVO hijovo = new HijoVO();
+		hijovo.setNombreUsuario(nombreExistente.getText());
+		hijovo.setContrasena(contraExistente.getText());
+		try {
 			logica.agregarHijoAPadre(hijovo);
 			this.muestraInfo("Registro", "Registro realizadoo", "Se ha asignado su hijo correctamente.");
 		}catch(Exception e) {
@@ -219,73 +148,305 @@ public class PadreInicioController extends Controller{
 				muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
 			}
 		}	
+	}
+
+
+	@FXML
+    public void elegirPanel(ActionEvent actionEvent) {
+    	
+    	if (actionEvent.getSource() == inicio) {      	
+        	panoInicio.setVisible(true);
+        	panoCerrar.setVisible(false);
+        	panoActividades.setVisible(false);
+        	panoTrayectos.setVisible(false);
+    		panoRegistrarHijo.setVisible(false); 
+        	
+        } else if (actionEvent.getSource() == actividades) {
+        	
+        	panoActividades.setVisible(true);       	
+        	panoCerrar.setVisible(false);
+        	panoInicio.setVisible(false);
+        	panoTrayectos.setVisible(false);
+    		panoRegistrarHijo.setVisible(false); 
+    		
+    		this.setHijosComboActividad();
+        	
+        }else if (actionEvent.getSource() == trayectos) {
+        	panoTrayectos.setVisible(true);
+        	panoCerrar.setVisible(false);  
+        	panoInicio.setVisible(false);
+        	panoActividades.setVisible(false);
+    		panoRegistrarHijo.setVisible(false); 
+    		
+    		this.setHijosComboTrayecto();
+    	
+    	}else if(actionEvent.getSource() == registrarHijo) {
+    		panoRegistrarHijo.setVisible(true);
+    		panoTrayectos.setVisible(false);
+        	panoCerrar.setVisible(false);  
+        	panoInicio.setVisible(false);
+        	panoActividades.setVisible(false);
+        
+    	}else if (actionEvent.getSource() == cerrarSesion) {
+        	panoCerrar.setVisible(true);  
+        	panoInicio.setVisible(false);
+        	panoActividades.setVisible(false);
+        	panoTrayectos.setVisible(false);
+    		panoRegistrarHijo.setVisible(false); 
+        }
+    }
+    
+    /**
+     * ACTIVIDADES
+     */
+    
+    private void setHijosComboActividad() {
+    	this.selectHijoActividad.getItems().clear();
+    	this.selectHijoActividad.getItems().add("Todos");
+    	this.hijos = Logica.getLogica().getHijos();
+    	for(HijoVO hijo: hijos) {
+    		this.selectHijoActividad.getItems().add(hijo.getNombreUsuario());
+    	}    	
+    }
+    
+    private void cargarActividades(HijoVO hijo) {
+		this.inicializarTablaActividades(Logica.getLogica().getActividades(hijo)); 
+		this.hijosVacio.setVisible(false);
+	}
+
+
+	private HijoVO getHijo() {
+		String nombre = this.selectHijoActividad.getSelectionModel().getSelectedItem();
+		HijoVO hijo = new HijoVO();
+		hijo.setNombreUsuario(nombre);
+		return hijo;
+	}
+
+
+	@FXML
+	void hijoElegidoActividad(ActionEvent event) {
+		
+		HijoVO hijo = this.getHijo();
+		
+		if(hijo.getNombreUsuario().equals("Todos")) {
+			this.apuntarActividad.setDisable(false);
+			this.desapuntarActividad.setDisable(true);
+		}else {
+			this.apuntarActividad.setDisable(true);
+			this.desapuntarActividad.setDisable(false);
+		}
+	
+		this.cargarActividades(hijo);
+	}
+
+	
+	@FXML
+	public void apuntarHijoActividad(MouseEvent event) {
+		System.out.println("Apuntando hijo a actividad");
+		ActividadTabla actividadTabla;
+		ActividadVO actividad = new ActividadVO();
+		if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+			this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
+		
+		}else if(this.getHijo().getNombreUsuario().equals("Todo")) {
+			
+			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere apuntar");
+			
+		}else {
+			actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
+			actividad.setIdActividad(actividadTabla.getId());    
+			Stage stage = this.esconderVentana(event);
+			this.mostrarDialogo(hijos, actividad, stage);    		
+		}
+	}
+
+
+	@FXML
+	public void desapuntarHijoActividad(MouseEvent event) {
+		System.out.println("Desapuntando hijo de actividad");
+		ActividadTabla actividadTabla;
+		ActividadVO actividad = new ActividadVO();
+		if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+			this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
+		
+		}else if(this.getHijo().getNombreUsuario().equals("Todo")) {
+			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
+		}else {
+			actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
+			actividad.setIdActividad(actividadTabla.getId());    		
+			Logica.getLogica().desapuntarHijoDeActividad(this.getHijo(), actividad);
+			this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
+		}
+	}
+
+
+	/**
+     * TRAYECTOS
+     */
+	
+	private void setHijosComboTrayecto() {
+    	this.selectHijoTrayecto.getItems().clear();
+    	this.selectHijoTrayecto.getItems().add("Todos");
+    	this.selectHijoTrayecto.getItems().add(Logica.getLogica().getUsuarioActual().getNombreUsuario());
+    	this.hijos = Logica.getLogica().getHijos();
+    	for(HijoVO hijo: hijos) {
+    		this.selectHijoTrayecto.getItems().add(hijo.getNombreUsuario());
+    	}    	
+    }
+    
+    private void cargarTrayectos(UsuarioVO usuario) {
+    	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(usuario));
+    	this.trayectosVacio.setVisible(false);
+    }
+    
+    private UsuarioVO getUsuarioTrayecto() {
+    	
+		String nombre = this.selectHijoTrayecto.getSelectionModel().getSelectedItem();
+		UsuarioVO usuario = new UsuarioVO();
+		if(nombre.equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {
+			
+			usuario.setTipo(TipoUsuario.PADRE);
+		}else {
+			usuario.setTipo(TipoUsuario.HIJO);
+		}
+		
+		//busque en USERS y le setee al VO el tipo de usuario
+		
+		
+		usuario.setNombreUsuario(nombre);
+		return usuario;
+	}
+
+	@FXML
+    void hijoElegidoTrayecto(ActionEvent  event) {
+    	
+    	UsuarioVO usuario = this.getUsuarioTrayecto();
+    	
+    	if(usuario.getNombreUsuario().equals("Todos")) {
+    		this.apuntarTrayecto.setDisable(false);
+    		this.apuntarTrayecto.setVisible(true);
+    		this.crear.setDisable(true);
+    		this.crear.setVisible(false);
+    		this.modificar.setDisable(true);
+    		this.modificar.setVisible(false);
+    		this.desapuntarTrayecto.setDisable(true);
+    		this.desapuntarTrayecto.setVisible(false);
+    		
+    		
+    	}else if(usuario.getTipo().equals(TipoUsuario.PADRE)){    	
+    		this.apuntarTrayecto.setDisable(true);
+    		this.apuntarTrayecto.setVisible(false);
+    		this.crear.setDisable(false);
+    		this.crear.setVisible(true);
+    		this.modificar.setDisable(false);
+    		this.modificar.setVisible(true);
+    		this.desapuntarTrayecto.setDisable(true);
+    		this.desapuntarTrayecto.setVisible(false);
+    	}else {
+    		//hijo
+    		this.desapuntarTrayecto.setDisable(false);
+    		this.desapuntarTrayecto.setVisible(true);
+    		this.apuntarTrayecto.setDisable(true);
+    		this.apuntarTrayecto.setVisible(false);
+    		this.crear.setDisable(true);
+    		this.crear.setVisible(false);
+    		this.modificar.setDisable(true); 
+    		this.modificar.setVisible(false);
+    	}
+    	//TODO IMPORTANTE gestionar el tipo del VO que se manda
+    	this.trayectosVacio.setVisible(false);
+    	this.cargarTrayectos(usuario);
     }
     
     @FXML
     public void crearTrayecto(MouseEvent event) {
     	System.out.println("Creando trayecto");
+    	Stage stage = this.esconderVentana(event);
+    	this.mostrarVentana("Trayecto");
     }
     
     @FXML
     public void modificarTrayecto(MouseEvent event) {
     	System.out.println("Modificando trayecto");
+    	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
+    	}else {
+	    	Stage stage = this.esconderVentana(event);
+	    	this.mostrarVentana("Trayecto");
+	    	//TODO initData para mandarle los datos del trayecto seleccionado
+    	}
     }
     
     @FXML
     public void borrarTrayecto(MouseEvent event) {
+    	//TODO esta sin probar
     	System.out.println("Borrando trayecto");
+    	
+    	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
+			
+		//Si no estan seleccionados los trayectos del padre
+		}else if(!this.getUsuarioTrayecto().getNombreUsuario().equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {
+			this.muestraError("ERROR", "Actividades", "Solo puede borrar los trayectos que haya creado usted.");
+		}else {
+			
+			TrayectoTabla trayectoTabla;
+			TrayectoVO trayecto = new TrayectoVO();
+			trayectoTabla = this.trayectosTree.getSelectionModel().getSelectedItem().getValue();
+			trayecto.setIdTrayecto(trayectoTabla.getId());
+			//TODO ese metodo en TrayectoDAO esta vacio
+			Logica.getLogica().borrarTrayecto(trayecto);
+			this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
+		}
     }
     
     @FXML
-    public void apuntarHijoActividad(MouseEvent event) {
-    	System.out.println("Apuntando hijo a actividad");
-    	ActividadTabla actividadTabla;
-    	ActividadVO actividad = new ActividadVO();
-    	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
-    		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
-    	
-    	}else if(this.getHijo().getNombreUsuario().equals("Todo")) {
-    		
-    		this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere apuntar");
-    		
-    	}else {
-    		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
-    		actividad.setIdActividad(actividadTabla.getId());    
+	public void apuntarHijoTrayecto(MouseEvent event) {
+		System.out.println("Apuntando hijo a trayecto");
+		if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
+			
+			//No hago comprobacioens del usuario porque los botones desaparecen, no hace falta
+		}else {
+    		TrayectoTabla trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
+    		TrayectoVO trayecto = new TrayectoVO();
+    		trayecto.setIdTrayecto(trayectoTabla.getId());
     		Stage stage = this.esconderVentana(event);
-    		this.mostrarDialogo(hijos, actividad, stage);    		
+    		this.mostrarDialogo(hijos, trayecto, stage);
     	}
-    }
-    
-    @FXML
-    public void desapuntarHijoActividad(MouseEvent event) {
-    	System.out.println("Desapuntando hijo de actividad");
-    	ActividadTabla actividadTabla;
-    	ActividadVO actividad = new ActividadVO();
-    	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
-    		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
-    	
-    	}else if(this.getHijo().getNombreUsuario().equals("Todo")) {
-    		this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
-    	}else {
-    		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
-    		actividad.setIdActividad(actividadTabla.getId());    		
-    		Logica.getLogica().desapuntarHijoDeActividad(this.getHijo(), actividad);
-    		this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
-    	}
-    }
-    
-    @FXML
-    public void apuntarHijoTrayecto(MouseEvent event) {
-    	System.out.println("Apuntando hijo a trayecto");    	
-    }
-    
-    @FXML
-    public void desapuntarHijoTrayecto(MouseEvent event) {
-    	System.out.println("Desapuntando hijo de trayecto");
-    }
+	}
 
-    
-    private void mostrarDialogo(ArrayList<HijoVO> hijos, ActividadVO actividad, Stage stage2) {
+
+	@FXML
+	public void desapuntarHijoTrayecto(MouseEvent event) {
+		//TODO esta sin probar
+		System.out.println("Desapuntando hijo de trayecto");
+		TrayectoTabla trayectoTabla;
+		HijoVO hijo = new HijoVO();
+		TrayectoVO trayecto = new TrayectoVO();
+		if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+			
+			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
+		
+		}else if(this.getUsuarioTrayecto().getNombreUsuario().equals("Todo") 
+				|| this.getUsuarioTrayecto().getNombreUsuario().equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {
+			
+			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
+		}else {
+			//Bayon dice que le hace el cast sin miedo porque al comprobar el tipo de usuario en el metodo
+			//hijoElegidoTrayecto se hara invisible este boton cuando el usuario no sea un hijo asique no se podra invocar
+			//este metodo si no es un hijo
+			hijo = (HijoVO) this.getUsuarioTrayecto();
+			trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
+			trayecto.setIdTrayecto(trayectoTabla.getId());		
+			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
+			this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
+		}
+		
+	}
+
+
+	private void mostrarDialogo(ArrayList<HijoVO> hijos, ActividadVO actividad, Stage stage2) {
     	
     	AnchorPane root;
     	
@@ -304,6 +465,31 @@ public class PadreInicioController extends Controller{
 
     	ElegirController controller = loader.getController();
     	controller.initData(hijos, actividad, stage2);
+    	
+    	stage.show();
+
+    }
+	
+	
+	private void mostrarDialogo(ArrayList<HijoVO> hijos, TrayectoVO trayecto, Stage stage2) {
+    	
+    	AnchorPane root;
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/ElegirTrayecto.fxml"));
+    	
+    	Stage stage = new Stage();
+    	
+    	try {
+    		root = loader.load();
+    		stage.setScene(new Scene(root));
+    		stage.setResizable(false);
+    	}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	ElegirTrayectoController controller = loader.getController();
+    	controller.initData(hijos, trayecto, stage2);
     	
     	stage.show();
 
@@ -378,5 +564,65 @@ public class PadreInicioController extends Controller{
 	    actividadesTree.setShowRoot(false);
 	    
 	    actividadesTree.setVisible(true);
+	}
+	
+	
+private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
+		
+		/**
+		 * CREACION DE LOS HEADERS DE LA TABLA
+		 */
+		JFXTreeTableColumn<TrayectoTabla, String> actividadCol = new JFXTreeTableColumn<>("Actividad");
+		actividadCol.setPrefWidth(145);
+		actividadCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getActividad();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<TrayectoTabla, String> tipoCol = new JFXTreeTableColumn<>("Tipo");
+	    tipoCol.setPrefWidth(145);
+	    tipoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getTipo();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<TrayectoTabla, String> padreCol = new JFXTreeTableColumn<>("Padre");
+	    padreCol.setPrefWidth(145);
+	    padreCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getPadre();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<TrayectoTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
+	    aforoCol.setPrefWidth(145);
+	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    /**
+	     * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
+	     */
+	    ObservableList<TrayectoTabla> obsTrayectos = FXCollections.observableArrayList();
+	    TrayectoTabla trayecto;
+	    for(TrayectoVO tr:trayectos) {
+	    	trayecto = new TrayectoTabla(tr);
+	    	obsTrayectos.add(trayecto);
+	    }
+	
+	    final TreeItem<TrayectoTabla> root = new RecursiveTreeItem<TrayectoTabla>(obsTrayectos, RecursiveTreeObject::getChildren);
+	    trayectosTree.getColumns().setAll(actividadCol, tipoCol, padreCol, aforoCol);
+	    trayectosTree.setRoot(root);
+	    trayectosTree.setShowRoot(false);
+	    
+	    trayectosTree.setVisible(true);
 	}
 }

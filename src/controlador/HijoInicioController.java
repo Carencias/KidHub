@@ -29,6 +29,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.util.Callback;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import modelo.Logica;
@@ -70,132 +71,6 @@ public class HijoInicioController extends Controller{
     }
     
     
-    private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
-    	
-    	/**
-    	 * CREACION DE LOS HEADERS DE LA TABLA
-    	 */
-    	JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
-    	nameCol.setPrefWidth(145);
-    	nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getNombre();
-            }
-        });
-
-        JFXTreeTableColumn<ActividadTabla, String> inicioCol = new JFXTreeTableColumn<>("Inicio");
-        inicioCol.setPrefWidth(145);
-        inicioCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getInicio();
-            }
-        });
-
-        JFXTreeTableColumn<ActividadTabla, String> finCol = new JFXTreeTableColumn<>("Fin");
-        finCol.setPrefWidth(145);
-        finCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getFin();
-            }
-        });
-        
-        JFXTreeTableColumn<ActividadTabla, String> lugarCol = new JFXTreeTableColumn<>("Lugar");
-        lugarCol.setPrefWidth(145);
-        lugarCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getLugar();
-            }
-        });
-        
-        JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-        aforoCol.setPrefWidth(145);
-        aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getAforo();
-            }
-        });
-        
-        /**
-         * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
-         */
-        ObservableList<ActividadTabla> obsActividades = FXCollections.observableArrayList();
-        ActividadTabla actividad;
-        for(ActividadVO act:actividades) {
-        	actividad = new ActividadTabla(act);
-        	obsActividades.add(actividad);
-        }
-
-        final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
-        actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
-        actividadesTree.setRoot(root);
-        actividadesTree.setShowRoot(false);
-        
-        actividadesTree.setVisible(true);
-    }
-
-    
-    private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
-    	
-    	/**
-    	 * CREACION DE LOS HEADERS DE LA TABLA
-    	 */
-    	JFXTreeTableColumn<TrayectoTabla, String> actividadCol = new JFXTreeTableColumn<>("Actividad");
-    	actividadCol.setPrefWidth(145);
-    	actividadCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
-                return param.getValue().getValue().getActividad();
-            }
-        });
-
-        JFXTreeTableColumn<TrayectoTabla, String> tipoCol = new JFXTreeTableColumn<>("Tipo");
-        tipoCol.setPrefWidth(145);
-        tipoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
-                return param.getValue().getValue().getTipo();
-            }
-        });
-
-        JFXTreeTableColumn<TrayectoTabla, String> padreCol = new JFXTreeTableColumn<>("Padre");
-        padreCol.setPrefWidth(145);
-        padreCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
-                return param.getValue().getValue().getPadre();
-            }
-        });
-        
-        JFXTreeTableColumn<TrayectoTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-        aforoCol.setPrefWidth(145);
-        aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
-                return param.getValue().getValue().getAforo();
-            }
-        });
-        
-        /**
-         * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
-         */
-        ObservableList<TrayectoTabla> obsTrayectos = FXCollections.observableArrayList();
-        TrayectoTabla trayecto;
-        for(TrayectoVO tr:trayectos) {
-        	trayecto = new TrayectoTabla(tr);
-        	obsTrayectos.add(trayecto);
-        }
-
-        final TreeItem<TrayectoTabla> root = new RecursiveTreeItem<TrayectoTabla>(obsTrayectos, RecursiveTreeObject::getChildren);
-        trayectosTree.getColumns().setAll(tipoCol, tipoCol, padreCol, aforoCol);
-        trayectosTree.setRoot(root);
-        trayectosTree.setShowRoot(false);
-    }
-    
     @FXML
     public void elegirPanel(ActionEvent actionEvent) {
     	
@@ -213,7 +88,7 @@ public class HijoInicioController extends Controller{
         	panoTrayectos.setVisible(false);
         	
         }else if (actionEvent.getSource() == trayectos) {
-        	//this.inicializarTablaTrayectos(Logica.getLogica().ge);
+        	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
         	panoTrayectos.setVisible(true);
         	panoCerrar.setVisible(false);  
         	panoInicio.setVisible(false);
@@ -237,5 +112,134 @@ public class HijoInicioController extends Controller{
     public void mostrarTrayectos(MouseEvent event) {
     	System.out.println("Mostrando trayectos.");
     }
+
+
+	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
+		
+		/**
+		 * CREACION DE LOS HEADERS DE LA TABLA
+		 */
+		JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
+		nameCol.setPrefWidth(145);
+		nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getNombre();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<ActividadTabla, String> inicioCol = new JFXTreeTableColumn<>("Inicio");
+	    inicioCol.setPrefWidth(145);
+	    inicioCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getInicio();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<ActividadTabla, String> finCol = new JFXTreeTableColumn<>("Fin");
+	    finCol.setPrefWidth(145);
+	    finCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getFin();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<ActividadTabla, String> lugarCol = new JFXTreeTableColumn<>("Lugar");
+	    lugarCol.setPrefWidth(145);
+	    lugarCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getLugar();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
+	    aforoCol.setPrefWidth(145);
+	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    /**
+	     * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
+	     */
+	    ObservableList<ActividadTabla> obsActividades = FXCollections.observableArrayList();
+	    ActividadTabla actividad;
+	    for(ActividadVO act:actividades) {
+	    	actividad = new ActividadTabla(act);
+	    	obsActividades.add(actividad);
+	    }
+	
+	    final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
+	    actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
+	    actividadesTree.setRoot(root);
+	    actividadesTree.setShowRoot(false);
+	    
+	    actividadesTree.setVisible(true);
+	}
+
+
+	private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
+		
+		/**
+		 * CREACION DE LOS HEADERS DE LA TABLA
+		 */
+		JFXTreeTableColumn<TrayectoTabla, String> actividadCol = new JFXTreeTableColumn<>("Actividad");
+		actividadCol.setPrefWidth(145);
+		actividadCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getActividad();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<TrayectoTabla, String> tipoCol = new JFXTreeTableColumn<>("Tipo");
+	    tipoCol.setPrefWidth(145);
+	    tipoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getTipo();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<TrayectoTabla, String> padreCol = new JFXTreeTableColumn<>("Padre");
+	    padreCol.setPrefWidth(145);
+	    padreCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getPadre();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<TrayectoTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
+	    aforoCol.setPrefWidth(145);
+	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    /**
+	     * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
+	     */
+	    ObservableList<TrayectoTabla> obsTrayectos = FXCollections.observableArrayList();
+	    TrayectoTabla trayecto;
+	    for(TrayectoVO tr:trayectos) {
+	    	trayecto = new TrayectoTabla(tr);
+	    	obsTrayectos.add(trayecto);
+	    }
+	
+	    final TreeItem<TrayectoTabla> root = new RecursiveTreeItem<TrayectoTabla>(obsTrayectos, RecursiveTreeObject::getChildren);
+	    trayectosTree.getColumns().setAll(actividadCol, tipoCol, padreCol, aforoCol);
+	    trayectosTree.setRoot(root);
+	    trayectosTree.setShowRoot(false);
+	    
+	    trayectosTree.setVisible(true);
+	}
     
 }

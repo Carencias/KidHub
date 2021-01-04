@@ -124,6 +124,10 @@ public class Logica {
 		return new ActividadDAO().mostrarActividades(usuario);
 	}
 	
+	public ArrayList<TrayectoVO> getTrayectos(UsuarioVO usuario) {
+		return new TrayectoDAO().mostrarTrayectos(usuario);
+	}
+	
 	public ArrayList<HijoVO> getHijos(){
 		return new PadreDAO().mostrarHijos(this.usuarioActual);
 	}
@@ -145,6 +149,11 @@ public class Logica {
 			e.printStackTrace();
 		}
 
+	}
+	
+	//TODO
+	public void borrarTrayecto(TrayectoVO trayecto) {
+		new TrayectoDAO().borrarTrayecto(trayecto);
 	}
 
 	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) {
