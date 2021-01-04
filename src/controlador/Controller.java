@@ -59,6 +59,14 @@ public class Controller {
 		alert.setContentText(contenido);
 		alert.showAndWait();
 	}
+	
+	protected void muestraInfo(String titulo, String encabezado, String contenido) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(titulo);
+		alert.setHeaderText(encabezado);
+		alert.setContentText(contenido);
+		alert.showAndWait();
+	}
 
     @FXML
     protected void logOut(MouseEvent event) {

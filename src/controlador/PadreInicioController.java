@@ -185,8 +185,7 @@ public class PadreInicioController extends Controller{
 			
 			try {
 				logica.registrarUsuario(hijovo);
-				this.mostrarVentana("PadreInicio");
-				this.cerrarVentana(event);
+				this.muestraInfo("Registro", "Registro realizadoo", "Se ha asignado su hijo correctamente.");
 			}catch(Exception e) {
 				if(e instanceof KidHubException) {
 					muestraError("ERROR","Se produjo un error.", e.getMessage());
@@ -209,14 +208,13 @@ public class PadreInicioController extends Controller{
     	hijovo.setContrasena(contraExistente.getText());
     	try {
 			logica.agregarHijoAPadre(hijovo);
-			this.mostrarVentana("PadreInicio");
-			this.cerrarVentana(event);
+			this.muestraInfo("Registro", "Registro realizadoo", "Se ha asignado su hijo correctamente.");
 		}catch(Exception e) {
 			if(e instanceof KidHubException) {
 				muestraError("ERROR","Se produjo un error.", e.getMessage());
-			}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062)
+			}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
 				muestraError("ERROR","Se produjo un error.", "El hijo no existe");
-			else if(e instanceof SQLException){
+			}else if(e instanceof SQLException){
 				System.out.println(((SQLException) e).getErrorCode());
 				muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
 			}
@@ -285,22 +283,7 @@ public class PadreInicioController extends Controller{
     public void desapuntarHijoTrayecto(MouseEvent event) {
     	System.out.println("Desapuntando hijo de trayecto");
     }
-    
-    @FXML
-    //??? Tiene que llamar a consultarActividades del hijo?
-    public void consultarActividadesHijo(MouseEvent event) {
-    	System.out.println("Mostrando actividades hijo");
-    }
-    
-    @FXML
-    public void consultarTrayectos(MouseEvent event) {
-    	System.out.println("Mostrando trayectos");
-    }
-    
-    @FXML
-    public void consultarTrayectosHijo(MouseEvent event) {
-    	System.out.println("Mostrando trayectos hijo");
-    }
+
     
     private void mostrarDialogo(ArrayList<HijoVO> hijos, ActividadVO actividad, Stage stage2) {
     	

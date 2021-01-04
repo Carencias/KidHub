@@ -37,8 +37,9 @@ public class PadreDAO extends UsuarioDAO{
 		query.append("(ParentUsername, KidUsername) ");
 		query.append("VALUES(");
 		query.append("'" + padre.getNombreUsuario() + "', '" + hijo.getNombreUsuario() + "');");
+		System.out.println(query.toString());
 				
-		statement.executeQuery(query.toString());
+		statement.executeUpdate(query.toString());
 		conexion.closeConnection();
 	}
 	
