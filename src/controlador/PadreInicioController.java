@@ -72,6 +72,7 @@ public class PadreInicioController extends Controller{
     
     @FXML
     private JFXTreeTableView<TrayectoTabla> trayectosTree;
+    
 	
     
     @FXML
@@ -362,7 +363,10 @@ public class PadreInicioController extends Controller{
     public void crearTrayecto(MouseEvent event) {
     	System.out.println("Creando trayecto");
     	Stage stage = this.esconderVentana(event);
-    	this.mostrarVentana("Trayecto");
+    	ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
+    	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
+    	//paso un VO vacio porque al ser crear no conozco ningun campo
+    	this.mostrarVentanaTrayecto(actividades, new TrayectoVO(), stage, false);
     }
     
     @FXML
@@ -372,8 +376,11 @@ public class PadreInicioController extends Controller{
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
     	}else {
 	    	Stage stage = this.esconderVentana(event);
-	    	this.mostrarVentana("Trayecto");
-	    	//TODO initData para mandarle los datos del trayecto seleccionado
+	    	ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
+	    	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
+	    	TrayectoVO trayecto = new TrayectoVO();
+	    	//TODO recoger los datos del trayecto seleccionado
+	    	this.mostrarVentanaTrayecto(actividades, trayecto, stage, false);
     	}
     }
     
@@ -471,6 +478,28 @@ public class PadreInicioController extends Controller{
 
     }
 	
+	
+	private void mostrarVentanaTrayecto(ArrayList<ActividadVO> actividades, TrayectoVO trayecto, Stage stage2, boolean modificacion) {
+		AnchorPane root;
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/Trayecto.fxml"));
+
+    	Stage stage = new Stage();
+    	
+    	try {
+    		root = loader.load();
+    		stage.setScene(new Scene(root));
+    		stage.setResizable(false);
+    	}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	TrayectoController controller = loader.getController();
+    	controller.initData(actividades, trayecto, stage2, modificacion);
+
+    	stage.show();
+	}
 	
 	private void mostrarDialogo(ArrayList<HijoVO> hijos, TrayectoVO trayecto, Stage stage2) {
     	
