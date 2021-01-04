@@ -1,45 +1,40 @@
 package controlador;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import org.apache.log4j.Logger;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
-import modelo.vo.Direccion;
-import modelo.vo.MonitorVO;
+import java.sql.SQLException;
 import vista.ActividadTabla;
 
+/**
+ *Clase controladora de los usuarios de tipo Monitor, que controla su ventana, y escucha sus acciones comunicandose con la Logica.
+ *@version 1.0
+ */
 public class MonitorInicioController extends Controller{
 	
-	//Ventana de monitor
 	
     @FXML
     private Button cerrar;
@@ -57,99 +52,131 @@ public class MonitorInicioController extends Controller{
     private JFXTreeTableView<ActividadTabla> actividadesTree;
     
     //Para saber si creo actividad o modifico ya que es la misma ventana
-    private boolean modificacion = false;
+    @SuppressWarnings("unused")
+	private boolean modificacion = false;
 
-    
-    
+    static Logger logger = Logger.getLogger(MonitorInicioController.class);
+   
+    /**
+     * Inicializa la ventana de Monitor, fijando el nombre de usuario del monitor
+     */
     @FXML
     public void initialize() {
     	nombreMonitor.setText(Logica.getLogica().getUsuarioActual().getNombre());  	
     }
     
-    
+    /**
+     * Metodo que elige el panel que se mostrara en la ventana, dependiendo de si se ha pulsado el boton de las actividades, inicio o cerrar sesion
+     * @param actionEvent
+     *  Evento capturado
+     */
     @FXML
     public void elegirPanel(ActionEvent actionEvent) {
-
-        if (actionEvent.getSource() == inicio) {      	
+    	logger.error("Eligiendo panel monitor");
+        if (actionEvent.getSource() == inicio) {
+        	logger.trace("Mostrando pantalla de inicio del monitor");
         	panoInicio.setVisible(true);
         	panoCerrar.setVisible(false);
         	panoActividades.setVisible(false);
         	
         } else if (actionEvent.getSource() == actividades) {
-        	//INICIALIZAR LA TABLA
-        	/*Direccion palomera = new Direccion("av. universidad", 3, "24008", "leon");
-        	//TODO que se inicialice con sus actividades
-        	ArrayList<ActividadVO> actividadesPrueba = new ArrayList<ActividadVO>();
-        	actividadesPrueba.add(new ActividadVO("Baloncesto", LocalDateTime.now(), LocalDateTime.now(), 3, palomera, "baloncesto"));
-        	actividadesPrueba.add(new ActividadVO("Futbol", LocalDateTime.now(), LocalDateTime.now(), 7, palomera, "futbol"));
-        	actividadesPrueba.add(new ActividadVO("Hockey", LocalDateTime.now(), LocalDateTime.now(), 8, palomera, "hockey"));
-        	this.inicializarTablaActividades(actividadesPrueba);
-        	*/
+        	logger.trace("Mostrando pantalla de actividades del monitor");
         	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
-        	
         	panoActividades.setVisible(true);       	
         	panoCerrar.setVisible(false);
         	panoInicio.setVisible(false);
         	
         }else if (actionEvent.getSource() == cerrarSesion) {
+        	logger.trace("Mostrando pantalla de cerrarSesion del monitor");
         	panoCerrar.setVisible(true);  
         	panoInicio.setVisible(false);
         	panoActividades.setVisible(false);
         }
     }    
     
-    
+    /**
+     * Metodo que escucha el boton de borrar actividad e indica a la logica que borre la actividad seleccionada
+     * @param event
+     *  Pulsado boton borrar
+     */
     @FXML
-    void borrarActividad(MouseEvent event) {
-    	System.out.println("Borrando actividad");
+    public void borrarActividad(MouseEvent event) {
+    	logger.trace("Borrando actividad del monitor");
     	ActividadTabla actividadTabla;
     	ActividadVO actividad = new ActividadVO();
     	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+    		logger.warn("Ninguna actividad seleccionada para borrar");
     		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
     	}else {
+    		logger.trace("Borrando actividad");
     		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
+    		logger.trace("La actividad seleccionada es:\n + " + actividadTabla.getNombre());
     		actividad.setIdActividad(actividadTabla.getId());
-    		Logica.getLogica().borrarActividad(actividad);
-    		this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
-    	}
-    	    	
+    		try {
+    			Logica.getLogica().borrarActividad(actividad);
+    			this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+        		logger.trace("Actividad borrada");
+    		}catch(SQLException e) {
+    			logger.error("Error al borrar la actividad: "+e.getMessage());
+    			this.muestraError("ERROR", "Actividades", "Error al borrar la actividad");
+    		}
+    	}   	
     }
 
+    /**
+     * Metodo que muestra la ventana encargada de crear una actividad
+     * @param event
+     *  Pulsado boton crear actividad
+     */
     @FXML
-    void crearActividad(MouseEvent event) {
-    	System.out.println("Creando actividad");
+    public void crearActividad(MouseEvent event) {
+    	logger.trace("Cambiando a vista de creacion de actividad");
     	Stage stage = this.esconderVentana(event);
     	this.mostrarVentanaActividades(new ActividadVO(), false, stage);
-    	System.out.println("Se supone que ya la cree");
+    	logger.trace("Actividad creada correctamente");
     }
 
+    /**
+     * Metodo que muestra la ventana de modificacion de actividades con los campos previos de la actividad
+     * @param event
+     *  Pulsado boton modificar actividad
+     */
     @FXML
-    void modificarActividad(MouseEvent event) {
-    	System.out.println("Modificando actividad");
+    public void modificarActividad(MouseEvent event) {
+    	logger.trace("Modificando actividad");
     	ActividadTabla actividadTabla;
     	ActividadVO actividad = new ActividadVO();
     	
     	if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+    		logger.warn("No hay actividad seleccionada para modificar");
     		this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
     	}else {
     		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
-    		System.out.println("La actividad seleccionada es:\n + " + actividadTabla.getNombre());
+    		logger.trace("La actividad seleccionada es:\n + " + actividadTabla.getNombre());
     		Stage stage = this.esconderVentana(event);
     		actividad.setIdActividad(actividadTabla.getId());
-    		Logica.getLogica().rellenarActividad(actividad);
-    		System.out.println("Me voy");
-        	this.mostrarVentanaActividades(actividad, true, stage);
-        	System.out.println("Se supone que ya la modifique");
+    		try{
+    			Logica.getLogica().rellenarActividad(actividad);
+    			this.mostrarVentanaActividades(actividad, true, stage);
+            	logger.trace("Actividad modificada correctamente");
+    		}catch(SQLException e) {
+    			logger.error("Error al obtener la actividad: "+e.getMessage());
+    			this.muestraError("ERROR", "Actividades", "Error al obtener la actividad");
+    		}
     	}
     }
     
-    
+    /**
+     * Metodo privado que muestra la ventana para modificar y crear actividades
+     * @param actividad
+     *  Actividad a modificar si es el caso
+     * @param modificacion
+     *  Boolean que indica si la actividad se va a modificar o crear. Verdadero si se va a modificar
+     * @param stage2
+     */
     private void mostrarVentanaActividades(ActividadVO actividad, boolean modificacion, Stage stage2) {
-    	
-    	AnchorPane root;
-    	
+    	AnchorPane root;  	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/Actividad.fxml"));
-
     	Stage stage = new Stage();
     	
     	try {
@@ -157,24 +184,22 @@ public class MonitorInicioController extends Controller{
     		stage.setScene(new Scene(root));
     		stage.setResizable(false);
     	}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+    		logger.error("No se pudo mostrar la ventana de creacion de actividad: "+e.getMessage());
 		}
-
+    
     	ActividadController controller = loader.getController();
     	controller.initData(actividad, modificacion, stage2);
-
     	stage.show();
-
     }
 
-
+    /**
+     * Metodo privado que inicializa la tabla en la que se muestran las actividades
+     * @param actividades
+     *  Actividades del monitor que se mostraran
+     */
 	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
-		
-		/**
-		 * CREACION DE LOS HEADERS DE LA TABLA
-		 */
-		
+		//Inicializacion de los headers de las tablas
+		logger.trace("Inicializando headers de las tablas de actividades");
 		//TODO incluir el tipo de la actividad
 		JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
 		nameCol.setPrefWidth(138);
@@ -221,9 +246,8 @@ public class MonitorInicioController extends Controller{
 	        }
 	    });
 	    
-	    /**
-	     * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
-	     */
+	   //Creando lista de actividades para incluir en la tabla
+	    logger.trace("Agragando actividades a la tabla");
 	    ObservableList<ActividadTabla> obsActividades = FXCollections.observableArrayList();
 	    ActividadTabla actividad;
 	    for(ActividadVO act:actividades) {
@@ -235,8 +259,7 @@ public class MonitorInicioController extends Controller{
 	    actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
 	    actividadesTree.setRoot(root);
 	    actividadesTree.setShowRoot(false);
-	    
 	    actividadesTree.setVisible(true);
+	    logger.trace("Tabla inicializada correctamente");
 	}
-
 }

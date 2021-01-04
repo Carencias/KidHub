@@ -6,27 +6,43 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
+import controlador.ActividadController;
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
 import modelo.vo.HijoVO;
-import modelo.vo.MonitorVO;
 import modelo.vo.UsuarioVO;
 import modelo.vo.UsuarioVO.TipoUsuario;
 
+/**
+ * Clase encargada de lanzar las querys de crear, modificar, borrar, apuntarHijoAActividad y desapuntarHijoAActivida a la base de datos
+ * @version 1.0
+ */
 public class ActividadDAO {
-		
+	
+	//Referencia a la conxeion con la base de datos
 	private Conexion conexion;
 	
+	//Referencia a un statemnt
 	private Statement statement;
 	
+    static Logger logger = Logger.getLogger(ActividadDAO.class);
+	/**
+	 * Constructor de la clase ActividadDAO, que inicializa el atributo conexion
+	 */
 	public ActividadDAO() {
 		this.conexion = new Conexion();
 	}
 	
+	/**
+	 * Metodo que lanza la query para crear una actividad a la base de datos
+	 * @param actividad
+	 *  ActividadVO con los datos de la actividad
+	 * @throws SQLException
+	 */
 	public void crearActividad(ActividadVO actividad) throws SQLException{
-		//Statement statement;
-		
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -36,19 +52,23 @@ public class ActividadDAO {
 		insertQuery.append("VALUES(");
 		insertQuery.append("'" + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
 		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
-				
+		logger.trace("Query lista para ser lanzada");
 		statement.executeUpdate(insertQuery.toString(), Statement.RETURN_GENERATED_KEYS);
-		
+		logger.trace("Query ejecutada con exito");
 		ResultSet generatedKeys = statement.getGeneratedKeys();
 		
 		if(generatedKeys.next()) {
 			actividad.setIdActividad(generatedKeys.getInt(1));
 		}
+		conexion.closeConnection();
 	}
 	
-	public void modificarActividad(ActividadVO actividad) {
-		Statement statement;
-		
+	/**
+	 * Metodo que lanza la query para modificar una actividad a la base de datos
+	 * @param actividad
+	 *  ActividadVO con los datos de la actividad
+	 */
+	public void modificarActividad(ActividadVO actividad) throws SQLException{
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -63,18 +83,19 @@ public class ActividadDAO {
 		query.append("Town='" + actividad.getDireccion().getCiudad() + "', ");
 		query.append("Type='" + actividad.getTipo() + "'");
 		query.append(" WHERE ActivityID='" + actividad.getIdActividad()+"';");
-				
-        try {
-			statement.executeUpdate(query.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
+		logger.trace("Query lista para ser lanzada");	
+		statement.executeUpdate(query.toString());
+		logger.trace("Query ejecutada con exito");
+		conexion.closeConnection();
 	}
 	
-	public void borrarActividad(ActividadVO actividad) {
+	/**
+	 * Metodo que lanza la query para borrar una actividad a la base de datos
+	 * @param actividad
+	 *  ActividadVO con los datos de la actividad que sera borrada
+	 */
+	public void borrarActividad(ActividadVO actividad) throws SQLException{
 		Statement statement;
 		
 		conexion.openConnection();
@@ -83,17 +104,20 @@ public class ActividadDAO {
 		StringBuilder query = new StringBuilder();
 		query.append("DELETE FROM ACTIVITIES WHERE ");
 		query.append("ActivityID='" + actividad.getIdActividad() + "'; ");
-				
-        try {
-			statement.executeUpdate(query.toString());
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		logger.trace("Query lista para ser lanzada");
+		statement.executeUpdate(query.toString());
+		logger.trace("Query ejecutada con exito");
+		conexion.closeConnection();
+		
 	}
 
-	public void rellenarActividad(ActividadVO actividad) {
+	/**
+	 * Metodo que rellena los datos de la actividad con los que se encuentren en la base de datos
+	 * @param actividad
+	 *  ActividadVO en la que se rellenaran los datos
+	 */
+	public void rellenarActividad(ActividadVO actividad) throws SQLException{
 		ResultSet resultSet = null;
 		conexion.openConnection();
 		statement = conexion.getSt();
@@ -101,46 +125,25 @@ public class ActividadDAO {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM ACTIVITIES ");
 		query.append("WHERE ActivityID='"+ actividad.getIdActividad()+"';");
-				
-		try {
-			resultSet = statement.executeQuery(query.toString());
-			
-			this.rellenarActividad(resultSet, actividad);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-	}
-
-	private void rellenarActividad(ResultSet resultSet, ActividadVO actividad) {
-		try {
-			while(resultSet.next()) {
-				this.setDatosActividad(actividad, resultSet);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		logger.trace("Query lista para ser lanzada");
+		resultSet = statement.executeQuery(query.toString());
+		logger.trace("Query ejecutada con exito");
+		while(resultSet.next()) {
+			this.setDatosActividad(actividad, resultSet);
 		}
-	}
-	
-	private LocalDateTime convertToDate(String stringDateTime) {
-		String date = stringDateTime.split(" ")[0];
-		String time = stringDateTime.split(" ")[1];
-		
-		int day = Integer.parseInt(date.split("/")[0]);
-		int month = Integer.parseInt(date.split("/")[1]);
-		int year = Integer.parseInt(date.split("/")[2]);
-		
-		int hour = Integer.parseInt(time.split(":")[0]);
-		int min = Integer.parseInt(time.split(":")[1]);
-
-		
-		return LocalDateTime.of(year, month, day, hour, min);
-
+		conexion.closeConnection();
 	}
 
-	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) {
+	/**
+	 * Metodo que lanza la query que apunta un hijo a una actividad
+	 * @param hijo
+	 *  HijoVO con la informacion del hijo
+	 * @param actividad
+	 *  ActividadVO con la informacion de la actividad
+	 * @throws SQLException
+	 */
+	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -149,82 +152,87 @@ public class ActividadDAO {
 		query.append("(KidUsername, ActivityID) ");
 		query.append("VALUES(");
 		query.append("'" + hijo.getNombreUsuario() + "', '" + actividad.getIdActividad() + "');");
-				
-		try {
-			statement.executeUpdate(query.toString());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
+		logger.trace("Query lista para ser lanzada");
+		statement.executeUpdate(query.toString());
+		logger.trace("Query ejecutada con exito");
 		conexion.closeConnection();
 	}
 
-	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) {
-		Statement statement;
-		
+	/**
+	 * Metodo que lanza la query que desapunta un hijo a una actividad
+	 * @param hijo
+	 *  HijoVO con la informacion del hijo
+	 * @param actividad
+	 *  ActividadVO con la informacion de la actividad
+	 * @throws SQLException
+	 */
+	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
 		conexion.openConnection();
-		statement = conexion.getSt();
+		Statement statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
 		query.append("DELETE FROM ActivityKid WHERE ");
 		query.append("ActivityID='" + actividad.getIdActividad() + "'AND KidUsername='" + hijo.getNombreUsuario() + "';");
 		
-		System.out.println(query);
-				
-        try {
-			statement.executeUpdate(query.toString());		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		logger.trace("Query lista para ser lanzada");
+		statement.executeUpdate(query.toString());
+		logger.trace("Query ejecutada con exito");
+		conexion.closeConnection();
 	}
 
-	public ArrayList<ActividadVO> mostrarActividades(UsuarioVO usuarioActual) {
+	/**
+	 * Metodo que devuelve una lista con las actividades relacionadas con el usuario
+	 * @param usuariovo
+	 *  Usuario del que se quieren obtener las actividades
+	 * @return
+	 *  Lista de actividades ActividadVO del usuario
+	 * @throws SQLException
+	 */
+	public ArrayList<ActividadVO> mostrarActividades(UsuarioVO usuariovo) throws SQLException{
 		ResultSet resultSet = null;
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
 		
-		if(usuarioActual.getTipo() == TipoUsuario.MONITOR) {
+		if(usuariovo.getTipo() == TipoUsuario.MONITOR) {
 			query.append("SELECT * FROM ACTIVITIES ");
-			query.append("WHERE MonitorUsername='"+ usuarioActual.getNombreUsuario()+"';");
-		}else if(usuarioActual.getTipo() == TipoUsuario.HIJO) {
-			
+			query.append("WHERE MonitorUsername='"+ usuariovo.getNombreUsuario()+"';");
+		}else if(usuariovo.getTipo() == TipoUsuario.HIJO) {
 			query.append("SELECT * FROM ACTIVITIES ");
-			
-			if(!usuarioActual.getNombreUsuario().equals("Todos")) {
+			if(!usuariovo.getNombreUsuario().equals("Todos")) {
 				query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID ");
-				query.append("WHERE ActivityKid.KidUsername='"+ usuarioActual.getNombreUsuario()+"';");
+				query.append("WHERE ActivityKid.KidUsername='"+ usuariovo.getNombreUsuario()+"';");
 			}
-			System.out.println(query.toString());
+		
 		}				
-		try {
-			System.out.println(query.toString());
-			resultSet = statement.executeQuery(query.toString());
-			//TODO si lo cierro peta pero entonces cuando se cierra?? 
-			//conexion.closeConnection();
-			return this.obtenerActividades(resultSet);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+		logger.trace("Query lista para ser lanzada");
+		resultSet = statement.executeQuery(query.toString());
+		logger.trace("Query ejecutada con exito");
+		
+		return this.obtenerActividades(resultSet);
 	}
 
-	private ArrayList<ActividadVO> obtenerActividades(ResultSet resultSet) {
+	/**
+	 * Metodo privado que rellena una lista de actividades con las actividades obtenidas de la base de datos
+	 * @param resultSet
+	 *  Resultado de la ejecucion de la query con los datos de las actividades
+	 * @return
+	 *  Lista de ActividadVO con los datos de las actividades
+	 * @throws SQLException
+	 */
+	private ArrayList<ActividadVO> obtenerActividades(ResultSet resultSet) throws SQLException{
+		logger.trace("Rellenando lista de actividades");
 		ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
 		ActividadVO actividad;
-		try {
-			while(resultSet.next()) {
-				actividad = new ActividadVO();
-				this.setDatosActividad(actividad, resultSet);
-				actividades.add(actividad);
-			}
-			return actividades;
-		} catch (SQLException e) {
-			e.printStackTrace();
+		while(resultSet.next()) {
+			actividad = new ActividadVO();
+			this.setDatosActividad(actividad, resultSet);
+			actividades.add(actividad);
 		}
-		return null; //TODO con esto no se liara??
+		conexion.closeConnection();
+		return actividades;
 	}
 	
 	public void setDatosActividad(ActividadVO actividad, ResultSet resultSet) throws SQLException {
@@ -245,5 +253,27 @@ public class ActividadDAO {
 		actividad.setTipo(resultSet.getString("Type"));
 	}
 	
+	/**
+	 * Metodo privado que convierte una fecha en string a LocalDateTime
+	 * @param stringDateTime
+	 *  String con la fecha
+	 * @return
+	 *  Objeto LocalDateTime de la fecha
+	 */
+	private LocalDateTime convertToDate(String stringDateTime) {
+		logger.trace("Conviertiendo la fecha a LocalDateTime");
+		String date = stringDateTime.split(" ")[0];
+		String time = stringDateTime.split(" ")[1];
+		
+		int day = Integer.parseInt(date.split("/")[0]);
+		int month = Integer.parseInt(date.split("/")[1]);
+		int year = Integer.parseInt(date.split("/")[2]);
+		
+		int hour = Integer.parseInt(time.split(":")[0]);
+		int min = Integer.parseInt(time.split(":")[1]);
+
+		return LocalDateTime.of(year, month, day, hour, min);
+
+	}
 	
 }

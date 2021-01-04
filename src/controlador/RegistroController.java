@@ -15,6 +15,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
+import org.apache.log4j.Logger;
+
+/**
+ * Clase controladora de la ventana de registro
+ * @version 1.0
+ */
 public class RegistroController extends Controller{
 
     @FXML
@@ -28,27 +34,38 @@ public class RegistroController extends Controller{
 
     @FXML
     private Button confirmar, cancelar;
-        
+    
+    static Logger logger = Logger.getLogger(RegistroController.class);
+    
+    /**
+     * Metodo que cancela el registro y muestra la ventana de login
+     * @param event
+     *  Pulsado boton cancelar
+     */
     @FXML
     void cancelar(MouseEvent event) {
-		System.out.println("Cancelando");
+    	logger.trace("Registro cancelado");
 		this.cerrarVentana(event);
 		this.mostrarVentana("Login");
     }
 
-    
-    
+    /**
+     * Metodo que registra al usuario
+     * @param event
+     *  Pulsado boton registrar
+     */
     @FXML
     void registrar(MouseEvent event) {
-		System.out.println("Registrando");
+    	logger.trace("Pulsado boton de registrar");
 		Logica logica = Logica.getLogica();
 		PadreVO padrevo = new PadreVO();
 		MonitorVO monitorvo = new MonitorVO();
 		if(!contra1.getText().equals(contra2.getText())) {
+			logger.error("Las contrasenas no coinciden");
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
 		}else {
 			if(padre.isSelected()) {
-				System.out.println("Es padre");
+				logger.trace("Opcion de registrar padre seleccionada");
 				rellenarVO(padrevo);
 				//TODO queda poner el telefono
 				try {
@@ -58,39 +75,48 @@ public class RegistroController extends Controller{
 					this.cerrarVentana(event);
 				}catch(Exception e) {
 					if(e instanceof KidHubException) {
+						logger.error(e.getMessage());
 						muestraError("ERROR","Se produjo un error.", e.getMessage());
-					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062)
+					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
+						logger.error("El usuario ya existe");
 						muestraError("ERROR","Se produjo un error.", "El usuario ya existe.");
-					else if(e instanceof SQLException){
-						System.out.println(((SQLException) e).getErrorCode());
-						muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
+					}else if(e instanceof SQLException){
+						logger.error(((SQLException) e).getErrorCode());
+						muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
 					}
 				}			
 			}else{
-				System.out.println("Es monitor");
+				logger.trace("Opcion de registrar monitor seleccionada");
 				rellenarVO(monitorvo);
 				//TODO queda poner las especialidades
 				try {
 					logica.registrarUsuario(monitorvo);
 					logica.setUsuarioActual(monitorvo);
-					//TODO no se porque no muestra la venta del monitor
 					this.mostrarVentana("MonitorInicio");
 					this.cerrarVentana(event);
 				}catch(Exception e) {
 					if(e instanceof KidHubException) {
+						logger.error(e.getMessage());
 						muestraError("ERROR","Se produjo un error.", e.getMessage());
 					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
+						logger.error("El usuario ya existe");
 						muestraError("ERROR","Se produjo un error.", "El usuario ya existe.");
 					}else if(e instanceof SQLException){
-						System.out.println(((SQLException) e).getErrorCode());
-						muestraError("ERROR","Se produjo un error.", "Campos invalidos");
+						logger.error(((SQLException) e).getErrorCode());
+						muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
 					}
 				}	
 			}
 		}	
     }
     
+    /**
+     * Metodo privado que rellena un UsuarioVO con los datos introducidos
+     * @param usuariovo
+     *  UsuarioVO donde se guardaran los datos
+     */
     private void rellenarVO(UsuarioVO usuariovo) {
+    	logger.trace("Rellenando usuario con los datos introducidos");
     	usuariovo.setNombre(nombre.getText());
     	usuariovo.setApellidos(apellidos.getText());
     	usuariovo.setNombreUsuario(usuario.getText());

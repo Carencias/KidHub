@@ -1,4 +1,7 @@
 package controlador;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -40,6 +43,8 @@ public class Main extends Application {
 		mostrarLogin(primaryStage);
 	}
 	
+	static Logger logger = Logger.getLogger(Main.class);
+	
 	public static void main(String[] args) {
 		
 		//TODO estos metodos son para probar los DAO
@@ -54,6 +59,8 @@ public class Main extends Application {
 		//crearTrayecto();
 		//apuntarHijoATrayecto();
 		//desapuntarHijoDeTrayecto();
+		DOMConfigurator.configure("./logs/log4j.xml");
+		logger.error("Log4j appender configuration is successful !!");
 		launch(args);
 	}
 	
@@ -134,9 +141,6 @@ public class Main extends Application {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (KidHubException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
     }
     
@@ -148,18 +152,32 @@ public class Main extends Application {
     	actividad.setCapacidad(60);
     	actividad.setNombre("AjedrezModificado");
     	
-    	logica.modificarActividad(actividad);
+    	try {
+			logica.modificarActividad(actividad);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void borrarActividad() {
     	Logica logica = Logica.getLogica();
-    	
-    	logica.borrarActividad(actividad);
+    	try {
+			logica.borrarActividad(actividad);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void apuntarHijoAActividad() {
     	Logica.getLogica().setUsuarioActual(padre);
-    	Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
+    	try {
+			Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     
