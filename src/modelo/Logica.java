@@ -120,8 +120,12 @@ public class Logica {
 		return this.usuarioActual;
 	}
 
-	public ArrayList<ActividadVO> getActividades() {
-		return new ActividadDAO().mostrarActividades(this.usuarioActual);
+	public ArrayList<ActividadVO> getActividades(UsuarioVO usuario) {
+		return new ActividadDAO().mostrarActividades(usuario);
+	}
+	
+	public ArrayList<HijoVO> getHijos(){
+		return new PadreDAO().mostrarHijos(this.usuarioActual);
 	}
 	
 	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) {

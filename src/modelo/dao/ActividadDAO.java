@@ -189,12 +189,20 @@ public class ActividadDAO {
 			query.append("SELECT * FROM ACTIVITIES ");
 			query.append("WHERE MonitorUsername='"+ usuarioActual.getNombreUsuario()+"';");
 		}else if(usuarioActual.getTipo() == TipoUsuario.HIJO) {
+			
 			query.append("SELECT * FROM ACTIVITIES ");
-			query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID ");
-			query.append("WHERE ActivityKid.KidUsername='"+ usuarioActual.getNombreUsuario()+"';");
+			
+			if(!usuarioActual.getNombreUsuario().equals("Todos")) {
+				query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID ");
+				query.append("WHERE ActivityKid.KidUsername='"+ usuarioActual.getNombreUsuario()+"';");
+			}
+			System.out.println(query.toString());
 		}				
 		try {
+			System.out.println(query.toString());
 			resultSet = statement.executeQuery(query.toString());
+			//TODO si lo cierro peta pero entonces cuando se cierra?? 
+			//conexion.closeConnection();
 			return this.obtenerActividades(resultSet);
 			
 		} catch (SQLException e) {

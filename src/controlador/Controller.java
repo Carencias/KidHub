@@ -26,15 +26,7 @@ public class Controller {
 	    stage.close();
 	}
 	
-	protected void muestraError(String titulo, String encabezado, String contenido) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle(titulo);
-		alert.setHeaderText(encabezado);
-		alert.setContentText(contenido);
-		alert.showAndWait();
-	}
-	
-    protected void mostrarVentana(String ventana) {
+	protected void mostrarVentana(String ventana) {
 		AnchorPane root;
 		try {
 			root = (AnchorPane) FXMLLoader.load(getClass().getResource("../vista/" + ventana + ".fxml"));
@@ -48,7 +40,26 @@ public class Controller {
 			e.printStackTrace();
 		}
     }
-    
+	
+	protected Stage esconderVentana(MouseEvent event) {
+		Node source = (Node) event.getSource();
+	    Stage stage = (Stage) source.getScene().getWindow();
+	    stage.hide();
+	    return stage;
+	}
+	
+	protected void recuperarVentana(Stage stage) {
+		stage.show();
+	}
+	
+	protected void muestraError(String titulo, String encabezado, String contenido) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(titulo);
+		alert.setHeaderText(encabezado);
+		alert.setContentText(contenido);
+		alert.showAndWait();
+	}
+
     @FXML
     protected void logOut(MouseEvent event) {
     	System.out.println("Cerrando la sesion y volviendo al login.");

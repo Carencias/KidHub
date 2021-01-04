@@ -137,18 +137,7 @@ public class HijoInicioController extends Controller{
         
         actividadesTree.setVisible(true);
     }
-    
-    
-    //TODO hace falta??
-    private void actualizarTablaActividades() {
-    	//Creo que no renta de ninguna manera, renta volver a invocar inicializarTabla(actividades)
-    	/*
-    	final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
-        actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
-        actividadesTree.setRoot(root);
-        actividadesTree.setShowRoot(false);
-        */
-    }
+
     
     private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
     	
@@ -217,13 +206,14 @@ public class HijoInicioController extends Controller{
         	panoTrayectos.setVisible(false);
         	
         } else if (actionEvent.getSource() == actividades) {
-        	this.inicializarTablaActividades(Logica.getLogica().getActividades());        	
+        	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));        	
         	panoActividades.setVisible(true);       	
         	panoCerrar.setVisible(false);
         	panoInicio.setVisible(false);
         	panoTrayectos.setVisible(false);
         	
         }else if (actionEvent.getSource() == trayectos) {
+        	//this.inicializarTablaTrayectos(Logica.getLogica().ge);
         	panoTrayectos.setVisible(true);
         	panoCerrar.setVisible(false);  
         	panoInicio.setVisible(false);
@@ -240,7 +230,7 @@ public class HijoInicioController extends Controller{
     @FXML
     public void mostrarActividadTablaes(MouseEvent event) {
     	System.out.println("Mostrando Actividades");
-    	this.inicializarTablaActividades(Logica.getLogica().getActividades());
+    	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
     }
     
     @FXML

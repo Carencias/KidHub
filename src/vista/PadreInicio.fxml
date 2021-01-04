@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -91,7 +93,7 @@
          </children></VBox>
       <StackPane layoutX="171.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
          <children>
-            <Pane fx:id="panoInicio" prefHeight="500.0" prefWidth="710.0" visible="false">
+            <Pane fx:id="panoInicio" prefHeight="500.0" prefWidth="710.0">
                <children>
                   <Label layoutX="183.0" layoutY="140.0" text="¡Bienvenido a la zona de padres!" textFill="#bcf4fc">
                      <font>
@@ -100,7 +102,7 @@
                   </Label>
                   <Label layoutX="35.0" layoutY="175.0" text="Aqui podras visualizar todas tus actividades y trayectos y los de tus hijos." textFill="#bcf4fc">
                      <font>
-                        <Font  size="20.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
                   <Label layoutX="120.0" layoutY="205.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
@@ -177,64 +179,6 @@
                   </HBox>                  
                </children>          
             </Pane>
-            <Pane fx:id="panoActividades" prefHeight="500.0" prefWidth="710.0">
-               <children>
-                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE ACTIVIDADES" textFill="#bcf4fc">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
-                  <HBox alignment="CENTER_LEFT" layoutX="38.0" layoutY="94.0" prefHeight="42.0" prefWidth="635.0" spacing="80.0">
-                     <children>
-                        <Label text="Nombre" textFill="#e7e5e5">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label text="Inicio" textFill="#e7e5e5">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label text="Fin" textFill="#e7e5e5">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label text="Lugar" textFill="#e7e5e5">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label text="Aforo disponible" textFill="#e7e5e5">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                     </children>
-                  </HBox>
-                  <JFXButton fx:id="apuntarActividad" layoutX="355.0" layoutY="29.0" onMouseClicked="#apuntarHijoActividad" prefHeight="45.0" prefWidth="122.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../etc/add.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>                 
-                  <JFXButton fx:id="desapuntarActividad" layoutX="576.0" layoutY="29.0" onMouseClicked="#desapuntarHijoActividad" prefHeight="45.0" prefWidth="149.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Desapuntar" textAlignment="LEFT" textFill="#e7e5e5">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../etc/thrash.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>            
-               </children>
-             </Pane>
             <Pane fx:id="panoRegistrarHijo" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE REGISTRO" textFill="#bcf4fc">
@@ -357,6 +301,47 @@
                   </Button>
                </children>
             </Pane>
+            <Pane fx:id="panoActividades" prefHeight="500.0" prefWidth="710.0" visible="false">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE ACTIVIDADES" textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
+                  <JFXTreeTableView fx:id="actividadesTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="696.0" stylesheets="@application.css" visible="false" />
+                  <JFXButton fx:id="apuntarActividad" disable="true" layoutX="315.0" layoutY="29.0" onMouseClicked="#apuntarHijoActividad" prefHeight="45.0" prefWidth="122.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>                 
+                  <JFXButton fx:id="desapuntarActividad" disable="true" layoutX="599.0" layoutY="29.0" onMouseClicked="#desapuntarHijoActividad" prefHeight="45.0" prefWidth="149.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Desapuntar" textAlignment="LEFT" textFill="#e7e5e5">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/thrash.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXComboBox fx:id="selectHijos" focusColor="#bcf4fc" layoutX="490.0" layoutY="39.0" onAction="#hijoElegido" promptText="Hijos" style="-fx-prompt-text-fill: #bcf4fc; -fx-text-fill: #bcf4fc;" unFocusColor="#bcf4fc" />
+                  <Label fx:id="hijosVacio" layoutX="66.0" layoutY="233.0" text="Selecciona el hijo del que quieres consultar las actividades." textFill="#bcf4fc">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>            
+               </children>
+             </Pane>
          </children>
       </StackPane>
       <Separator layoutX="170.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="12.0" />

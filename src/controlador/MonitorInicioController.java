@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -66,77 +67,6 @@ public class MonitorInicioController extends Controller{
     }
     
     
-    private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
-    	
-    	/**
-    	 * CREACION DE LOS HEADERS DE LA TABLA
-    	 */
-    	
-    	//TODO incluir el tipo de la actividad
-    	JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
-    	nameCol.setPrefWidth(138);
-    	nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getNombre();
-            }
-        });
-
-        JFXTreeTableColumn<ActividadTabla, String> inicioCol = new JFXTreeTableColumn<>("Inicio");
-        inicioCol.setPrefWidth(138);
-        inicioCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getInicio();
-            }
-        });
-
-        JFXTreeTableColumn<ActividadTabla, String> finCol = new JFXTreeTableColumn<>("Fin");
-        finCol.setPrefWidth(138);
-        finCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getFin();
-            }
-        });
-        
-        JFXTreeTableColumn<ActividadTabla, String> lugarCol = new JFXTreeTableColumn<>("Lugar");
-        lugarCol.setPrefWidth(140);
-        lugarCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getLugar();
-            }
-        });
-        
-        JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-        aforoCol.setPrefWidth(138);
-        aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-                return param.getValue().getValue().getAforo();
-            }
-        });
-        
-        /**
-         * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
-         */
-        ObservableList<ActividadTabla> obsActividades = FXCollections.observableArrayList();
-        ActividadTabla actividad;
-        for(ActividadVO act:actividades) {
-        	actividad = new ActividadTabla(act);
-        	obsActividades.add(actividad);
-        }
-
-        final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
-        actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
-        actividadesTree.setRoot(root);
-        actividadesTree.setShowRoot(false);
-        
-        actividadesTree.setVisible(true);
-    }
-
-
     @FXML
     public void elegirPanel(ActionEvent actionEvent) {
 
@@ -155,7 +85,7 @@ public class MonitorInicioController extends Controller{
         	actividadesPrueba.add(new ActividadVO("Hockey", LocalDateTime.now(), LocalDateTime.now(), 8, palomera, "hockey"));
         	this.inicializarTablaActividades(actividadesPrueba);
         	*/
-        	this.inicializarTablaActividades(Logica.getLogica().getActividades());
+        	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
         	
         	panoActividades.setVisible(true);       	
         	panoCerrar.setVisible(false);
@@ -180,7 +110,7 @@ public class MonitorInicioController extends Controller{
     		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
     		actividad.setIdActividad(actividadTabla.getId());
     		Logica.getLogica().borrarActividad(actividad);
-    		this.inicializarTablaActividades(Logica.getLogica().getActividades());
+    		this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
     	}
     	    	
     }
@@ -188,8 +118,8 @@ public class MonitorInicioController extends Controller{
     @FXML
     void crearActividad(MouseEvent event) {
     	System.out.println("Creando actividad");
-    	this.cerrarVentana(event);
-    	this.mostrarVentanaActividades(new ActividadVO(), false);
+    	Stage stage = this.esconderVentana(event);
+    	this.mostrarVentanaActividades(new ActividadVO(), false, stage);
     	System.out.println("Se supone que ya la cree");
     }
 
@@ -204,17 +134,17 @@ public class MonitorInicioController extends Controller{
     	}else {
     		actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
     		System.out.println("La actividad seleccionada es:\n + " + actividadTabla.getNombre());
-    		this.cerrarVentana(event);
+    		Stage stage = this.esconderVentana(event);
     		actividad.setIdActividad(actividadTabla.getId());
     		Logica.getLogica().rellenarActividad(actividad);
     		System.out.println("Me voy");
-        	this.mostrarVentanaActividades(actividad, true);
+        	this.mostrarVentanaActividades(actividad, true, stage);
         	System.out.println("Se supone que ya la modifique");
     	}
     }
     
     
-    private void mostrarVentanaActividades(ActividadVO actividad, boolean modificacion) {
+    private void mostrarVentanaActividades(ActividadVO actividad, boolean modificacion, Stage stage2) {
     	
     	AnchorPane root;
     	
@@ -225,16 +155,88 @@ public class MonitorInicioController extends Controller{
     	try {
     		root = loader.load();
     		stage.setScene(new Scene(root));
+    		stage.setResizable(false);
     	}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
     	ActividadController controller = loader.getController();
-    	controller.initData(actividad, modificacion);
+    	controller.initData(actividad, modificacion, stage2);
 
     	stage.show();
 
     }
+
+
+	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
+		
+		/**
+		 * CREACION DE LOS HEADERS DE LA TABLA
+		 */
+		
+		//TODO incluir el tipo de la actividad
+		JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
+		nameCol.setPrefWidth(138);
+		nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getNombre();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<ActividadTabla, String> inicioCol = new JFXTreeTableColumn<>("Inicio");
+	    inicioCol.setPrefWidth(138);
+	    inicioCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getInicio();
+	        }
+	    });
+	
+	    JFXTreeTableColumn<ActividadTabla, String> finCol = new JFXTreeTableColumn<>("Fin");
+	    finCol.setPrefWidth(138);
+	    finCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getFin();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<ActividadTabla, String> lugarCol = new JFXTreeTableColumn<>("Lugar");
+	    lugarCol.setPrefWidth(140);
+	    lugarCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getLugar();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
+	    aforoCol.setPrefWidth(138);
+	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    /**
+	     * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
+	     */
+	    ObservableList<ActividadTabla> obsActividades = FXCollections.observableArrayList();
+	    ActividadTabla actividad;
+	    for(ActividadVO act:actividades) {
+	    	actividad = new ActividadTabla(act);
+	    	obsActividades.add(actividad);
+	    }
+	
+	    final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
+	    actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
+	    actividadesTree.setRoot(root);
+	    actividadesTree.setShowRoot(false);
+	    
+	    actividadesTree.setVisible(true);
+	}
 
 }

@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
@@ -29,11 +30,14 @@ public class ActividadController extends Controller {
     
     private boolean modificacion;
     
+    private Stage stage;
     
-    void initData(ActividadVO actividad, boolean modificacion) {
-    	System.out.println("estoy iniciando datos");
+    
+    void initData(ActividadVO actividad, boolean modificacion, Stage stage) {
+
     	this.actividad = actividad;
     	this.modificacion = modificacion;
+    	this.stage = stage;
     	
     	if(modificacion) {
     		this.setDatosActividad(actividad);
@@ -43,7 +47,6 @@ public class ActividadController extends Controller {
     
     @FXML
     void confirmar(MouseEvent event) {
-    	System.out.println("Confirmando");
     	this.getDatosActividad(actividad);
     	
     	if(this.modificacion) {	
@@ -68,18 +71,17 @@ public class ActividadController extends Controller {
 			}
     	}
     	
-    	System.out.println("He salido del if-else");
     	this.cerrarVentana(event);
-    	this.mostrarVentana("MonitorInicio");
+    	this.recuperarVentana(this.stage);
 
     }
     
     
     @FXML
     void cancelar(MouseEvent event) {
-    	System.out.println("Cancelando");
+
     	this.cerrarVentana(event);
-    	this.mostrarVentana("MonitorInicio");
+    	this.recuperarVentana(this.stage);
     }
     
     private void setDatosActividad(ActividadVO actividad) {
