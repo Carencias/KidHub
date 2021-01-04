@@ -93,7 +93,6 @@ public class Main extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logica.mostrarUsuarios();
     }
     
     public static void crearMonitor() {
@@ -110,7 +109,6 @@ public class Main extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logica.mostrarUsuarios();
     }
     
     public static void crearHijo() {
@@ -128,7 +126,6 @@ public class Main extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logica.mostrarUsuarios();
     }
     
     public static void crearActividad() {
@@ -183,7 +180,12 @@ public class Main extends Application {
     
     public static void desapuntarHijoDeActividad() {
     	Logica.getLogica().setUsuarioActual(padre);
-    	Logica.getLogica().desapuntarHijoDeActividad(hijo, actividad);
+    	try {
+			Logica.getLogica().desapuntarHijoDeActividad(hijo, actividad);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
   
     

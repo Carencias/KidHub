@@ -110,7 +110,7 @@ public class Logica {
 		if(usuario.getNombreUsuario().equals("") || usuario.getContrasena().equals("")) {
 			throw new KidHubException("Hay campos sin rellenar");
 		}
-		TipoUsuario tipo = TipoUsuario.INCORRECTO;
+		TipoUsuario tipo;
 		String contrasena = usuario.getContrasena();
 		String usuarion = usuario.getNombreUsuario();
 		
@@ -157,6 +157,7 @@ public class Logica {
 	 */
 	public void borrarActividad(ActividadVO actividadVO) throws SQLException{		
 		new ActividadDAO().borrarActividad(actividadVO);
+		logger.trace("Actividad borrada correctamente");
 	}
 
 	/**
@@ -166,6 +167,7 @@ public class Logica {
 	 */
 	public void rellenarActividad(ActividadVO actividad) throws SQLException{
 		new ActividadDAO().rellenarActividad(actividad);
+		logger.trace("Actividad rellenada correctamente");
 	}
 	
 	/**
@@ -178,6 +180,7 @@ public class Logica {
 	 */
 	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
 		new ActividadDAO().apuntarHijoAActividad(hijo, actividad);
+		logger.trace("Hijo apuntado correctamente");
 	}
 	
 	/**
@@ -190,36 +193,44 @@ public class Logica {
 	 */
 	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
 		new ActividadDAO().desapuntarHijoDeActividad(hijo, actividad);
+		logger.trace("Hijo desapuntado correctamente");
 	}
 	
-	public void mostrarUsuarios() {
-		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		usuarioDAO.mostrarUsuarios();
+	/**
+	 * Metodo que se comunica con el modelo para obtener todas las actividades de un usuario
+	 * @param usuario
+	 *  Usuario del que se obtendrar las actividades
+	 * @return
+	 *  Devuelve una lista con las actividades de ese usuario
+	 */
+	public ArrayList<ActividadVO> getActividades(UsuarioVO usuario) throws SQLException{
+		logger.trace("Obteniendo actividades");
+		return new ActividadDAO().mostrarActividades(usuario);
 	}
 
-	public boolean comprobarDatosCorrectos() {
-		// TODO Auto-generated method stub
-		return false;
+	/**
+	 * Metodo que se comunica con el modelo para obtener todos los hijos de un padre
+	 * @return
+	 *  Devuelve una lista con los hijos del padre
+	 */
+	public ArrayList<HijoVO> getHijos() throws SQLException{
+		logger.trace("Obteninendo hijos");
+		return new PadreDAO().mostrarHijos(this.usuarioActual);
 	}
-	
 
-	
+	/**
+	 * Metodo que devuelve el usuario actualmente logueado en la aplicacion
+	 * @return
+	 *  Devuelve el usuario actualmente logueado en la aplicacion
+	 */
 	public UsuarioVO getUsuarioActual() {
+		logger.trace("Obteniendo usuario actual");
 		return this.usuarioActual;
 	}
 
-	public ArrayList<ActividadVO> getActividades(UsuarioVO usuario) {
-		return new ActividadDAO().mostrarActividades(usuario);
-	}
-	
 	public ArrayList<TrayectoVO> getTrayectos(UsuarioVO usuario) {
 		return new TrayectoDAO().mostrarTrayectos(usuario);
 	}
-	
-	public ArrayList<HijoVO> getHijos(){
-		return new PadreDAO().mostrarHijos(this.usuarioActual);
-	}
-	
 	
 	public void crearTrayecto(TrayectoVO trayecto) {
 		trayecto.setPadre((PadreVO) this.usuarioActual);
@@ -247,13 +258,3 @@ public class Logica {
 		new TrayectoDAO().desapuntarHijoDeTrayecto(hijo,trayecto);		
 	}
 }
-
-
-
-
-
-
-
-
-
-

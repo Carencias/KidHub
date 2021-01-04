@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -42,7 +45,6 @@ import vista.TrayectoTabla;
 /**
  * Clase controladora de la ventana del padre
  * @version 1.0
- *
  */
 public class PadreInicioController extends Controller{
 
@@ -74,8 +76,11 @@ public class PadreInicioController extends Controller{
     @FXML
     private JFXTreeTableView<TrayectoTabla> trayectosTree;
     
-	
+    static Logger logger = Logger.getLogger(PadreInicioController.class);
     
+    /**
+     * Inicializa la ventana de Monitor, fijando el nombre de usuario del monitor
+     */
     @FXML
     public void initialize() {
     	nombreLabel.setText(Logica.getLogica().getUsuarioActual().getNombre()); 
@@ -198,21 +203,38 @@ public class PadreInicioController extends Controller{
         }
     }
     
+   //Actividades
+	
     /**
-     * ACTIVIDADES
+     * Metodo privado que obtiene los hijos del padre y los setea en la lista de hijos del padre para las actividades
      */
-    
     private void setHijosComboActividad() {
     	this.selectHijoActividad.getItems().clear();
     	this.selectHijoActividad.getItems().add("Todos");
-    	this.hijos = Logica.getLogica().getHijos();
-    	for(HijoVO hijo: hijos) {
-    		this.selectHijoActividad.getItems().add(hijo.getNombreUsuario());
-    	}    	
+    	try {
+			this.hijos = Logica.getLogica().getHijos();
+			for(HijoVO hijo: hijos) {
+	    		this.selectHijoActividad.getItems().add(hijo.getNombreUsuario());
+	    	} 
+		} catch (SQLException e) {
+			logger.error("No se han podido obtener las hijos");
+       		this.muestraError("ERROR", "Hijos", "No se han podido obtener los hijos");
+		}   	   	
     }
     
+    /**
+     * Metodo privado que carga del modelo todas las actividades del hijo
+     * @param hijo
+     *  HijoVO con la informacion del hijo del que se cargaran las actividades
+     */
     private void cargarActividades(HijoVO hijo) {
-		this.inicializarTablaActividades(Logica.getLogica().getActividades(hijo)); 
+    	logger.trace("Cargando las actividades del hijo");
+    	try {
+    		this.inicializarTablaActividades(Logica.getLogica().getActividades(hijo)); 
+       	}catch(SQLException e) {
+       		logger.error("No se han podido obtener las actividades");
+       		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
+       	}
 		this.hijosVacio.setVisible(false);
 	}
 
@@ -241,19 +263,22 @@ public class PadreInicioController extends Controller{
 		this.cargarActividades(hijo);
 	}
 
-	
+	/**
+	 * Metodo que muestra la ventana para apuntar a un hijo a una actividad
+	 * @param event
+	 *  Pulsado boton apuntar hijo a actividad
+	 */
 	@FXML
 	public void apuntarHijoActividad(MouseEvent event) {
-		System.out.println("Apuntando hijo a actividad");
+		logger.trace("Boton de apuntar hijo a actividad pulsado");
 		ActividadTabla actividadTabla;
 		ActividadVO actividad = new ActividadVO();
 		if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+			logger.error("Ninguna actividad seleccionada a la que apuntar");
 			this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
-		
 		}else if(this.getHijo().getNombreUsuario().equals("Todo")) {
-			
+			logger.error("Ninguna hijo seleccionado al que apuntar");
 			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere apuntar");
-			
 		}else {
 			actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
 			actividad.setIdActividad(actividadTabla.getId());    
@@ -262,38 +287,54 @@ public class PadreInicioController extends Controller{
 		}
 	}
 
-
+	/**
+	 * Metodo que desapunta un hijo de una actividad
+	 * @param event
+	 *  Pulsado boton despauntar hijo
+	 */
 	@FXML
 	public void desapuntarHijoActividad(MouseEvent event) {
-		System.out.println("Desapuntando hijo de actividad");
+		logger.trace("Boton de desapuntar hijo pulsado");
 		ActividadTabla actividadTabla;
 		ActividadVO actividad = new ActividadVO();
 		if(actividadesTree.getSelectionModel().getSelectedItem() == null) {
+			logger.error("Ninguna actividad seleccionada a la que desapuntar");
 			this.muestraError("ERROR", "Actividades", "No hay ninguna actividad seleccionada");
-		
 		}else if(this.getHijo().getNombreUsuario().equals("Todo")) {
+			logger.error("Ninguna hijo seleccionado a el que desapuntar");
 			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
 		}else {
 			actividadTabla = actividadesTree.getSelectionModel().getSelectedItem().getValue();
-			actividad.setIdActividad(actividadTabla.getId());    		
-			Logica.getLogica().desapuntarHijoDeActividad(this.getHijo(), actividad);
-			this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
+			actividad.setIdActividad(actividadTabla.getId());  
+			try {
+				Logica.getLogica().desapuntarHijoDeActividad(this.getHijo(), actividad);
+				this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
+			}catch(SQLException e) {
+				logger.error("Error en la base de datos: "+e.getMessage());
+				muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
+			}
 		}
 	}
 
 
-	/**
-     * TRAYECTOS
-     */
+	//Trayectos
 	
+	/**
+	 * Metodo privado que obtiene los hijos y los setea en la lista de hijos del padre para los trayectos
+	 */
 	private void setHijosComboTrayecto() {
     	this.selectHijoTrayecto.getItems().clear();
     	this.selectHijoTrayecto.getItems().add("Todos");
     	this.selectHijoTrayecto.getItems().add(Logica.getLogica().getUsuarioActual().getNombreUsuario());
-    	this.hijos = Logica.getLogica().getHijos();
-    	for(HijoVO hijo: hijos) {
-    		this.selectHijoTrayecto.getItems().add(hijo.getNombreUsuario());
-    	}    	
+    	try {
+			this.hijos = Logica.getLogica().getHijos();
+			for(HijoVO hijo: hijos) {
+	    		this.selectHijoTrayecto.getItems().add(hijo.getNombreUsuario());
+	    	}    
+		} catch (SQLException e) {
+			logger.error("No se han podido obtener las actividades");
+       		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
+		} 		
     }
     
     private void cargarTrayectos(UsuarioVO usuario) {
@@ -449,9 +490,13 @@ public class PadreInicioController extends Controller{
 			trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
 			trayecto.setIdTrayecto(trayectoTabla.getId());		
 			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
-			this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
-		}
-		
+			try {
+				this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
+	        }catch(SQLException e) {
+	        		logger.error("No se han podido obtener las actividades");
+	        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
+	        }
+		}	
 	}
 
 

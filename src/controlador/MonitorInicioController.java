@@ -72,7 +72,7 @@ public class MonitorInicioController extends Controller{
      */
     @FXML
     public void elegirPanel(ActionEvent actionEvent) {
-    	logger.error("Eligiendo panel monitor");
+    	logger.trace("Eligiendo panel monitor");
         if (actionEvent.getSource() == inicio) {
         	logger.trace("Mostrando pantalla de inicio del monitor");
         	panoInicio.setVisible(true);
@@ -81,7 +81,12 @@ public class MonitorInicioController extends Controller{
         	
         } else if (actionEvent.getSource() == actividades) {
         	logger.trace("Mostrando pantalla de actividades del monitor");
-        	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+        	try {
+        	 this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+        	}catch(SQLException e) {
+        		logger.error("No se han podido obtener las actividades");
+        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
+        	}
         	panoActividades.setVisible(true);       	
         	panoCerrar.setVisible(false);
         	panoInicio.setVisible(false);

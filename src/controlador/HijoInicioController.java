@@ -5,40 +5,33 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import com.mysql.fabric.xmlrpc.base.Array;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
-
-//EJEMPLO TABLA
-import java.net.URL;
-import java.time.LocalDateTime;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.FlowPane;
+import org.apache.log4j.Logger;
 import com.jfoenix.controls.RecursiveTreeItem;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.util.Callback;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
-import modelo.vo.Direccion;
 import modelo.vo.TrayectoVO;
 import vista.ActividadTabla;
 import vista.TrayectoTabla;
 
+/**
+ * Clase controladora de la ventana del hijo
+ * @version 1.0
+ *
+ */
 public class HijoInicioController extends Controller{
 
 	@FXML
@@ -59,7 +52,7 @@ public class HijoInicioController extends Controller{
     @FXML
     private JFXTreeTableView<TrayectoTabla> trayectosTree;
     
-    
+    static Logger logger = Logger.getLogger(HijoInicioController.class);
     
     @FXML
     public void initialize() {
@@ -81,7 +74,12 @@ public class HijoInicioController extends Controller{
         	panoTrayectos.setVisible(false);
         	
         } else if (actionEvent.getSource() == actividades) {
-        	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));        	
+        	try {
+        		this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual())); 
+	        }catch(SQLException e) {
+	        		logger.error("No se han podido obtener las actividades");
+	        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
+	        }      	
         	panoActividades.setVisible(true);       	
         	panoCerrar.setVisible(false);
         	panoInicio.setVisible(false);
@@ -105,7 +103,12 @@ public class HijoInicioController extends Controller{
     @FXML
     public void mostrarActividadTablaes(MouseEvent event) {
     	System.out.println("Mostrando Actividades");
-    	this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+    	try {
+    		this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+        }catch(SQLException e) {
+        		logger.error("No se han podido obtener las actividades");
+        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
+        }
     }
     
     @FXML

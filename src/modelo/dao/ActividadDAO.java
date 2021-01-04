@@ -5,10 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
-import controlador.ActividadController;
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
@@ -235,7 +232,15 @@ public class ActividadDAO {
 		return actividades;
 	}
 	
-	public void setDatosActividad(ActividadVO actividad, ResultSet resultSet) throws SQLException {
+	/**
+	 * Metodo privado que rellena una actividad de los datos obtenidos en la query de un resultSet
+	 * @param actividad
+	 *  ActividadVO en la que se introduciran los datos
+	 * @param resultSet
+	 *  Resultado de la ejecucion de la query
+	 * @throws SQLException
+	 */
+	private void setDatosActividad(ActividadVO actividad, ResultSet resultSet) throws SQLException {
 		actividad.setIdActividad(Integer.parseInt(resultSet.getString("ActivityID")));
 		actividad.setNombre(resultSet.getString("Name"));
 		actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
@@ -273,7 +278,6 @@ public class ActividadDAO {
 		int min = Integer.parseInt(time.split(":")[1]);
 
 		return LocalDateTime.of(year, month, day, hour, min);
-
 	}
 	
 }

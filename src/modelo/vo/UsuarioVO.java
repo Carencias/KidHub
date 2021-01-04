@@ -3,7 +3,7 @@ package modelo.vo;
 public class UsuarioVO {
 	
 	public enum TipoUsuario{
-		PADRE,HIJO,MONITOR,INCORRECTO
+		PADRE,HIJO,MONITOR
 	}
 	
 	private String nombreUsuario;
