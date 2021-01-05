@@ -39,6 +39,8 @@ public class ActividadController extends Controller {
     
     private Stage stage;
     
+    private MonitorInicioController controladorMonitor;
+    
     static Logger logger = Logger.getLogger(ActividadController.class);
     
     /**
@@ -50,10 +52,11 @@ public class ActividadController extends Controller {
      * @param stage
      *  Stage
      */
-    void initData(ActividadVO actividad, boolean modificacion, Stage stage) {
+    void initData(ActividadVO actividad, boolean modificacion, Stage stage, MonitorInicioController controladorMonitor) {
     	this.actividad = actividad;
     	this.modificacion = modificacion;
     	this.stage = stage;
+    	this.controladorMonitor = controladorMonitor;
   	
     	if(modificacion) {
     		this.setDatosActividad(actividad);
@@ -67,39 +70,34 @@ public class ActividadController extends Controller {
      */
     @FXML
     void confirmar(MouseEvent event) {
-    	if(this.modificacion) {	
-    		logger.trace("Boton de confirmar modificacion de actividad pulsado");
-    		try {
-    			this.getDatosActividad(actividad);
-    			Logica.getLogica().modificarActividad(actividad);
-			}catch(Exception e) {
-				if(e instanceof KidHubException) {
-					logger.error(e.getMessage());
-					muestraError("ERROR","Se produjo un error.", e.getMessage());
-				}else if(e instanceof SQLException) {
-					logger.error("Formato de algun campo introducido invalido");
-					muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-				}
-			}
-    	}else {
-    		logger.trace("Boton de confirmar creacion de actividad pulsado");
-    		try {
-    			this.getDatosActividad(actividad);
+    	
+    	try {
+    		this.getDatosActividad(actividad);
+    		
+	    	if(this.modificacion) {	
+	    		logger.trace("Boton de confirmar modificacion de actividad pulsado");
+	    		Logica.getLogica().modificarActividad(actividad);
+
+	    	}else {
+	    		logger.trace("Boton de confirmar creacion de actividad pulsado");
     			Logica.getLogica().crearActividad(actividad);
-			}catch(Exception e) {
-				if(e instanceof KidHubException) {
-					logger.error(e.getMessage());
-					muestraError("ERROR","Se produjo un error.", e.getMessage());
-				}else if(e instanceof SQLException) {
-					logger.error("Formato de algun campo introducido invalido");
-					muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-				}
+				
+	    	}
+			controladorMonitor.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+    	}catch(Exception e) {
+			if(e instanceof KidHubException) {
+				logger.error(e.getMessage());
+				muestraError("ERROR","Se produjo un error.", e.getMessage());
+			}else if(e instanceof SQLException) {
+				logger.error("Formato de algun campo introducido invalido");
+				muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
 			}
-    	}
+		}
+    	
     	this.cerrarVentana(event);
     	this.recuperarVentana(this.stage);
     }
-    
+        
     /**
      * Metodo que escucha el boton de cancelar la creacion/modificacion de la actividad
      * @param event
@@ -149,11 +147,11 @@ public class ActividadController extends Controller {
 		logger.trace("Rellenando la actividad con los datos de la interfaz");
 		StringBuffer error = new StringBuffer();
 		int numero = 1, aforo = 1;
-		if(this.nombreAct.getText().isEmpty() || this.tipo.getText().isEmpty() || this.calle.getText().isEmpty() || this.codPostal.getText().isEmpty() || this.ciudad.getText().isEmpty() 
-		   || this.diaInicio.getText().isEmpty() || this.mesInicio.getText().isEmpty() || this.anoInicio.getText().isEmpty() || this.horaInicio.getText().isEmpty() || this.minInicio.getText().isEmpty()
-		   || this.diaFin.getText().isEmpty() || this.mesFin.getText().isEmpty() || this.anoFin.getText().isEmpty() || this.horaFin.getText().isEmpty() || this.minFin.getText().isEmpty()) {
+		
+		if(hayCamposVacios(this.nombreAct, this.tipo, this.calle, this.codPostal, this.ciudad, this.diaInicio, this.mesInicio, this.anoInicio, this.horaInicio, this.minInicio, this.diaFin, this.mesFin, this.anoFin, this.horaFin, this.minFin)) {
 			error.append("Campos sin rellenar\n");
 		}
+		
 		try {
 			numero = Integer.parseInt(this.num.getText());
 			aforo = Integer.parseInt(this.aforo.getText());
@@ -167,45 +165,55 @@ public class ActividadController extends Controller {
 		actividad.setTipo(this.tipo.getText());
 		Direccion direccion = new Direccion(this.calle.getText(), Integer.parseInt(this.num.getText()), this.codPostal.getText(), this.ciudad.getText());
 		actividad.setDireccion(direccion);
-		if(diaInicio.getText().length() == 1) {
-			diaInicio.setText("0"+diaInicio.getText());
-		}
-		if(mesInicio.getText().length() == 1) {
-			mesInicio.setText("0"+mesInicio.getText());
-		}
-		if(horaInicio.getText().length() == 1) {
-			horaInicio.setText("0"+horaInicio.getText());
-		}
-		if(minInicio.getText().length() == 1) {
-			minInicio.setText("0"+minInicio.getText());
-		}
-		if(diaFin.getText().length() == 1) {
-			diaFin.setText("0"+diaFin.getText());
-		}
-		if(mesFin.getText().length() == 1) {
-			mesFin.setText("0"+mesFin.getText());
-		}
-		if(horaFin.getText().length() == 1) {
-			horaFin.setText("0"+horaFin.getText());
-		}
-		if(minFin.getText().length() == 1) {
-			minFin.setText("0"+minFin.getText());
-		}
+		
+		darFormatoVista(diaInicio, mesInicio, horaInicio, minInicio, diaFin, mesFin, horaFin, minFin);
+		
 		try {
-			LocalDateTime inicio = LocalDateTime.of(Integer.parseInt(this.anoInicio.getText()), Integer.parseInt(this.mesInicio.getText()), Integer.parseInt(this.diaInicio.getText()), Integer.parseInt(this.horaInicio.getText()), Integer.parseInt(this.minInicio.getText()));
-			LocalDateTime fin = LocalDateTime.of(Integer.parseInt(this.anoFin.getText()), Integer.parseInt(this.mesFin.getText()), Integer.parseInt(this.diaFin.getText()), Integer.parseInt(this.horaFin.getText()), Integer.parseInt(this.minFin.getText()));
-			actividad.setInicio(inicio);
-			actividad.setFin(fin);
-			actividad.setDuracion();
-			if(inicio.isAfter(fin)) {
-				error.append("La actividad no puede terminar antes de empezar");
-			}
+			error.append(this.setFechas());
+
 		}catch(Exception e) {
-			error.append("Formato de fecha invalido");
+			error.append("Formato de fecha invalido\n");
 		}
 		if(error.length() != 0) {
 			throw new KidHubException(error.toString());
 		}
 		actividad.setCapacidad(Integer.parseInt(this.aforo.getText()));
+	}
+	
+	private String setFechas() {
+		String error;
+		LocalDateTime inicio = LocalDateTime.of(Integer.parseInt(this.anoInicio.getText()), Integer.parseInt(this.mesInicio.getText()), Integer.parseInt(this.diaInicio.getText()), Integer.parseInt(this.horaInicio.getText()), Integer.parseInt(this.minInicio.getText()));
+		LocalDateTime fin = LocalDateTime.of(Integer.parseInt(this.anoFin.getText()), Integer.parseInt(this.mesFin.getText()), Integer.parseInt(this.diaFin.getText()), Integer.parseInt(this.horaFin.getText()), Integer.parseInt(this.minFin.getText()));
+		actividad.setInicio(inicio);
+		actividad.setFin(fin);
+		actividad.setDuracion();
+		if(inicio.isAfter(fin)) {
+			error = "La actividad no puede terminar antes de empezar\n";
+		}else {
+			error = "";
+		}
+		
+		return error;
+	}
+
+	private boolean hayCamposVacios(JFXTextField...campos) {
+		for(JFXTextField campo: campos) {
+			if(campo.getText().isEmpty()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	
+	private void darFormatoVista(JFXTextField...campos) {
+		
+		for(JFXTextField campo: campos) {
+			if(campo.getText().length() == 1) {
+				campo.setText("0"+campo.getText());
+			}
+		}	
+
 	}
 }
