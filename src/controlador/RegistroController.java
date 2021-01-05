@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import org.apache.log4j.Logger;
 
@@ -57,57 +58,58 @@ public class RegistroController extends Controller{
     @FXML
     void registrar(MouseEvent event) {
     	logger.trace("Pulsado boton de registrar");
-		Logica logica = Logica.getLogica();
 		PadreVO padrevo = new PadreVO();
 		MonitorVO monitorvo = new MonitorVO();
 		if(!contra1.getText().equals(contra2.getText())) {
 			logger.error("Las contrasenas no coinciden");
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
 		}else {
-			if(padre.isSelected()) {
-				logger.trace("Opcion de registrar padre seleccionada");
-				rellenarVO(padrevo);
-				//TODO queda poner el telefono
-				try {
-					logica.registrarUsuario(padrevo);
-					logica.setUsuarioActual(padrevo);
-					this.mostrarVentana("PadreInicio");
-					this.cerrarVentana(event);
-				}catch(Exception e) {
-					if(e instanceof KidHubException) {
-						logger.error(e.getMessage());
-						muestraError("ERROR","Se produjo un error.", e.getMessage());
-					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
-						logger.error("El usuario ya existe");
-						muestraError("ERROR","Se produjo un error.", "El usuario ya existe.");
-					}else if(e instanceof SQLException){
-						logger.error(((SQLException) e).getErrorCode());
-						muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-					}
-				}			
-			}else{
-				logger.trace("Opcion de registrar monitor seleccionada");
-				rellenarVO(monitorvo);
-				//TODO queda poner las especialidades
-				try {
-					logica.registrarUsuario(monitorvo);
-					logica.setUsuarioActual(monitorvo);
-					this.mostrarVentana("MonitorInicio");
-					this.cerrarVentana(event);
-				}catch(Exception e) {
-					if(e instanceof KidHubException) {
-						logger.error(e.getMessage());
-						muestraError("ERROR","Se produjo un error.", e.getMessage());
-					}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
-						logger.error("El usuario ya existe");
-						muestraError("ERROR","Se produjo un error.", "El usuario ya existe.");
-					}else if(e instanceof SQLException){
-						logger.error(((SQLException) e).getErrorCode());
-						muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-					}
-				}	
-			}
+			try {
+				if(padre.isSelected()) {
+					registrarPadre(event, padrevo);
+				}else{
+					registrarMonitor(event, monitorvo);
+				}
+			}catch(Exception e) {
+				if(e instanceof KidHubException) {
+					logger.error(e.getMessage());
+					muestraError("ERROR","Se produjo un error.", e.getMessage());
+				}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
+					logger.error("El usuario ya existe");
+					muestraError("ERROR","Se produjo un error.", "El usuario ya existe.");
+				}else if(e instanceof DateTimeParseException) {
+					logger.error("El formato de la fecha no es correcto");
+					muestraError("ERROR","Se produjo un error.", "El formato de la fecha no es correcto.");
+				}else if(e instanceof SQLException){
+					logger.error(((SQLException) e).getErrorCode());
+					muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
+				}
+			}	
 		}	
+    }
+    
+    private void registrarPadre(MouseEvent event, PadreVO padrevo) throws KidHubException, SQLException {
+		Logica logica = Logica.getLogica();
+    	logger.trace("Opcion de registrar padre seleccionada");
+		rellenarVO(padrevo);
+		//TODO queda poner el telefono
+		logica.registrarUsuario(padrevo);
+		logica.setUsuarioActual(padrevo);
+		this.mostrarVentana("PadreInicio");
+		this.cerrarVentana(event);
+
+    }
+    
+    private void registrarMonitor(MouseEvent event, MonitorVO monitorvo) throws KidHubException, SQLException {
+		Logica logica = Logica.getLogica();
+		logger.trace("Opcion de registrar monitor seleccionada");
+		rellenarVO(monitorvo);
+		//TODO queda poner las especialidades
+		logica.registrarUsuario(monitorvo);
+		logica.setUsuarioActual(monitorvo);
+		this.mostrarVentana("MonitorInicio");
+		this.cerrarVentana(event);
+
     }
     
     /**
