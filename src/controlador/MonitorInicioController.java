@@ -75,9 +75,8 @@ public class MonitorInicioController extends Controller{
     	logger.trace("Eligiendo panel monitor");
         if (actionEvent.getSource() == inicio) {
         	logger.trace("Mostrando pantalla de inicio del monitor");
-        	panoInicio.setVisible(true);
-        	panoCerrar.setVisible(false);
-        	panoActividades.setVisible(false);
+        	mostrarPanelesActividadesCerrarInicio(false, false, true);
+
         	
         } else if (actionEvent.getSource() == actividades) {
         	logger.trace("Mostrando pantalla de actividades del monitor");
@@ -87,17 +86,20 @@ public class MonitorInicioController extends Controller{
         		logger.error("No se han podido obtener las actividades");
         		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
         	}
-        	panoActividades.setVisible(true);       	
-        	panoCerrar.setVisible(false);
-        	panoInicio.setVisible(false);
+        	mostrarPanelesActividadesCerrarInicio(true, false, false);
+
         	
         }else if (actionEvent.getSource() == cerrarSesion) {
         	logger.trace("Mostrando pantalla de cerrarSesion del monitor");
-        	panoCerrar.setVisible(true);  
-        	panoInicio.setVisible(false);
-        	panoActividades.setVisible(false);
+        	mostrarPanelesActividadesCerrarInicio(false, true, false);
         }
-    }    
+    }
+    
+    private void mostrarPanelesActividadesCerrarInicio(boolean actividades, boolean cerrar, boolean inicio) {
+    	panoActividades.setVisible(actividades);
+    	panoCerrar.setVisible(cerrar);  
+    	panoInicio.setVisible(inicio);
+    }
     
     /**
      * Metodo que escucha el boton de borrar actividad e indica a la logica que borre la actividad seleccionada
@@ -193,7 +195,7 @@ public class MonitorInicioController extends Controller{
 		}
     
     	ActividadController controller = loader.getController();
-    	controller.initData(actividad, modificacion, stage2);
+    	controller.initData(actividad, modificacion, stage2, this);
     	stage.show();
     }
 
@@ -202,7 +204,7 @@ public class MonitorInicioController extends Controller{
      * @param actividades
      *  Actividades del monitor que se mostraran
      */
-	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
+	void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
 		//Inicializacion de los headers de las tablas
 		logger.trace("Inicializando headers de las tablas de actividades");
 		//TODO incluir el tipo de la actividad

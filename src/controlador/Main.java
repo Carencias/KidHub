@@ -60,7 +60,7 @@ public class Main extends Application {
 		//apuntarHijoATrayecto();
 		//desapuntarHijoDeTrayecto();
 		DOMConfigurator.configure("./logs/log4j.xml");
-		logger.error("Log4j appender configuration is successful !!");
+		logger.info("La aplicacion se ha iniciado");
 		launch(args);
 	}
 	
@@ -68,10 +68,10 @@ public class Main extends Application {
 		try {
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("../vista/Login.fxml"));
 			Scene scene = new Scene(root);
-			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
+			logger.info("Se ha mostrado la ventana de inicio de sesion");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
