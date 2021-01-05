@@ -25,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.MouseEvent;
@@ -71,10 +72,11 @@ public class PadreInicioController extends Controller{
     @FXML
     private JFXTreeTableView<ActividadTabla> actividadesTree;
     
-    private ArrayList<HijoVO> hijos; 
-    
     @FXML
     private JFXTreeTableView<TrayectoTabla> trayectosTree;
+    
+    private ArrayList<HijoVO> hijos; 
+
     
     static Logger logger = Logger.getLogger(PadreInicioController.class);
     
@@ -83,7 +85,7 @@ public class PadreInicioController extends Controller{
      */
     @FXML
     public void initialize() {
-    	nombreLabel.setText(Logica.getLogica().getUsuarioActual().getNombre()); 
+    	nombreLabel.setText(Logica.getLogica().getUsuarioActual().getNombre());
     }
     
     
@@ -405,9 +407,21 @@ public class PadreInicioController extends Controller{
     public void crearTrayecto(MouseEvent event) {
     	System.out.println("Creando trayecto");
     	Stage stage = this.esconderVentana(event);
-    	ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
+
     	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
     	//paso un VO vacio porque al ser crear no conozco ningun campo
+    	
+    	ArrayList<ActividadVO> actividades = new ArrayList<>();
+    	HijoVO hijo = new HijoVO();
+    	
+    	//TODO A Santi no le gusta esto, comprobar otras maneras
+    	hijo.setNombreUsuario("Todos");
+    	try {
+    		actividades = Logica.getLogica().getActividades(hijo);
+    	}catch(SQLException e) {
+			logger.error("Error al obtener la actividad: "+e.getMessage());
+			this.muestraError("ERROR", "Actividades", "Error al obtener la actividad");
+		}
     	this.mostrarVentanaTrayecto(actividades, new TrayectoVO(), stage, false);
     }
     
@@ -541,7 +555,7 @@ public class PadreInicioController extends Controller{
 			e.printStackTrace();
 		}
 
-    	TrayectoController controller = loader.getController();
+    	TrayectoController controller = loader.getController();    	
     	controller.initData(actividades, trayecto, stage2, modificacion);
 
     	stage.show();
