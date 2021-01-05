@@ -348,8 +348,8 @@ public class PadreInicioController extends Controller{
     	
 		String nombre = this.selectHijoTrayecto.getSelectionModel().getSelectedItem();
 		UsuarioVO usuario = new UsuarioVO();
-		if(nombre.equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {
-			
+		
+		if(nombre.equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {		
 			usuario.setTipo(TipoUsuario.PADRE);
 		}else {
 			usuario.setTipo(TipoUsuario.HIJO);
@@ -407,14 +407,12 @@ public class PadreInicioController extends Controller{
     public void crearTrayecto(MouseEvent event) {
     	System.out.println("Creando trayecto");
     	Stage stage = this.esconderVentana(event);
-
-    	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
-    	//paso un VO vacio porque al ser crear no conozco ningun campo
     	
     	ArrayList<ActividadVO> actividades = new ArrayList<>();
     	HijoVO hijo = new HijoVO();
     	
     	//TODO A Santi no le gusta esto, comprobar otras maneras
+    	//TODO de esta manera cogemos todos las actividades, no solo aquellas a las que esten apuntados sus hijos
     	hijo.setNombreUsuario("Todos");
     	try {
     		actividades = Logica.getLogica().getActividades(hijo);
@@ -435,8 +433,10 @@ public class PadreInicioController extends Controller{
 	    	ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
 	    	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
 	    	TrayectoVO trayecto = new TrayectoVO();
+	    	//TODO metodo ya hecho en el DAO, crear en logica y descomentar la siguiente linea
+	    	//Logica.getLogica().rellenarTrayecto(trayecto);
 	    	//TODO recoger los datos del trayecto seleccionado
-	    	this.mostrarVentanaTrayecto(actividades, trayecto, stage, false);
+	    	this.mostrarVentanaTrayecto(actividades, trayecto, stage, true);
     	}
     }
     
@@ -497,19 +497,15 @@ public class PadreInicioController extends Controller{
 			
 			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
 		}else {
-			//Solo cuando sea un hijo lo que este en el combo se va a poder invocar este metodo
+			//Solo cuando sea un hijo lo que este en el combo se va a poder desapuntar, luego uso un objeto hijoVO
 			usuario = this.getUsuarioTrayecto();
 			hijo.setNombreUsuario(usuario.getNombreUsuario());
+			//TODO esto para que si ya es un objeto hijo no???
 			hijo.setTipo(TipoUsuario.HIJO);
 			trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
 			trayecto.setIdTrayecto(trayectoTabla.getId());		
 			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
-			try {
-				this.inicializarTablaActividades(Logica.getLogica().getActividades(this.getHijo()));
-	        }catch(SQLException e) {
-	        		logger.error("No se han podido obtener las actividades");
-	        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
-	        }
+			this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(hijo));
 		}	
 	}
 

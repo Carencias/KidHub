@@ -150,7 +150,7 @@
                      </graphic>
                   </JFXButton>
                   <JFXComboBox fx:id="selectHijoTrayecto" focusColor="#bcf4fc" layoutX="623.0" layoutY="39.0" onAction="#hijoElegidoTrayecto" prefHeight="25.0" prefWidth="87.0" promptText="Hijos" style="-fx-prompt-text-fill: #bcf4fc;" unFocusColor="#bcf4fc" />
-                  <Label fx:id="trayectosVacio" layoutX="66.0" layoutY="233.0" text="Selecciona el hijo del que quieres consultar los trayectos." textFill="#bcf4fc">
+                  <Label fx:id="trayectosVacio" layoutX="66.0" layoutY="233.0" text="Selecciona el usuario del que quieres consultar los trayectos." textFill="#bcf4fc">
                      <font>
                         <Font size="24.0" />
                      </font>

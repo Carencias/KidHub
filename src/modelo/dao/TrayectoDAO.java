@@ -26,6 +26,8 @@ public class TrayectoDAO {
 		this.conexion = new Conexion();
 	}
 	
+	//TODO logs y javadoc
+	
 	public void crearTrayecto(TrayectoVO trayecto) throws SQLException {
 		Statement statement;
 		
@@ -173,6 +175,24 @@ public class TrayectoDAO {
 		}
 		return null;
 	}
+
+	
+	public void rellenarTrayecto(TrayectoVO trayecto) throws SQLException{
+		ResultSet resultSet = null;
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT * FROM ACTIVITIES ");
+		query.append("WHERE ActivityID='"+ trayecto.getIdTrayecto()+"';");
+		
+		resultSet = statement.executeQuery(query.toString());
+		while(resultSet.next()) {
+			this.setDatosTrayecto(trayecto, resultSet);
+		}
+		conexion.closeConnection();
+	}
+	
 	
 	private ArrayList<TrayectoVO> obtenerTrayectos(ResultSet resultSet) {
 		ArrayList<TrayectoVO> trayectos = new ArrayList<TrayectoVO>();
