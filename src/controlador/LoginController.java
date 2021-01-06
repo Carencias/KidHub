@@ -37,25 +37,39 @@ public class LoginController extends Controller{
 	static Logger logger = Logger.getLogger(LoginController.class);
 	
 	/**
-	 * Metodo que oculta los caracteres de la contrasena o los muestra.
+	 * Oculta los caracteres de la contrasena o los muestra.
 	 */
 	@FXML
 	public void cambiarCaracteres() {
 		if(this.mostrar.isSelected()) {	
-			logger.trace("Ocultando contrasena");
-			this.contrasenaVisible.setText(this.textoContrasena.getText());
-			this.textoContrasena.setVisible(false);
-			this.contrasenaVisible.setVisible(true);
+			mostrarContrasena();
 		}else {
-			logger.trace("Mostrando contrasena");
-			this.textoContrasena.setText(this.contrasenaVisible.getText());
-			this.textoContrasena.setVisible(true);
-			this.contrasenaVisible.setVisible(false);
+			ocultarContrasena();
 		}
+	}
+	
+	/**
+	 * Muestra los caracteres introducidos en el campo de la contrasena
+	 */
+	private void mostrarContrasena() {
+		logger.trace("Mostrando contrasena");
+		this.contrasenaVisible.setText(this.textoContrasena.getText());
+		this.textoContrasena.setVisible(false);
+		this.contrasenaVisible.setVisible(true);
+	}
+	
+	/**
+	 * Oculta los caracteres introducidos en el campo de la contrasena
+	 */
+	private void ocultarContrasena() {
+		logger.trace("Ocultando contrasena");
+		this.textoContrasena.setText(this.contrasenaVisible.getText());
+		this.textoContrasena.setVisible(true);
+		this.contrasenaVisible.setVisible(false);
 	}
 
 	/**
-	 * Metodo que escucha el boton de loguin y realiza las acciones necesarias para intentar loguear al usuario
+	 * Metodo que escucha el boton de login y realiza las acciones necesarias para intentar loguear al usuario
 	 * @param event
 	 *  Pulsado boton loguear
 	 */

@@ -44,11 +44,11 @@ public class ActividadController extends Controller {
     static Logger logger = Logger.getLogger(ActividadController.class);
     
     /**
-     * Metodo que inicializa la clase y inicializa los campos de la pantalla con los datos de la actividad si se esta modificando
+     * Inicializa la clase y inicializa los campos de la pantalla con los datos de la actividad si se esta modificando
      * @param actividad
-     *  ActividadVO con los datos de la actividad a modificar
+     * Contenedor con los datos de la actividad a modificar
      * @param modificacion
-     *  Boleean que indica si se esta modificando la actividad o creando
+     *  true si se esta modificando la actividad, false si se esta creando
      * @param stage
      *  Stage
      */
@@ -64,7 +64,7 @@ public class ActividadController extends Controller {
     }
     
     /**
-     * Metodo que escucha el boton de confirmar y indica a la logica que cree o modifique una actividad
+     * Escucha el boton de confirmar e indica a la logica que cree o modifique una actividad
      * @param event
      *  Pulsado boton de confirmar
      */
@@ -99,7 +99,7 @@ public class ActividadController extends Controller {
     }
         
     /**
-     * Metodo que escucha el boton de cancelar la creacion/modificacion de la actividad
+     * Escucha el boton de cancelar la creacion/modificacion de la actividad
      * @param event
      *  Pulsado boton de cancelar
      */
@@ -111,9 +111,9 @@ public class ActividadController extends Controller {
     }
     
     /**
-     * Metodo privado que actualiza los campos de la interfaz con los datos de la actividad recibida
+     * Actualiza los campos de la interfaz con los datos de la actividad recibida
      * @param actividad
-     *  ActividadVO con los datos de la actividad
+     *  Contenedor con los datos de la actividad
      */
     private void setDatosActividad(ActividadVO actividad) {
     	logger.trace("Seteando datos en la interfaz");
@@ -137,11 +137,11 @@ public class ActividadController extends Controller {
 	}
 	
 	/**
-	 * Metodo privado que recoge los datos de la actividad y comprueba que todos los datos son validos
+	 * Recoge los datos de la actividad y comprueba que todos los datos son validos
 	 * @param actividad
-	 *  ActividadVO en la que se almacenan los datos recogidos
+	 *  Contenedor en la que se almacenan los datos recogidos
 	 * @throws KidHubException
-	 *  Lanza la excepcion si los datos son invalidos
+	 *  Si los datos son invalidos
 	 */
 	private void getDatosActividad(ActividadVO actividad) throws KidHubException{
 		logger.trace("Rellenando la actividad con los datos de la interfaz");
@@ -180,8 +180,13 @@ public class ActividadController extends Controller {
 		actividad.setCapacidad(Integer.parseInt(this.aforo.getText()));
 	}
 	
+	/**
+	 * Asigna las fechas a la actividad
+	 * @return
+	 * Cadena de texto que muestra el error en caso de que ocurra 
+	 */
 	private String setFechas() {
-		String error;
+		String error = "";
 		LocalDateTime inicio = LocalDateTime.of(Integer.parseInt(this.anoInicio.getText()), Integer.parseInt(this.mesInicio.getText()), Integer.parseInt(this.diaInicio.getText()), Integer.parseInt(this.horaInicio.getText()), Integer.parseInt(this.minInicio.getText()));
 		LocalDateTime fin = LocalDateTime.of(Integer.parseInt(this.anoFin.getText()), Integer.parseInt(this.mesFin.getText()), Integer.parseInt(this.diaFin.getText()), Integer.parseInt(this.horaFin.getText()), Integer.parseInt(this.minFin.getText()));
 		actividad.setInicio(inicio);
@@ -189,13 +194,18 @@ public class ActividadController extends Controller {
 		actividad.setDuracion();
 		if(inicio.isAfter(fin)) {
 			error = "La actividad no puede terminar antes de empezar\n";
-		}else {
-			error = "";
 		}
 		
 		return error;
 	}
 
+	/**
+	 * Comprueba si alguno de los campos introducidos esta vacio
+	 * @param campos
+	 * Campos de texto en los que se introducen los datos de la actividad
+	 * @return
+	 * True si algun campo de los introducidos esta vacio
+	 */
 	private boolean hayCamposVacios(JFXTextField...campos) {
 		for(JFXTextField campo: campos) {
 			if(campo.getText().isEmpty()) {
@@ -206,7 +216,11 @@ public class ActividadController extends Controller {
 		return false;
 	}
 
-	
+	/**
+	 * Mejora el formato de los campos de texto para mostrarlos por la interfaz grafica
+	 * @param campos
+	 * Campos de texto a los que hay que aplicar el formato
+	 */
 	private void darFormatoVista(JFXTextField...campos) {
 		
 		for(JFXTextField campo: campos) {

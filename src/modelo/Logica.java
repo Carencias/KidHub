@@ -18,22 +18,23 @@ import modelo.vo.UsuarioVO.TipoUsuario;
 public class Logica {
 	
 	/**
-	 * Atributo que guarda la informacion del usuario que actualmente se encuentra logueado en la aplicacion
+	 * Usuario que actualmente se encuentra logueado en la aplicacion
 	 */
 	private UsuarioVO usuarioActual;
 	
 	/**
-	 * Atributo privado que guarda la unica instancia de la aplicacion
+	 * Unica instancia de la logica (Singleton)
 	 */
 	private static Logica logica;
 	static Logger logger = Logger.getLogger(Logica.class);
+	
 	/**
 	 * Constructor privado de la clase, crea un objeto Logica
 	 */
 	private Logica() {}
 	
 	/**
-	 * Getter que devuelve la unica instancia de la clase, si esta no esta creada aun la crea.
+	 * Devuelve la unica instancia de la clase. Si esta no esta creada aun, la crea.
 	 * @return
 	 *  Instancia de la clase Logica
 	 */
@@ -47,29 +48,31 @@ public class Logica {
 	}
 	
 	/**
-	 * Metodo que setea el usuario actual
+	 * Asigna el usuario actual
 	 * @param usuario
-	 *  Usuario actualmente logueado
+	 *  Usuario que ha iniciado sesion
 	 */
 	public void setUsuarioActual(UsuarioVO usuario){
-		logger.trace("Devolviendo el usuario actual");
 		this.usuarioActual = usuario;
+		logger.trace("Asignando el usuario actual");
 	}
 	
 	/**
-	 * Metodo que comprueba que los valores introducidos son correctos, y se comunica con el modelo para registrar un usuario en la aplicacion
+	 * Comprueba que los valores introducidos son correctos, y se comunica con el modelo para registrar un usuario en la aplicacion
 	 * @param usuario
-	 *  Objeto de tipo UsuarioVO con la informacion del usuario a registrar
+	 *  Contiene la informacion del usuario a registrar
 	 * @throws KidHubException
-	 *  Excepcion de tipo KidHub si algun dato introducido es invalido
+	 *  Si algun dato introducido es invalido
 	 * @throws SQLException
-	 *  Excepcion de tipo SQLException si se ha producido algun error relacionado con la base de datos
+	 *  Si se ha producido algun error relacionado con la base de datos
 	 */
 	public void registrarUsuario(UsuarioVO usuario) throws KidHubException, SQLException{
-		logger.trace("Registrando usuario");
-		if(usuario.getNombre().equals("") || usuario.getApellidos().equals("") || usuario.getContrasena().equals("") || usuario.getNombreUsuario().equals("") || usuario.getFechaNacimiento().equals("") || usuario.getDni().equals("") || usuario.getEmail().equals("")) {
+		if(camposRegistroUsuarioIncompletos(usuario)) {
+			logger.error("Se ha intentado registrar un usuario sin introducir todos los campos necesarios");
 			throw new KidHubException("Hay campos sin rellenar");
 		}
+		
+		logger.trace("Se han introducido todos los campos para registar a un usuario");
 		new UsuarioDAO().registrarUsuario(usuario);
 		
 		if(usuario.getTipo()==TipoUsuario.HIJO) {
@@ -78,55 +81,95 @@ public class Logica {
 	}
 	
 	/**
-	 * Metodo que comprueba que los valores introducidos son correctos, y se comunica con el modelo para agregar un hijo a un padre
+	 * Comprueba si alguno de los campos que hay que rellenar para registrar a un usuario esta vacio
+	 * @param usuario
+	 * contiene los datos introducidos para registrar a un usuario
+	 * @return
+	 * true si alguno de los campos esta vacio
+	 */
+	public boolean camposRegistroUsuarioIncompletos(UsuarioVO usuario) {
+		return usuario.getNombre().equals("") || usuario.getApellidos().equals("") || 
+				usuario.getContrasena().equals("") || usuario.getNombreUsuario().equals("") || 
+				usuario.getFechaNacimiento().equals("") || usuario.getDni().equals("") || usuario.getEmail().equals("");
+	}
+	
+	/**
+	 * Comprueba que los campos necesarios no estan vacios y se comunica con el modelo para agregar un hijo a un padre
 	 * @param hijo
-	 *  HijoVO con los datos del hijo para agregar al padre
+	 *  contiene los datos del hijo para agregar al padre
 	 * @throws SQLException
-	 *  Excepcion de tipo SQLException si se ha producido algun error relacionado con la base de datos
+	 *  Si se ha producido algun error relacionado con la base de datos
 	 * @throws KidHubException
-	 *  Excepcion de tipo KidHub si algun dato introducido es invalido
+	 *  Si algun dato introducido es invalido
 	 */
 	public void agregarHijoAPadre(HijoVO hijo) throws SQLException, KidHubException{
 		logger.trace("Agregando hijo a padre");
-		if(hijo.getNombreUsuario().equals("") || hijo.getContrasena().equals("")) {
-			throw new KidHubException("Hay campos sin rellenar");
-		}
+
+		comprobarCamposLoginNoVacios(hijo);
+		
 		new PadreDAO().agregarHijoAPadre(hijo, (PadreVO) this.usuarioActual);
 	}
 	
 	/**
-	 * Metodo que comprueba que los valores introducidos son correctos, y se comunica con el modelo para loguear un usuario en la aplicacion
+	 * Permite que el usuario acceda a la aplicacion si ha introducido sus credenciales correctamente
 	 * @param usuario
-	 *  UsuarioVO con los datos del usuario que se esta logueando
+	 *  Contiene los datos del usuario que se esta logueando
 	 * @return
-	 *  Devuelve el tipo de usuario logueado
+	 *  tipo de usuario logueado
 	 * @throws KidHubException
-	 *  Lanza la excepcion si hay campos sin rellenar o si el usuario o la contrasena son incorrectos
+	 *  Si hay campos sin rellenar o si el usuario o la contrasena son incorrectos
 	 * @throws SQLException
-	 *  Lanza la excepcion si se ha producido un error con la base de datos
+	 *  Si se ha producido un error con la base de datos
 	 */
 	public TipoUsuario loguearUsuario(UsuarioVO usuario) throws KidHubException, SQLException{
 		logger.trace("Logueando usuario");
-		if(usuario.getNombreUsuario().equals("") || usuario.getContrasena().equals("")) {
-			throw new KidHubException("Hay campos sin rellenar");
-		}
-		TipoUsuario tipo;
-		String contrasena = usuario.getContrasena();
-		String usuarion = usuario.getNombreUsuario();
 		
-		this.usuarioActual = new UsuarioDAO().loguearUsuario(usuario);
-		if(usuarioActual.getContrasena().equals(contrasena) || usuarioActual.getNombreUsuario().equals(usuarion)) {
+		comprobarCamposLoginNoVacios(usuario);
+		
+		TipoUsuario tipo;
+		
+		if(credencialesCorrectas(usuario)) {
 			logger.trace("Usuario y contrasena correctos");
-			logger.trace("Usuario: "+usuarion+" ha accedido a su cuenta correctamente");
+			logger.info("Usuario: "+ usuario.getNombreUsuario() +" ha accedido a su cuenta correctamente");
+			new UsuarioDAO().loguearUsuario(usuario); //Se agregan los datos basicos al usuario al acceder a la BBDD
+			this.usuarioActual = usuario;
 			tipo = this.usuarioActual.getTipo();
 		}else {
-			throw new KidHubException("Usuario y/o contrasena incorrecto");
+			throw new KidHubException("Usuario y/o contrasena incorrectos");
 		}
+				
 		return tipo;
 	}
 	
 	/**
-	 * Metodo que agrega el nombre de usuario del monitor a la actividad, y se comunica con el modelo para crear la actividad
+	 * Comprueba que la conterasena y el usuario introducidos sean correctos
+	 * @param usuario
+	 * Contiene el usuario y la contrasena introducidos
+	 * @return
+	 * true si son correctos, false si no
+	 * @throws SQLException 
+	 */
+	private boolean credencialesCorrectas(UsuarioVO usuario) throws SQLException {	
+		
+		return new UsuarioDAO().credencialesCorrectas(usuario); 
+	}
+	
+	/**
+	 * Comprueba que los campos usuario y contrasena introducidos no esten vacios
+	 * @param usuario
+	 * Contiene el usuario y la contrasena a comprobar
+	 * @throws KidHubException
+	 * Si alguno de los campos esta vacio
+	 */
+	private void comprobarCamposLoginNoVacios(UsuarioVO usuario) throws KidHubException {
+		if(usuario.getNombreUsuario().equals("") || usuario.getContrasena().equals("")) {
+			logger.error("El usuario o la contrasena estan vacios");
+			throw new KidHubException("Hay campos sin rellenar");
+		}
+	}
+	
+	/**
+	 * Agrega el nombre de usuario del monitor a la actividad, y se comunica con el modelo para crear la actividad
 	 * @param actividadVO
 	 *  ActividadVO con los datos de la actividad para crear
 	 * @throws SQLException
@@ -136,6 +179,7 @@ public class Logica {
 		actividadVO.setMonitor((MonitorVO) this.usuarioActual);
 		new ActividadDAO().crearActividad(actividadVO);
 	}
+	
 	
 	/**
 	 * Metodo que agrega el nombre de usuario del monitor a la actividad, y se comunica con el modelo para crear la actividad
@@ -219,15 +263,20 @@ public class Logica {
 	}
 
 	/**
-	 * Metodo que devuelve el usuario actualmente logueado en la aplicacion
+	 * Devuelve el usuario actualmente logueado en la aplicacion
 	 * @return
-	 *  Devuelve el usuario actualmente logueado en la aplicacion
+	 *  Usuario actualmente logueado en la aplicacion
 	 */
 	public UsuarioVO getUsuarioActual() {
 		logger.trace("Obteniendo usuario actual");
 		return this.usuarioActual;
 	}
 
+	/**
+	 * 
+	 * @param usuario
+	 * @return
+	 */
 	public ArrayList<TrayectoVO> getTrayectos(UsuarioVO usuario) {
 		return new TrayectoDAO().mostrarTrayectos(usuario);
 	}

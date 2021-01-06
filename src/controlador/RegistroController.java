@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.*;
+import modelo.vo.UsuarioVO.TipoUsuario;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -58,18 +59,28 @@ public class RegistroController extends Controller{
     @FXML
     void registrar(MouseEvent event) {
     	logger.trace("Pulsado boton de registrar");
-		PadreVO padrevo = new PadreVO();
-		MonitorVO monitorvo = new MonitorVO();
+		
+    	UsuarioVO usuarioVO;
+    	
 		if(!contra1.getText().equals(contra2.getText())) {
 			logger.error("Las contrasenas no coinciden");
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
 		}else {
 			try {
 				if(padre.isSelected()) {
-					registrarPadre(event, padrevo);
+					usuarioVO = new PadreVO();
+					usuarioVO.setTipo(TipoUsuario.PADRE);
+					//TODO set telefono
 				}else{
-					registrarMonitor(event, monitorvo);
+					usuarioVO = new MonitorVO();
+					usuarioVO.setTipo(TipoUsuario.MONITOR);
+					//TODO set especialidad
 				}
+				
+				registrarUsuario(event, usuarioVO);
+				this.mostrarVentana(usuarioVO.getTextoTipo() + "Inicio");
+				this.cerrarVentana(event);
+				
 			}catch(Exception e) {
 				if(e instanceof KidHubException) {
 					logger.error(e.getMessage());
@@ -88,34 +99,27 @@ public class RegistroController extends Controller{
 		}	
     }
     
-    private void registrarPadre(MouseEvent event, PadreVO padrevo) throws KidHubException, SQLException {
+    /**
+     * Conecta con la logica de la aplicacion para registrar al usuario en la BBDD
+     * @param event
+     * Evento que dispara el registro
+     * @param usuario
+     * Contenedor donde se van a almacenar los datos introducidos
+     * @throws KidHubException
+     * @throws SQLException
+     */
+    private void registrarUsuario(MouseEvent event, UsuarioVO usuario) throws KidHubException, SQLException {
 		Logica logica = Logica.getLogica();
     	logger.trace("Opcion de registrar padre seleccionada");
-		rellenarVO(padrevo);
-		//TODO queda poner el telefono
-		logica.registrarUsuario(padrevo);
-		logica.setUsuarioActual(padrevo);
-		this.mostrarVentana("PadreInicio");
-		this.cerrarVentana(event);
-
-    }
-    
-    private void registrarMonitor(MouseEvent event, MonitorVO monitorvo) throws KidHubException, SQLException {
-		Logica logica = Logica.getLogica();
-		logger.trace("Opcion de registrar monitor seleccionada");
-		rellenarVO(monitorvo);
-		//TODO queda poner las especialidades
-		logica.registrarUsuario(monitorvo);
-		logica.setUsuarioActual(monitorvo);
-		this.mostrarVentana("MonitorInicio");
-		this.cerrarVentana(event);
-
+		rellenarVO(usuario);
+		logica.registrarUsuario(usuario);
+		logica.setUsuarioActual(usuario);
     }
     
     /**
-     * Metodo privado que rellena un UsuarioVO con los datos introducidos
+     * Rellena un UsuarioVO con los datos introducidos
      * @param usuariovo
-     *  UsuarioVO donde se guardaran los datos
+     * Contenedor donde se guardaran los datos
      */
     private void rellenarVO(UsuarioVO usuariovo) {
     	logger.trace("Rellenando usuario con los datos introducidos");
