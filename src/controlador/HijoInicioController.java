@@ -68,11 +68,9 @@ public class HijoInicioController extends Controller{
     public void elegirPanel(ActionEvent actionEvent) {
     	
         if (actionEvent.getSource() == inicio) {      	
-        	panoInicio.setVisible(true);
-        	panoCerrar.setVisible(false);
-        	panoActividades.setVisible(false);
-        	panoTrayectos.setVisible(false);
         	
+            mostrarPanelesActividadesCerrarInicioTrayectos(false, false, true, false);
+
         } else if (actionEvent.getSource() == actividades) {
         	try {
         		this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual())); 
@@ -80,40 +78,39 @@ public class HijoInicioController extends Controller{
 	        		logger.error("No se han podido obtener las actividades");
 	        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
 	        }      	
-        	panoActividades.setVisible(true);       	
-        	panoCerrar.setVisible(false);
-        	panoInicio.setVisible(false);
-        	panoTrayectos.setVisible(false);
+            mostrarPanelesActividadesCerrarInicioTrayectos(true, false, false, false);
+
         	
         }else if (actionEvent.getSource() == trayectos) {
         	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
-        	panoTrayectos.setVisible(true);
-        	panoCerrar.setVisible(false);  
-        	panoInicio.setVisible(false);
-        	panoActividades.setVisible(false);
+            
+        	mostrarPanelesActividadesCerrarInicioTrayectos(false, false, false, true);
     	
     	}else if (actionEvent.getSource() == cerrarSesion) {
-        	panoCerrar.setVisible(true);  
-        	panoInicio.setVisible(false);
-        	panoActividades.setVisible(false);
-        	panoTrayectos.setVisible(false);
+            mostrarPanelesActividadesCerrarInicioTrayectos(false, true, false, false);
+
         }
-    } 
+    }
+    
+    private void mostrarPanelesActividadesCerrarInicioTrayectos(boolean actividades, boolean cerrar, boolean inicio, boolean trayectos) {
+    	panoActividades.setVisible(actividades);
+    	panoCerrar.setVisible(cerrar);  
+    	panoInicio.setVisible(inicio);
+    	panoTrayectos.setVisible(trayectos);
+    	
+    }
 
     @FXML
-    public void mostrarActividadTablaes(MouseEvent event) {
-    	System.out.println("Mostrando Actividades");
+    public void mostrarActividadTablas(MouseEvent event) {
+    	logger.trace("Intentando mostrar actividades del hijo");
+    	
     	try {
     		this.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+    		logger.trace("Actividades del hijo mostradas");
         }catch(SQLException e) {
         		logger.error("No se han podido obtener las actividades");
         		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
         }
-    }
-    
-    @FXML
-    public void mostrarTrayectos(MouseEvent event) {
-    	System.out.println("Mostrando trayectos.");
     }
 
 
@@ -183,6 +180,8 @@ public class HijoInicioController extends Controller{
 	    actividadesTree.setShowRoot(false);
 	    
 	    actividadesTree.setVisible(true);
+	    
+	    logger.trace("Tabla de actividades del hijo inicializada");
 	}
 
 
@@ -243,6 +242,9 @@ public class HijoInicioController extends Controller{
 	    trayectosTree.setShowRoot(false);
 	    
 	    trayectosTree.setVisible(true);
+	    
+	    logger.trace("Tabla de trayectos del hijo inicializada");
+
 	}
     
 }

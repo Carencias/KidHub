@@ -49,7 +49,6 @@ public class Controller {
 		try {
 			logger.trace("Mostrando ventana: "+ventana);
 			root = (AnchorPane) FXMLLoader.load(getClass().getResource("../vista/" + ventana + ".fxml"));
-			//scene.getStylesheets().add(getClass().getResource("vista/application.css").toExternalForm());
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.setResizable(false);
