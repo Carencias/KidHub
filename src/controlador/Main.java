@@ -217,14 +217,24 @@ public class Main extends Application {
     
     public static void apuntarHijoATrayecto() {
     	Logica.getLogica().setUsuarioActual(padre);
-    	Logica.getLogica().apuntarHijoATrayecto(hijo, trayecto);
+    	try {
+			Logica.getLogica().apuntarHijoATrayecto(hijo, trayecto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void desapuntarHijoDeTrayecto() {
     	Logica.getLogica().setUsuarioActual(padre);
     	//TODO aqui se le pasa TrayectoID=0, no se si es porque trayecto es estatico
     	trayecto.setIdTrayecto(1);
-    	Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
+    	try {
+			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     

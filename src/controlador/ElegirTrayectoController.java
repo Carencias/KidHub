@@ -1,5 +1,6 @@
 package controlador;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXComboBox;
@@ -44,9 +45,14 @@ public class ElegirTrayectoController extends Controller{
 		}else {		
 			HijoVO hijo = new HijoVO();
 			hijo.setNombreUsuario(nombre);
-			Logica.getLogica().apuntarHijoATrayecto(hijo, this.trayecto);		
-			this.cerrarVentana(event);
-			this.recuperarVentana(this.stage);
+			try {
+				Logica.getLogica().apuntarHijoATrayecto(hijo, this.trayecto);
+				this.cerrarVentana(event);
+				this.recuperarVentana(this.stage);
+			} catch (SQLException e) {
+				logger.error("Error al apuntar a "+nombre+" en el trayecto");
+				this.muestraError("ERROR", "Actividades", "Error al apuntar a "+nombre+" en el trayecto");
+			}					
 		}
 	}
 	

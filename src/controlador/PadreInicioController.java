@@ -381,8 +381,13 @@ public class PadreInicioController extends Controller{
 	 * Usuario cuyos trayectos se cargan
 	 */
     private void cargarTrayectos(UsuarioVO usuario) {
-    	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(usuario));
-    	this.trayectosVacio.setVisible(false);
+    	try {
+	    	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(usuario));
+	    	this.trayectosVacio.setVisible(false);
+    	}catch(SQLException e) {
+    		logger.error("No se han podido obtener los trayectos");
+       		this.muestraError("ERROR", "Actividades", "No se han podido obtener los trayectos");
+    	}
     }
     
     /**
@@ -534,9 +539,15 @@ public class PadreInicioController extends Controller{
 			TrayectoVO trayecto = new TrayectoVO();
 			trayectoTabla = this.trayectosTree.getSelectionModel().getSelectedItem().getValue();
 			trayecto.setIdTrayecto(trayectoTabla.getId());
-			//TODO ese metodo en TrayectoDAO esta vacio
-			Logica.getLogica().borrarTrayecto(trayecto);
-			this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
+			
+			try {
+				//TODO ese metodo en TrayectoDAO esta vacio
+				Logica.getLogica().borrarTrayecto(trayecto);
+				this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
+			} catch (SQLException e) {
+	    		logger.error("Error al borrar el trayecto");
+				this.muestraError("ERROR", "Actividades", "Error al borrar el trayecto");
+			}
 		}
     }
     
@@ -591,8 +602,13 @@ public class PadreInicioController extends Controller{
 			hijo.setTipo(TipoUsuario.HIJO);
 			trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
 			trayecto.setIdTrayecto(trayectoTabla.getId());		
-			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
-			this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(hijo));
+			try {
+				Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
+				this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(hijo));
+			} catch (SQLException e) {
+	    		logger.error("Error al desapuntar hijo de trayecto");
+				this.muestraError("ERROR", "Actividades", "Error al desapuntar hijo de trayecto");
+			}	
 		}	
 	}
 	/**

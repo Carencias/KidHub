@@ -273,7 +273,15 @@ public class ActividadDAO {
 		return LocalDateTime.of(year, month, day, hour, min);
 	}
 	
-	
+	/**
+	 * Metodo privado que separa la direccion 
+	 * @param direccionCompleta
+	 *  Direccion completa sin la ciudad
+	 * @param ciudad
+	 *  Ciudad
+	 * @return
+	 *  Objeto direccion
+	 */
 	private Direccion convertToDireccion(String direccionCompleta, String ciudad) {
 		
 		String calle = direccionCompleta.split(",")[0];

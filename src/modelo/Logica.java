@@ -273,43 +273,90 @@ public class Logica {
 	}
 
 	/**
-	 * 
+	 * Metodo que se comunica con el modelo para obtener todos los trayectos de un usuario
 	 * @param usuario
+	 *  UsuarioVO con la informacion del que se obtendran los trayectos
 	 * @return
+	 *  Lista con los trayectos del usuario
+     * @throws SQLException
 	 */
-	public ArrayList<TrayectoVO> getTrayectos(UsuarioVO usuario) {
+	public ArrayList<TrayectoVO> getTrayectos(UsuarioVO usuario) throws SQLException{
+		logger.trace("Obteniendo trayectos");
 		return new TrayectoDAO().mostrarTrayectos(usuario);
 	}
 	
+	/**
+	 * Metodo que se comunica con el modelo para crear un trayecto
+	 * @param trayecto
+	 *  TrayectoVO con los datos del trayecto
+	 * @throws SQLException
+	 */
 	public void crearTrayecto(TrayectoVO trayecto) throws SQLException {
+		logger.trace("Creando trayectos");
 		trayecto.setPadre((PadreVO) this.usuarioActual);
 		new TrayectoDAO().crearTrayecto(trayecto);
-
-
 	}
 	
+	/**
+	 * Metodo que se comunica con el modelo para modificar un trayecto
+	 * @param trayecto
+	 *  TrayectoVO con los datos del trayecto
+	 * @throws SQLException
+	 */
 	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException {
+		logger.trace("modificando trayectos");
 		trayecto.setPadre((PadreVO) this.usuarioActual);
 		new TrayectoDAO().modificarTrayecto(trayecto);
 	}
 	
+	/**
+	 * Metodo que se comunica con el modelo para rellenar un trayectoVO
+	 * @param trayecto
+	 *  TrayectoVO en el que se guardaran los datos
+	 * @throws SQLException
+	 */
 	public void rellenarTrayecto(TrayectoVO trayecto) throws SQLException{
+		logger.trace("Rellenando trayectos");
 		trayecto.setPadre((PadreVO) this.usuarioActual);
 		new TrayectoDAO().rellenarTrayecto(trayecto);;
 	}
 	
+	/**
+	 * Metodo que se comunica con el modelo para borrar un trayecto
+	 * @param trayecto
+	 *  TrayectoVO con los datos del trayecto
+	 * @throws SQLException
+	 */
 	//TODO
-	public void borrarTrayecto(TrayectoVO trayecto) {
+	public void borrarTrayecto(TrayectoVO trayecto) throws SQLException{
+		logger.trace("Borrando trayecto");
 		new TrayectoDAO().borrarTrayecto(trayecto);
 	}
 
-	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) {
-		
+	/**
+	 * Metodo que se comunica con el modelo para apuntar un hijo a un trayecto
+	 * @param hijo
+	 *  HijoVO con los datos del hijo
+	 * @param trayecto
+	 *  TrayectoVO con los datos del trayecto
+	 * @throws SQLException
+	 */
+	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException{
+		logger.trace("Apuntando hijo a trayecto");
 		new TrayectoDAO().apuntarHijoATrayecto(hijo,trayecto);
 		
 	}
 
-	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) {
+	/**
+	 * Metodo que se comunica con el modelo para desapuntar un hijo a un trayecto
+	 * @param hijo
+	 *  HijoVO con los datos del hijo
+	 * @param trayecto
+	 *  TrayectoVO con los datos del trayecto
+	 * @throws SQLException
+	 */
+	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException{
+		logger.trace("Despauntando hijo a trayecto");
 		new TrayectoDAO().desapuntarHijoDeTrayecto(hijo,trayecto);		
 	}
 }

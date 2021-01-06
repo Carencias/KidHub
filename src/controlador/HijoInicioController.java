@@ -82,10 +82,13 @@ public class HijoInicioController extends Controller{
 
         	
         }else if (actionEvent.getSource() == trayectos) {
-        	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
-            
-        	mostrarPanelesActividadesCerrarInicioTrayectos(false, false, false, true);
-    	
+        	try {
+				this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
+				mostrarPanelesActividadesCerrarInicioTrayectos(false, false, false, true);
+			} catch (SQLException e) {
+				logger.error("Error al obtener los trayectos");
+				this.muestraError("ERROR", "Actividades", "Error al obtener los trayectos");
+			}
     	}else if (actionEvent.getSource() == cerrarSesion) {
             mostrarPanelesActividadesCerrarInicioTrayectos(false, true, false, false);
 
