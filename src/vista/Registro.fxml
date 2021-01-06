@@ -80,22 +80,22 @@
             <Font name="Monospaced Regular" size="18.0" />
          </font>
       </Button>
-      <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="257.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="372.0" layoutY="177.0" prefHeight="31.0" prefWidth="46.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="308.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="311.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="363.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="249.0" layoutY="177.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <Label layoutX="257.0" layoutY="141.0" prefHeight="54.0" prefWidth="190.0" text="Fecha de nacimiento:" textFill="#bef0ff">
+      <Label layoutX="257.0" layoutY="141.0" prefHeight="35.0" prefWidth="190.0" text="Fecha de nacimiento:" textFill="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
