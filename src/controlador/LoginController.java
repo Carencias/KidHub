@@ -80,7 +80,11 @@ public class LoginController extends Controller{
 		TipoUsuario tipoUsuario;
 		
 		nombreUsuario = textoUsuario.getText();
-		contrasena = textoContrasena.getText();
+		if(contrasenaVisible.isVisible()) {
+			contrasena = contrasenaVisible.getText();
+		}else {
+			contrasena = textoContrasena.getText();
+		}
 		logger.trace("Comprobando usuario:" + nombreUsuario + " " + contrasena);
 				
 		UsuarioVO usuario = new UsuarioVO();
