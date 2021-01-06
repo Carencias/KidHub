@@ -488,13 +488,17 @@ public class PadreInicioController extends Controller{
     @FXML
     public void modificarTrayecto(MouseEvent event) {
     	System.out.println("Modificando trayecto");
+    	TrayectoTabla trayectoTabla;
+    	TrayectoVO trayecto = new TrayectoVO();
+    	
+    	
     	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionado");
     	}else {
+    		trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
+    		trayecto.setIdTrayecto(trayectoTabla.getId());
 	    	Stage stage = this.esconderVentana(event);
 	    	ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
-	    	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
-	    	TrayectoVO trayecto = new TrayectoVO();
 	    	HijoVO hijo = new HijoVO();
 	    	hijo.setNombreUsuario("TODOS");
 	    	try {
@@ -660,7 +664,7 @@ public class PadreInicioController extends Controller{
 	 * @return
 	 * loader usado para mostrar la ventana
 	 */
-	private FXMLLoader mostrarGenerico(String ventana ) {
+	private FXMLLoader mostrarGenerico(String ventana) {
 		AnchorPane root;
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/" + ventana + ".fxml"));
     	Stage stage = new Stage();

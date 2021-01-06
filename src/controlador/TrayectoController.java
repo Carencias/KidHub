@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -12,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -42,6 +45,9 @@ public class TrayectoController extends Controller{
 	    @FXML
 	    private JFXComboBox<String> actividad;
 	    
+	    @FXML
+	    private Label nombreActividad;
+	    
 	    private Stage stage;
 	    
 	    private TrayectoVO trayecto;
@@ -65,20 +71,83 @@ public class TrayectoController extends Controller{
 	    }
 	    
 	    private void setDatosTrayecto() {
-	    	//TODO
+	    	
+	    	ActividadVO actividad = this.trayecto.getActividad();
+	    	this.nombreActividad.setText("Actividad: " + actividad.getIdActividad() + "-" + actividad.getNombre());	    
 
 	    	LocalDateTime fechaOrigen = this.trayecto.getOrigen().getFecha();
+	    		    	
+	    	this.dia.setText(Integer.toString(fechaOrigen.getDayOfMonth()));
+	    	this.mes.setText(Integer.toString(fechaOrigen.getMonthValue()));
+	    	this.ano.setText(Integer.toString(fechaOrigen.getYear()));
+	    	this.hora.setText(Integer.toString(fechaOrigen.getHour()));
+	    	this.min.setText(Integer.toString(fechaOrigen.getMinute()));
+	    	
 	    	LocalDateTime fechaDestino = this.trayecto.getDestino().getFecha();
+	    	
+	    	this.diaDestino.setText(Integer.toString(fechaDestino.getDayOfMonth()));
+	    	this.mesDestino.setText(Integer.toString(fechaDestino.getMonthValue()));
+	    	this.anoDestino.setText(Integer.toString(fechaDestino.getYear()));
+	    	this.horaDestino.setText(Integer.toString(fechaDestino.getHour()));
+	    	this.minDestino.setText(Integer.toString(fechaDestino.getMinute()));
+	    	
+	    	
 	    	Direccion direccionOrigen = this.trayecto.getOrigen().getDireccion();
+	    	
+	    	this.ciudad.setText(direccionOrigen.getCiudad());
+	    	this.calle.setText(direccionOrigen.getCalle());
+	    	this.num.setText(Integer.toString(direccionOrigen.getNumero()));
+	    	this.codPostal.setText(direccionOrigen.getCodigoPostal());
+	    	
 	    	Direccion direccionDestino = this.trayecto.getDestino().getDireccion();
 	    	
+	    	this.ciudadDestino.setText(direccionDestino.getCiudad());
+	    	this.calleDestino.setText(direccionDestino.getCalle());
+	    	this.numDestino.setText(Integer.toString(direccionDestino.getNumero()));
+	    	this.codPostalDestino.setText(direccionDestino.getCodigoPostal());
+	    	
+	    	this.aforo.setText(Integer.toString(this.trayecto.getCapacidad()));
 	    	
 	    	if(this.trayecto.getTipo().equals(TipoTrayecto.IDA)) {
 	    		this.ida.setSelected(true);
+	    		this.disableFields(TipoTrayecto.IDA);
 	    	}else {
-	    		this.vuelta.setSelected(false);
+	    		this.vuelta.setSelected(true);
+	    		this.disableFields(TipoTrayecto.VUELTA);
 	    	}
+    		
+	    }
+	    
+	    private void disableFields(TipoTrayecto tipo) {
 	    	
+	    	this.ida.setDisable(true);
+    		this.vuelta.setDisable(true);
+    		this.nombreActividad.setVisible(true);
+    		this.actividad.setVisible(false);
+    		
+	    	if(tipo.equals(TipoTrayecto.IDA)) {
+	    		this.dia.setDisable(true);
+	    		this.mes.setDisable(true);
+	    		this.ano.setDisable(true);
+	    		this.hora.setDisable(true);
+	    		this.min.setDisable(true);
+	    		
+	    		this.ciudad.setDisable(true);
+	    		this.calle.setDisable(true);
+	    		this.num.setDisable(true);
+	    		this.codPostal.setDisable(true);
+	    	}else {
+	    		this.diaDestino.setDisable(true);
+	    		this.mesDestino.setDisable(true);
+	    		this.anoDestino.setDisable(true);
+	    		this.horaDestino.setDisable(true);
+	    		this.minDestino.setDisable(true);
+	    		
+	    		this.ciudadDestino.setDisable(true);
+	    		this.calleDestino.setDisable(true);
+	    		this.numDestino.setDisable(true);
+	    		this.codPostalDestino.setDisable(true);
+	    	}
 	    }
 	    
 	    
@@ -108,7 +177,7 @@ public class TrayectoController extends Controller{
 	    		error.append("Campos sin rellenar\n");	    		
 	    	}
 	    	
-	    	if(this.actividad.getSelectionModel().getSelectedItem().equals("")) {
+	    	if(this.actividad.getSelectionModel().getSelectedItem() != null) {
 	    		error.append("Seleccione la actividad relacionada con el trayecto.\n");
 	    	}
 	    	
@@ -174,10 +243,18 @@ public class TrayectoController extends Controller{
 	    
 	    
 	    private ActividadVO getActividad() throws SQLException{
-
-	    	//Nombre de actividad
-	    	String nombreActividad = this.actividad.getSelectionModel().getSelectedItem();	    			
 	    	
+	    	String nombreActividad = "";
+	    	if(!this.modificacion) {
+		    	//Nombre de actividad
+	    		nombreActividad = this.actividad.getSelectionModel().getSelectedItem();	    			
+	    	}else {
+	    		nombreActividad = this.nombreActividad.getText();
+	    		System.out.println("Antes del substirng es: " + nombreActividad);
+	    		// Siempre empieza por 'Actividad: '
+	    		nombreActividad = nombreActividad.substring(11);
+	    		System.out.println("Despues del substring es: " + nombreActividad);
+	    	}
 	    	//La actividad en el combo es id-tabla, asique hago un substring para obtener el id
 	    	
 	    	String[] partes = nombreActividad.split("-");
@@ -291,6 +368,7 @@ public class TrayectoController extends Controller{
 	    	System.out.println("Confirmando");
 	    	//TODO
 	    	try {
+	    		
 	    		this.getDatosTrayecto();
 	    		
 	    		if(this.modificacion) {

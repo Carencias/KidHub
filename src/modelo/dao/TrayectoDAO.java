@@ -187,8 +187,8 @@ public class TrayectoDAO {
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT * FROM ACTIVITIES ");
-		query.append("WHERE ActivityID='"+ trayecto.getIdTrayecto()+"';");
+		query.append("SELECT * FROM RIDES ");
+		query.append("WHERE RideID='"+ trayecto.getIdTrayecto()+"';");
 		
 		resultSet = statement.executeQuery(query.toString());
 		while(resultSet.next()) {
@@ -240,6 +240,15 @@ public class TrayectoDAO {
 			trayecto.setTipo(TipoTrayecto.IDA);		
 		}else {
 			trayecto.setTipo(TipoTrayecto.VUELTA);
+		}
+		ArrayList<ParadaVO> paradas = new ParadaDAO().mostrarParadas(trayecto);
+		//Siempre sera un array de 2 paradas, una de cada
+		for(ParadaVO parada: paradas) {
+			if(parada.getTipo().equals(TipoParada.ORIGEN)) {
+				trayecto.setOrigen(parada);
+			}else {
+				trayecto.setDestino(parada);
+			}
 		}
 	
 	}

@@ -246,15 +246,8 @@ public class ActividadDAO {
 		actividad.setInicio(convertToDate(resultSet.getString("StartDate")));
 		actividad.setFin(convertToDate(resultSet.getString("EndDate")));
 		actividad.setDuracion();
-		actividad.setCapacidad(resultSet.getInt("Capacity"));
-		
-		String direccionCompleta = resultSet.getString("Address");
-		String calle = direccionCompleta.split(",")[0];
-		String numero = direccionCompleta.split(",")[1];
-		String codigoPostal = direccionCompleta.split(",")[2];
-		String ciudad = resultSet.getString("Town");
-		
-		actividad.setDireccion(new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad));
+		actividad.setCapacidad(resultSet.getInt("Capacity"));		
+		actividad.setDireccion(this.convertToDireccion(resultSet.getString("Address"), resultSet.getString("Town")));
 		actividad.setTipo(resultSet.getString("Type"));
 	}
 	
@@ -278,6 +271,16 @@ public class ActividadDAO {
 		int min = Integer.parseInt(time.split(":")[1]);
 
 		return LocalDateTime.of(year, month, day, hour, min);
+	}
+	
+	
+	private Direccion convertToDireccion(String direccionCompleta, String ciudad) {
+		
+		String calle = direccionCompleta.split(",")[0];
+		String numero = direccionCompleta.split(",")[1];
+		String codigoPostal = direccionCompleta.split(",")[2];
+		
+		return new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad);		
 	}
 	
 }

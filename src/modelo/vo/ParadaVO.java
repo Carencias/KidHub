@@ -17,6 +17,8 @@ public class ParadaVO {
 		this.direccion = direccion;
 	}
 	
+	public ParadaVO() {}
+	
 	public LocalDateTime getFecha() {
 		return fecha;
 	}

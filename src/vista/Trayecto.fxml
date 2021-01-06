@@ -50,7 +50,7 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </Label>
-      <JFXRadioButton fx:id="ida" selected="true" layoutX="13.0" layoutY="146.0" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc; -fx-text-fill: #bef0ff;" text="Ida" textFill="#bef0ff">
+      <JFXRadioButton fx:id="ida" layoutX="13.0" layoutY="146.0" selected="true" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc; -fx-text-fill: #bef0ff;" text="Ida" textFill="#bef0ff">
          <toggleGroup>
             <ToggleGroup fx:id="grupo1" />
          </toggleGroup>
@@ -172,6 +172,11 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
+      <Label fx:id="nombreActividad" layoutX="322.0" layoutY="124.0" prefHeight="30.0" prefWidth="170.0" text="NombreActividad" textFill="#bef0ff" visible="false">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </Label>
       
    </children>
 </AnchorPane>
