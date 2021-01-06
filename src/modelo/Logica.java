@@ -293,6 +293,11 @@ public class Logica {
 		new TrayectoDAO().modificarTrayecto(trayecto);
 	}
 	
+	public void rellenarTrayecto(TrayectoVO trayecto) throws SQLException{
+		trayecto.setPadre((PadreVO) this.usuarioActual);
+		new TrayectoDAO().rellenarTrayecto(trayecto);;
+	}
+	
 	//TODO
 	public void borrarTrayecto(TrayectoVO trayecto) {
 		new TrayectoDAO().borrarTrayecto(trayecto);

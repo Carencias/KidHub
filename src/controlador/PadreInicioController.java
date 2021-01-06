@@ -240,7 +240,7 @@ public class PadreInicioController extends Controller{
      */
     private void setHijosComboActividad() {
     	this.selectHijoActividad.getItems().clear();
-    	this.selectHijoActividad.getItems().add("Todos");
+    	this.selectHijoActividad.getItems().add("TODOS");
     	try {
 			this.hijos = Logica.getLogica().getHijos();
 			for(HijoVO hijo: hijos) {
@@ -289,7 +289,7 @@ public class PadreInicioController extends Controller{
 		
 		HijoVO hijo = this.getHijo();
 		
-		if(hijo.getNombreUsuario().equals("Todos")) {
+		if(hijo.getNombreUsuario().equals("TODOS")) {
 			this.apuntarActividad.setDisable(false);
 			this.desapuntarActividad.setDisable(true);
 		}else {
@@ -395,14 +395,11 @@ public class PadreInicioController extends Controller{
 		String nombre = this.selectHijoTrayecto.getSelectionModel().getSelectedItem();
 		UsuarioVO usuario = new UsuarioVO();
 		
-		if(nombre.equals("PROPIOS")) {		
+		if(nombre.equals("PROPIOS") || nombre.equals("TODOS")) {		
 			usuario.setTipo(TipoUsuario.PADRE);
 		}else {
 			usuario.setTipo(TipoUsuario.HIJO);
 		}
-		
-		//busque en USERS y le setee al VO el tipo de usuario
-		
 		
 		usuario.setNombreUsuario(nombre);
 		return usuario;
@@ -422,7 +419,7 @@ public class PadreInicioController extends Controller{
     		
     		mostrarBotones(true, false, false, false);
     		
-    	}else if(usuario.getNombreUsuario().equals("PROPIOS")){    	
+    	}else if(usuario.getNombreUsuario().equals("PROPIOS")){	
 
     		mostrarBotones(true, true, true, false);
 
@@ -473,7 +470,7 @@ public class PadreInicioController extends Controller{
     	
     	//TODO A Santi no le gusta esto, comprobar otras maneras
     	//TODO de esta manera cogemos todos las actividades, no solo aquellas a las que esten apuntados sus hijos
-    	hijo.setNombreUsuario("Todos");
+    	hijo.setNombreUsuario("TODOS");
     	try {
     		actividades = Logica.getLogica().getActividades(hijo);
     	}catch(SQLException e) {
@@ -492,15 +489,21 @@ public class PadreInicioController extends Controller{
     public void modificarTrayecto(MouseEvent event) {
     	System.out.println("Modificando trayecto");
     	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
-			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
+			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionado");
     	}else {
 	    	Stage stage = this.esconderVentana(event);
 	    	ArrayList<ActividadVO> actividades = new ArrayList<ActividadVO>();
 	    	//TODO implementar funcionalidad para coger lista de actividades de todos los hijos del padre
 	    	TrayectoVO trayecto = new TrayectoVO();
-	    	//TODO metodo ya hecho en el DAO, crear en logica y descomentar la siguiente linea
-	    	//Logica.getLogica().rellenarTrayecto(trayecto);
-	    	//TODO recoger los datos del trayecto seleccionado
+	    	HijoVO hijo = new HijoVO();
+	    	hijo.setNombreUsuario("TODOS");
+	    	try {
+		    	actividades = Logica.getLogica().getActividades(hijo);
+		    	Logica.getLogica().rellenarTrayecto(trayecto);
+	    	}catch(SQLException e) {
+	    		logger.error("Error al obtener la actividad: "+e.getMessage());
+				this.muestraError("ERROR", "Actividades", "Error al obtener datos/");
+	    	}
 	    	this.mostrarVentanaTrayecto(actividades, trayecto, stage, true);
     	}
     }

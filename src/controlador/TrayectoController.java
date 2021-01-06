@@ -294,7 +294,6 @@ public class TrayectoController extends Controller{
 	    		this.getDatosTrayecto();
 	    		
 	    		if(this.modificacion) {
-	    			//TODO implementar este metodo
 	    			logger.trace("Boton de confirmar modificacion de actividad pulsado");
 	    			Logica.getLogica().modificarTrayecto(trayecto);
 	    		}else {

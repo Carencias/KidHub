@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import modelo.Logica;
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
 import modelo.vo.HijoVO;
@@ -146,7 +147,7 @@ public class TrayectoDAO {
 		}		
 	}
 	
-	public ArrayList<TrayectoVO> mostrarTrayectos(UsuarioVO usuarioActual) {
+	public ArrayList<TrayectoVO> mostrarTrayectos(UsuarioVO usuario) {
 		ResultSet resultSet = null;
 		conexion.openConnection();
 		statement = conexion.getSt();
@@ -155,14 +156,13 @@ public class TrayectoDAO {
 		//TODO comprobar lo de TODOS Y PROPIOS EN TODOS LOS SITIOS
 		query.append("SELECT * FROM RIDES ");
 		
-		if(usuarioActual.getNombreUsuario().equals("PROPIOS")) {
-			query.append("WHERE ParentUsername='"+ usuarioActual.getNombreUsuario()+"';");
-		}else if(usuarioActual.getTipo() == TipoUsuario.HIJO) {
-			
-			
-			if(!usuarioActual.getNombreUsuario().equals("Todos")) {
+		if(usuario.getNombreUsuario().equals("PROPIOS")) {
+			query.append("WHERE ParentUsername='"+ Logica.getLogica().getUsuarioActual().getNombreUsuario()+"';");
+		}else if(usuario.getTipo() == TipoUsuario.HIJO) {
+
+			if(!usuario.getNombreUsuario().equals("TODOS")) {
 				query.append("INNER JOIN RideKid ON RideKid.RideID = RIDES.RideID ");
-				query.append("WHERE RideKid.KidUsername='"+ usuarioActual.getNombreUsuario()+"';");
+				query.append("WHERE RideKid.KidUsername='"+ usuario.getNombreUsuario()+"';");
 			}
 			System.out.println(query.toString());
 		}	
