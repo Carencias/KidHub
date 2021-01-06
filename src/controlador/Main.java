@@ -59,7 +59,7 @@ public class Main extends Application {
 		//crearTrayecto();
 		//apuntarHijoATrayecto();
 		//desapuntarHijoDeTrayecto();
-		modificarTrayecto();
+		//modificarTrayecto();
 		DOMConfigurator.configure("./logs/log4j.xml");
 		logger.info("La aplicacion se ha iniciado");
 		launch(args);

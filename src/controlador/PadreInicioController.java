@@ -326,8 +326,8 @@ public class PadreInicioController extends Controller{
 	 */
 	private void setHijosComboTrayecto() {
     	this.selectHijoTrayecto.getItems().clear();
-    	this.selectHijoTrayecto.getItems().add("Todos");
-    	this.selectHijoTrayecto.getItems().add(Logica.getLogica().getUsuarioActual().getNombreUsuario());
+    	this.selectHijoTrayecto.getItems().add("TODOS");
+    	this.selectHijoTrayecto.getItems().add("PROPIOS");
     	try {
 			this.hijos = Logica.getLogica().getHijos();
 			for(HijoVO hijo: hijos) {
@@ -349,7 +349,7 @@ public class PadreInicioController extends Controller{
 		String nombre = this.selectHijoTrayecto.getSelectionModel().getSelectedItem();
 		UsuarioVO usuario = new UsuarioVO();
 		
-		if(nombre.equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {		
+		if(nombre.equals("PROPIOS")) {		
 			usuario.setTipo(TipoUsuario.PADRE);
 		}else {
 			usuario.setTipo(TipoUsuario.HIJO);
@@ -367,7 +367,7 @@ public class PadreInicioController extends Controller{
     	
     	UsuarioVO usuario = this.getUsuarioTrayecto();
     	
-    	if(usuario.getNombreUsuario().equals("Todos")) {
+    	if(usuario.getNombreUsuario().equals("TODOS")) {
     		this.apuntarTrayecto.setDisable(false);
     		this.apuntarTrayecto.setVisible(true);
     		this.crear.setDisable(true);
@@ -378,7 +378,7 @@ public class PadreInicioController extends Controller{
     		this.desapuntarTrayecto.setVisible(false);
     		
     		
-    	}else if(usuario.getTipo().equals(TipoUsuario.PADRE)){    	
+    	}else if(usuario.getNombreUsuario().equals("PROPIOS")){    	
     		this.apuntarTrayecto.setDisable(false);
     		this.apuntarTrayecto.setVisible(true);
     		this.crear.setDisable(false);

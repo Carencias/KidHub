@@ -152,15 +152,13 @@ public class TrayectoDAO {
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
+		//TODO comprobar lo de TODOS Y PROPIOS EN TODOS LOS SITIOS
+		query.append("SELECT * FROM RIDES ");
 		
-		if(usuarioActual.getNombreUsuario().equals("Todos")) {
-			query.append("SELECT * FROM RIDES ");
-		}else if(usuarioActual.getTipo() == TipoUsuario.PADRE) {
-			query.append("SELECT * FROM RIDES ");
+		if(usuarioActual.getNombreUsuario().equals("PROPIOS")) {
 			query.append("WHERE ParentUsername='"+ usuarioActual.getNombreUsuario()+"';");
 		}else if(usuarioActual.getTipo() == TipoUsuario.HIJO) {
 			
-			query.append("SELECT * FROM RIDES ");
 			
 			if(!usuarioActual.getNombreUsuario().equals("Todos")) {
 				query.append("INNER JOIN RideKid ON RideKid.RideID = RIDES.RideID ");
