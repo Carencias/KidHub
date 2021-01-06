@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
 import modelo.vo.HijoVO;
@@ -21,6 +23,8 @@ public class TrayectoDAO {
 	private Conexion conexion;
 	
 	private Statement statement;
+	
+    static Logger logger = Logger.getLogger(TrayectoDAO.class);
 	
 	public TrayectoDAO() {
 		this.conexion = new Conexion();
@@ -79,19 +83,21 @@ public class TrayectoDAO {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
+		//TODO QUITAR LA DURACION DE LA TABLA STOPS
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO STOPS");
 		query.append("(RideID, StopDate, Duration, Address, Town, Type) ");
 		query.append("VALUES(");
 		query.append("'" + trayecto.getIdTrayecto() + "', '" + parada.getTextoFecha() + "', '");
 		query.append(trayecto.getDuracion() + "', '" + parada.getDireccion().getTextoDireccion() + "', '" + parada.getDireccion().getCiudad() + "', '");
+		query.append(parada.getTextoTipo() + "');");
 		
-		if(parada.getTipo() == TipoParada.ORIGEN) {
+		/*if(parada.getTipo() == TipoParada.ORIGEN) {
 			query.append("Origen');");
 
 		}else {
 			query.append("Destino');");
-		}
+		}*/
 		
 				
 		try {
@@ -210,6 +216,15 @@ public class TrayectoDAO {
 		return null; //TODO con esto no se liara??
 	}
 	
+	/**
+	 * Se incluyen los datos extraidos de la BBDD en el objeto contenedor trayecto
+	 * @param trayecto
+	 * Contendra los datos extraidos de la BBDD
+	 * @param resultSet
+	 * Contiene los datos extraidos de la BBDD que hay que pasar al trayecto
+	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
+	 */
 	private void setDatosTrayecto(TrayectoVO trayecto, ResultSet resultSet) throws SQLException{
 		
 		ActividadVO actividad = new ActividadVO();		
@@ -230,4 +245,62 @@ public class TrayectoDAO {
 		}
 	
 	}
+
+	/**
+	 * Modifica los valores del trayecto almacenado en la BBDD con ID = parametroTrayectoID
+	 * @param trayecto
+	 * Contiene los nuevos valores a insertar en la tabla
+	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
+	 */
+	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException {
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE RIDES SET ");		
+		query.append("ParentUsername='" + trayecto.getPadre().getNombreUsuario() + "', ");
+		query.append("Capacity='" + trayecto.getCapacidad() + "', ");
+		query.append("Type='" + trayecto.getTipo() + "'");
+		query.append(" WHERE RideID='" + trayecto.getIdTrayecto()+"';");
+		
+		
+		statement.executeUpdate(query.toString());
+		
+		this.modificarParada(trayecto, trayecto.getOrigen());
+		this.modificarParada(trayecto, trayecto.getDestino());
+		
+		logger.trace("Query para modificar trayecto lista para ser lanzada");	
+		logger.trace("Query para modificar trayecto ejecutada con exito");
+		conexion.closeConnection();
+	}
+	
+	/**
+	 * Modifica los valores pasados a traves del parametro parada en la BBDD
+	 * @param trayecto
+	 * Trayecto al que pertenece la parada
+	 * @param parada
+	 * Contiene los valores a modificar
+	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
+	 */
+	private void modificarParada(TrayectoVO trayecto, ParadaVO parada) throws SQLException {
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE STOPS SET ");		
+		query.append("StopDate='" + parada.getTextoFecha() + "', ");
+		query.append("Address='" + parada.getDireccion().getTextoDireccion() + "', ");
+		query.append("Town='" + parada.getDireccion().getCiudad() + "' ");
+		query.append(" WHERE RideID='" + trayecto.getIdTrayecto()+"' AND Type='" + parada.getTextoTipo() + "';");
+		
+
+		
+		logger.trace("Query para modificar trayecto lista para ser lanzada");	
+		statement.executeUpdate(query.toString());
+		logger.trace("Query para modificar trayecto ejecutada con exito");
+		conexion.closeConnection();
+	}
+	
 }

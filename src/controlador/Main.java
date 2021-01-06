@@ -59,9 +59,10 @@ public class Main extends Application {
 		//crearTrayecto();
 		//apuntarHijoATrayecto();
 		//desapuntarHijoDeTrayecto();
+		modificarTrayecto();
 		DOMConfigurator.configure("./logs/log4j.xml");
 		logger.info("La aplicacion se ha iniciado");
-		launch(args);
+		//launch(args);
 	}
 	
     private void mostrarLogin(Stage primaryStage) {
@@ -191,7 +192,28 @@ public class Main extends Application {
     
     public static void crearTrayecto() {
     	Logica.getLogica().setUsuarioActual(padre);
-    	Logica.getLogica().crearTrayecto(trayecto);
+    	try {
+			Logica.getLogica().crearTrayecto(trayecto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public static void modificarTrayecto() {
+    	Logica logica = Logica.getLogica();
+    	
+    	logica.setUsuarioActual(padre);
+    	   
+    	trayecto.setIdTrayecto(11); //TODO esto deberia ser automatico
+    	trayecto.setCapacidad(80);
+    	
+    	try {
+			logica.modificarTrayecto(trayecto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public static void apuntarHijoATrayecto() {

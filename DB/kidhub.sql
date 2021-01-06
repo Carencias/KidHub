@@ -104,7 +104,7 @@ CREATE TABLE RideKid(
 CREATE TABLE STOPS(
 	RideID int not null,
 	StopDate NVARCHAR(16) not null,
-	Duration int not null,
+	Duration int not null,/* ESTO HAY QUE QUITARLO*/
 	Address NVARCHAR(50) not null,
 	Town NVARCHAR(20) not null,
 	Type NVARCHAR(10) not null, /*Origen o destino*/

@@ -29,6 +29,14 @@ public class ParadaVO {
 		return tipo;
 	}
 	
+	public String getTextoTipo() {
+		if(this.tipo==TipoParada.ORIGEN) {
+			return "Origen";
+		}else {
+			return "Destino";
+		}
+	}
+	
 	public void setTipo(TipoParada tipo) {
 		this.tipo = tipo;
 	}

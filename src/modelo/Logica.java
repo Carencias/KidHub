@@ -131,7 +131,7 @@ public class Logica {
 		if(credencialesCorrectas(usuario)) {
 			logger.trace("Usuario y contrasena correctos");
 			logger.info("Usuario: "+ usuario.getNombreUsuario() +" ha accedido a su cuenta correctamente");
-			new UsuarioDAO().loguearUsuario(usuario); //Se agregan los datos basicos al usuario al acceder a la BBDD
+			usuario = new UsuarioDAO().loguearUsuario(usuario); //Se agregan los datos basicos al usuario al acceder a la BBDD
 			this.usuarioActual = usuario;
 			tipo = this.usuarioActual.getTipo();
 		}else {
@@ -281,15 +281,16 @@ public class Logica {
 		return new TrayectoDAO().mostrarTrayectos(usuario);
 	}
 	
-	public void crearTrayecto(TrayectoVO trayecto) {
+	public void crearTrayecto(TrayectoVO trayecto) throws SQLException {
 		trayecto.setPadre((PadreVO) this.usuarioActual);
-		try {
-			new TrayectoDAO().crearTrayecto(trayecto);
-		} catch (SQLException e) {
-			// TODO Manejar errores
-			e.printStackTrace();
-		}
+		new TrayectoDAO().crearTrayecto(trayecto);
 
+
+	}
+	
+	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException {
+		trayecto.setPadre((PadreVO) this.usuarioActual);
+		new TrayectoDAO().modificarTrayecto(trayecto);
 	}
 	
 	//TODO
