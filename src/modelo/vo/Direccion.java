@@ -36,7 +36,7 @@ public class Direccion {
 	}
 	
 	public String getDireccionCompleta() {
-		return calle + "," + Integer.toString(numero) +"," + ciudad + " (" +codigoPostal +")";
+		return calle + "," + Integer.toString(numero) +"," + ciudad + ", " +codigoPostal;
 	}
 	
 	public void setCalle(String calle) {
@@ -56,7 +56,7 @@ public class Direccion {
 	}
 	
 	public String getTextoDireccion() {
-		return calle + "," + Integer.toString(numero) +"," + " (" +codigoPostal +")";
+		return calle + "," + Integer.toString(numero) +"," + codigoPostal;
 	}
 	
 	public String toString() {

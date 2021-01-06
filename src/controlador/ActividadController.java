@@ -81,21 +81,23 @@ public class ActividadController extends Controller {
 	    	}else {
 	    		logger.trace("Boton de confirmar creacion de actividad pulsado");
     			Logica.getLogica().crearActividad(actividad);
-				
 	    	}
-			controladorMonitor.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
-    	}catch(Exception e) {
-			if(e instanceof KidHubException) {
-				logger.error(e.getMessage());
-				muestraError("ERROR","Se produjo un error.", e.getMessage());
-			}else if(e instanceof SQLException) {
-				logger.error("Formato de algun campo introducido invalido");
-				muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-			}
+	    	
+	    	//TODO para refrescar se usa la linea de abajo, pero da warnings por classcast exception
+			//controladorMonitor.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
+    	}catch(KidHubException e) {
+			logger.error(e.getMessage());
+			muestraError("ERROR","Se produjo un error.", e.getMessage());
+    	}catch(SQLException e) {
+			logger.error("Formato de algun campo introducido invalido");
+			muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
+		}catch(ClassCastException e) {
+			
 		}
     	
     	this.cerrarVentana(event);
-    	this.recuperarVentana(this.stage);
+    	this.mostrarVentana("MonitorInicio");
+    	//this.recuperarVentana(this.stage);
     }
         
     /**

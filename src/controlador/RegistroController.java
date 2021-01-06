@@ -65,7 +65,10 @@ public class RegistroController extends Controller{
 		if(!contra1.getText().equals(contra2.getText())) {
 			logger.error("Las contrasenas no coinciden");
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
-		}else {
+		}else if(esUsuarioReservado(usuario.getText())) {
+			logger.error("El nombre de usuario elegido esta reservado");
+			muestraError("ERROR","Se produjo un error.", "El nombre de usuario elegido esta reservado.");
+    	}else {
 			try {
 				if(padre.isSelected()) {
 					usuarioVO = new PadreVO();
@@ -97,6 +100,15 @@ public class RegistroController extends Controller{
 				}
 			}	
 		}	
+    }
+    
+    /**
+     * Comprueba si el nombre de usuario introducido esta reservado
+     * @return
+     * True si el nombre de usuario esta reservado
+     */
+    private boolean esUsuarioReservado(String usuario) {
+    	return (usuario.toLowerCase().equals("propios") || usuario.toLowerCase().equals("propios"));
     }
     
     /**
