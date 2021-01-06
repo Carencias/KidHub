@@ -228,6 +228,7 @@ public class TrayectoDAO {
 		ActividadVO actividad = new ActividadVO();		
 		int id = Integer.parseInt(resultSet.getString("ActivityID"));
 		actividad.setIdActividad(id);
+		Logica.getLogica().rellenarActividad(actividad);
 		trayecto.setActividad(actividad);
 		trayecto.setIdTrayecto(Integer.parseInt(resultSet.getString("RideID")));
 		
