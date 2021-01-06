@@ -396,7 +396,7 @@ public class TrayectoController extends Controller{
 	    	
 	    	
 	    	//TODO recargar la tabla de trayectos a traves de un objeto controller que se reciba en el initData.
-	    	this.recuperarVentana(this.stage);
+	    	this.mostrarVentana("PadreInicio");
 	    	this.cerrarVentana(event);
 	    }
 }
