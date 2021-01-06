@@ -15,55 +15,29 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
+import modelo.vo.PadreVO;
+import modelo.vo.ParadaVO;
 import modelo.vo.TrayectoVO;
+import modelo.vo.ParadaVO.TipoParada;
 import modelo.vo.TrayectoVO.TipoTrayecto;
 
 public class TrayectoController extends Controller{
-	   @FXML
-	    private JFXTextField dia;
-
+	   	@FXML
+	    private JFXTextField dia, mes, ano, aforo, codPostal, ciudad, calle, num, diaDestino, mesDestino, anoDestino, ciudadDestino,
+	    calleDestino, numDestino, codPostalDestino, hora, min, horaDestino, minDestino;
+	   
 	    @FXML
-	    private JFXTextField mes;
-
-	    @FXML
-	    private JFXTextField ano;
-
-	    @FXML
-	    private JFXRadioButton ida;
+	    private JFXRadioButton ida, vuelta;
 
 	    @FXML
 	    private ToggleGroup grupo1;
-
-	    @FXML
-	    private JFXRadioButton vuelta;
-
-	    @FXML
-	    private JFXTextField aforo;
-
-	    @FXML
-	    private JFXTextField codPostal;
-
-	    @FXML
-	    private JFXTextField ciudad;
-
-	    @FXML
-	    private JFXTextField calle;
-
-	    @FXML
-	    private JFXTextField num;
 	    
 	    @FXML
-	    private JFXTextField diaDestino, mesDestino, anoDestino, ciudadDestino, calleDestino, numDestino, codPostalDestino, 
-	    					 hora, min, horaDestino, minDestino;
-
-	    @FXML
-	    private Button confirmar;
-
-	    @FXML
-	    private Button cancelar;
+	    private Button confirmar, cancelar;
 
 	    @FXML
 	    private JFXComboBox<String> actividad;
@@ -92,6 +66,7 @@ public class TrayectoController extends Controller{
 	    
 	    private void setDatosTrayecto() {
 	    	//TODO
+
 	    	LocalDateTime fechaOrigen = this.trayecto.getOrigen().getFecha();
 	    	LocalDateTime fechaDestino = this.trayecto.getDestino().getFecha();
 	    	Direccion direccionOrigen = this.trayecto.getOrigen().getDireccion();
@@ -117,13 +92,89 @@ public class TrayectoController extends Controller{
 	    	
 	    }
 	    
-	    private void getDatosTrayecto() {
-	    	//TODO
-	    }
+	    private void getDatosTrayecto() throws KidHubException, SQLException{
+	    	
+	    	//TODO los metodos estos de control como hayCamposVacios, darFormato etc habria que meterlos al Controller padre
+	    	logger.trace("Rellenando la actividad con los datos de la interfaz");
+	    	StringBuffer error = new StringBuffer();
+	    	ParadaVO paradaOrigen, paradaDestino;
+	    	LocalDateTime fechaOrigen = null, fechaDestino = null;
+	    	Direccion direccionOrigen, direccionDestino;
+
+	    	int numero = 1, aforo = 1, numeroDestino = 1;
+	    	if(hayCamposVacios(this.dia, this.mes, this.ano, this.min, this.hora, this.diaDestino, this.mesDestino, this.anoDestino,
+	    	                   this.aforo, this.codPostal, this.ciudad, this.calle, this.num, this.codPostalDestino,
+	    	                   this.ciudadDestino, this.calleDestino,this.numDestino)) {	    		
+	    		error.append("Campos sin rellenar\n");	    		
+	    	}
+	    	
+	    	if(this.actividad.getSelectionModel().getSelectedItem().equals("")) {
+	    		error.append("Seleccione la actividad relacionada con el trayecto.\n");
+	    	}
+	    	
+	    	try {
+				numero = Integer.parseInt(this.num.getText());
+				numeroDestino = Integer.parseInt(this.numDestino.getText());
+				aforo = Integer.parseInt(this.aforo.getText());
+				
+			}catch(Exception e) {
+				error.append("Formato de numero o aforo invalidos\n");
+			}
+	    	
+	    	this.trayecto.setCapacidad(aforo);
+	    		    	
+	    	direccionOrigen = new Direccion(this.calle.getText(), numero, this.codPostal.getText(), this.ciudad.getText());
+	    	direccionDestino = new Direccion(this.calleDestino.getText(), numeroDestino, this.codPostalDestino.getText(), this.ciudadDestino.getText());
+
+	    	try {
+	    		fechaOrigen = LocalDateTime.of(Integer.parseInt(this.ano.getText()), Integer.parseInt(this.mes.getText()), Integer.parseInt(this.dia.getText()),
+						Integer.parseInt(this.hora.getText()), Integer.parseInt(this.min.getText()));
+				fechaDestino = LocalDateTime.of(Integer.parseInt(this.anoDestino.getText()), Integer.parseInt(this.mesDestino.getText()), Integer.parseInt(this.diaDestino.getText()),
+										 Integer.parseInt(this.horaDestino.getText()), Integer.parseInt(this.minDestino.getText()));
+				
+				if(fechaOrigen.isAfter(fechaDestino) || fechaOrigen.isEqual(fechaDestino)) {
+					error.append("El trayecto debe comenzar antes de acabar\n");
+				}
+	    		
+	    	}catch(Exception e) {
+	    		error.append("Formato de fecha invalido.\n");
+	    	}
+	    		
+	    	if(error.length() != 0) {
+				throw new KidHubException(error.toString());
+			}
+	    	
+	    	paradaOrigen = new ParadaVO(fechaOrigen, TipoParada.ORIGEN, direccionOrigen);
+	    	paradaDestino = new ParadaVO(fechaDestino, TipoParada.DESTINO, direccionDestino);
+	    	
+	    	trayecto.setOrigen(paradaOrigen);
+	    	trayecto.setDestino(paradaDestino);
+	    	trayecto.setActividad(this.getActividad());
+	    	
+	    	if(this.ida.isSelected()) {
+	    		trayecto.setTipo(TipoTrayecto.IDA);
+	    	}else {
+	    		trayecto.setTipo(TipoTrayecto.VUELTA);
+	    	}
+	    }	
 	    
 	    @FXML
-	    void setDatosActividad(ActionEvent event) {
+	    void setDatosActividad(ActionEvent event) throws SQLException{
 	    	//TODO este es el evento del combobox, pero como gestiono al cambiar luego lo de ida y vuelta??
+	    	
+	    	ActividadVO actividad = this.getActividad();
+	    	
+	    	if(this.ida.isSelected()) {
+	    		this.setDatosOrigen(actividad);
+	    	}else {
+	    		this.setDatosDestino(actividad);
+	    	}
+	    	
+	    }
+	    
+	    
+	    private ActividadVO getActividad() throws SQLException{
+
 	    	//Nombre de actividad
 	    	String nombreActividad = this.actividad.getSelectionModel().getSelectedItem();	    			
 	    	
@@ -137,20 +188,24 @@ public class TrayectoController extends Controller{
 	    	
 	    	actividad.setIdActividad(Integer.parseInt(idActividad));
 	    	
-	    	try{
-    			Logica.getLogica().rellenarActividad(actividad);
-    		}catch(SQLException e) {
-    			logger.error("Error al obtener la actividad: "+e.getMessage());
-    			this.muestraError("ERROR", "Actividades", "Error al obtener la actividad");
-    		}
+	    	//TODO comprobar este try catch, lo hizo Bayon rapido
+	    	Logica.getLogica().rellenarActividad(actividad);
+	    	return actividad;
 	    	
-	    	if(this.ida.isSelected()) {
-	    		this.setDatosOrigen(actividad);
-	    	}else {
-	    		this.setDatosDestino(actividad);
-	    	}
 	    	
 	    }
+	    
+		
+	    
+	    private boolean hayCamposVacios(JFXTextField...campos) {
+			for(JFXTextField campo: campos) {
+				if(campo.getText().isEmpty()) {
+					return true;
+				}
+			}
+			
+			return false;
+		}
 	    
 	    private void setDatosDestino(ActividadVO actividad) {
 
@@ -234,6 +289,37 @@ public class TrayectoController extends Controller{
 	    @FXML
 	    void confirmar(MouseEvent event) {
 	    	System.out.println("Confirmando");
-	    	//TODO	    
+	    	//TODO
+	    	try {
+	    		this.getDatosTrayecto();
+	    		
+	    		if(this.modificacion) {
+	    			//TODO implementar este metodo
+	    			logger.trace("Boton de confirmar modificacion de actividad pulsado");
+	    			Logica.getLogica().modificarTrayecto(trayecto);
+	    		}else {
+	    			logger.trace("Boton de confirmar creacion de actividad pulsado");
+	    			Logica.getLogica().crearTrayecto(trayecto);
+	    		}
+	    	
+	    	}catch(Exception e) {
+				if(e instanceof KidHubException) {
+					logger.error(e.getMessage());
+					muestraError("ERROR","Se produjo un error.", e.getMessage());
+				}else if(e instanceof SQLException) {
+					logger.error("Formato de algun campo introducido invalido");
+					muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
+				}else {
+					logger.error("Error desconocido.");
+					e.printStackTrace();
+					muestraError("ERROR","Se produjo un error.", "No se que poner aqui");
+				}
+			}
+	    	
+	    	
+	    	
+	    	//TODO recargar la tabla de trayectos a traves de un objeto controller que se reciba en el initData.
+	    	this.recuperarVentana(this.stage);
+	    	this.cerrarVentana(event);
 	    }
 }

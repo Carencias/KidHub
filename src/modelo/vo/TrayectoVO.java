@@ -36,6 +36,10 @@ public class TrayectoVO {
 		this.setDuracion();
 	}
 	
+	public TrayectoVO() {
+		
+	}
+	
 	public void crearTrayectoIda(LocalDateTime fecha, Direccion direccion) {
 		this.origen = new ParadaVO(fecha, TipoParada.ORIGEN, direccion);
 		this.destino = new ParadaVO(actividad.getInicio(), TipoParada.DESTINO, actividad.getDireccion());
@@ -45,10 +49,7 @@ public class TrayectoVO {
 		this.origen = new ParadaVO(actividad.getFin(), TipoParada.ORIGEN, actividad.getDireccion());
 		this.destino = new ParadaVO(fecha, TipoParada.DESTINO, direccion);
 	}
-	
-	public TrayectoVO() {
-		
-	}
+
 
 	public int getIdTrayecto() {
 		return idTrayecto;
@@ -82,6 +83,7 @@ public class TrayectoVO {
 		this.actividad = actividad;
 	}
 	
+	//TODO Bayon cree que esto sobra
 	public PadreVO getPadre() {
 		return padre;
 	}
@@ -90,10 +92,13 @@ public class TrayectoVO {
 		this.padre = padre;
 	}
 	
+	
+	//TODO Bayon cree que no se usa nunca
 	public ArrayList<HijoVO> getHijos() {
 		return hijos;
 	}
 	
+	//TODO yo creo que no se usa nunca
 	public void setHijos(ArrayList<HijoVO> hijos) {
 		this.hijos = hijos;
 	}
@@ -118,7 +123,7 @@ public class TrayectoVO {
 		return this.duracion;
 	}
 	
-	public void setDuracion() {
+	private void setDuracion() {
 		this.duracion = (int) this.origen.getFecha().until(this.destino.getFecha(), ChronoUnit.MINUTES);
 	}
 	

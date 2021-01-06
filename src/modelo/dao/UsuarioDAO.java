@@ -92,7 +92,8 @@ public class UsuarioDAO {
 	 * @throws SQLException
 	 * Si hay algun error al ejecutar la query
 	 */
-	public void loguearUsuario(UsuarioVO usuario) throws SQLException{
+	public UsuarioVO loguearUsuario(UsuarioVO usuario) throws SQLException{
+
 		ResultSet resultSet = null;
 		conexion.openConnection();
 		statement = conexion.getSt();
@@ -107,14 +108,17 @@ public class UsuarioDAO {
 		if(resultSet.next()) {			
 			switch(resultSet.getString("Type")) {
 				case "Padre":
+					usuario = new PadreVO();
 					logger.trace("Usuario padre obtenido de la base de datos");
 					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.PADRE);
 					break;
 				case "Hijo":
+					usuario = new HijoVO();
 				    logger.trace("Usuario hijo obtenido de la base de datos");
 					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.HIJO);
 					break;
 				case "Monitor":
+					usuario = new MonitorVO();
 					logger.trace("Usuario monitor obtenido de la base de datos");
 					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.MONITOR);
 					break;
@@ -127,6 +131,7 @@ public class UsuarioDAO {
 			throw new SQLException("Contraseña o usuarios desconocidos");
 		}
 		conexion.closeConnection();
+		return usuario;
 	}
 	
 	private void setDatosBasicosUsuario(UsuarioVO usuario, ResultSet resultSet, TipoUsuario tipo) throws SQLException {

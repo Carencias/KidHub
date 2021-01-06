@@ -17,6 +17,7 @@ public class TrayectoTabla extends RecursiveTreeObject<TrayectoTabla> {
     public TrayectoTabla(TrayectoVO trayecto) {
     	
     	String actividad = Integer.toString(trayecto.getActividad().getIdActividad()) + "-" + trayecto.getActividad().getNombre();
+    	System.out.println("El nombre de la actividad  es: " + actividad);
     	this.actividad = new SimpleStringProperty(actividad);
     	this.tipo = new SimpleStringProperty(trayecto.getTipo().toString());
     	this.padre = new SimpleStringProperty(trayecto.getPadre().getNombre());

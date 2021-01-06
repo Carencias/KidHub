@@ -62,7 +62,7 @@ public class Main extends Application {
 		modificarTrayecto();
 		DOMConfigurator.configure("./logs/log4j.xml");
 		logger.info("La aplicacion se ha iniciado");
-		//launch(args);
+		launch(args);
 	}
 	
     private void mostrarLogin(Stage primaryStage) {

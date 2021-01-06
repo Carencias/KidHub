@@ -89,6 +89,7 @@ public class LoginController extends Controller{
 		
 		try {
 			tipoUsuario = Logica.getLogica().loguearUsuario(usuario);
+			
 			this.mostrarVentana(elegirVentana(tipoUsuario));
 			this.cerrarVentana(event);
 		} catch (KidHubException e) {
