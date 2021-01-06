@@ -19,13 +19,18 @@ import modelo.vo.UsuarioVO.TipoUsuario;
  */
 public class UsuarioDAO {
 	
-	//Referencia a la conxeion con la base de datos
+	/**
+	 * Para conectar con la BBDD
+	 */
 	protected Conexion conexion;
 	
-	//Referencia a un statemnt
+	/**
+	 * Para ejecutar queries en la BBDD
+	 */
 	protected Statement statement;
 	
 	static Logger logger = Logger.getLogger(UsuarioDAO.class);
+	
 	/**
 	 * Constructor de la clase ActividadDAO, que inicializa el atributo conexion
 	 */
@@ -34,35 +39,37 @@ public class UsuarioDAO {
 	}
 	
 	/**
-	 * Metodo que lanza una query para registrar un usuario a la base de datos
+	 * Lanza una query para registrar un usuario a la base de datos
 	 * @param usuario
-	 *  UsuarioVO con la informacion del usuario
+	 * Contiene la informacion del usuario
 	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
 	 */
 	public void registrarUsuario(UsuarioVO usuario) throws SQLException{
 		
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
-		StringBuilder insertQuery = new StringBuilder();
-		insertQuery.append("INSERT INTO USERS");
-		insertQuery.append("(Username, DNI, UserPassword, Email, FirstName, SecondName, BirthDate, Age, Type) ");
-		insertQuery.append("VALUES(");
-		insertQuery.append("'" + usuario.getNombreUsuario() + "', '" + usuario.getDni() + "', '" + usuario.getContrasena() + "', '" + usuario.getEmail() + "', '");
-		insertQuery.append(usuario.getNombre() + "', '" + usuario.getApellidos() + "', '" + usuario.getFechaNacimiento() + "', '" + usuario.getEdad() + "', '" + usuario.getTextoTipo() + "');");
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO USERS");
+		query.append("(Username, DNI, UserPassword, Email, FirstName, SecondName, BirthDate, Age, Type) ");
+		query.append("VALUES(");
+		query.append("'" + usuario.getNombreUsuario() + "', '" + usuario.getDni() + "', '" + usuario.getContrasena() + "', '" + usuario.getEmail() + "', '");
+		query.append(usuario.getNombre() + "', '" + usuario.getApellidos() + "', '" + usuario.getFechaNacimiento() + "', '" + usuario.getEdad() + "', '" + usuario.getTextoTipo() + "');");
 		
 		logger.trace("Query lista para ser lanzada");
-		statement.executeUpdate(insertQuery.toString());
+		statement.executeUpdate(query.toString());
 		logger.trace("Query ejecutada con exito");
 		conexion.closeConnection();
 		registroEspecifico(usuario);
 	}
 	
 	/**
-	 * Metodo que termina el registro dependiendo del tipo de usuario
+	 * Termina el registro dependiendo del tipo de usuario
 	 * @param usuario
-	 *  UsuarioVO con la informacion del usuario
+	 *  contiene la informacion del usuario
 	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
 	 */
 	private void registroEspecifico(UsuarioVO usuario) throws SQLException{
 		switch(usuario.getTipo()) {
@@ -79,54 +86,38 @@ public class UsuarioDAO {
 	}
 	
 	/**
-	 * Metodo que lanza una query para obtener un usuario de la base de datos
+	 * Lanza una query para obtener los datos de un usuario de la BBDD
 	 * @param usuario
-	 *  UsuarioVO con la informacion del usuario
-	 * @return
-	 *  Devuelve un UsuarioVO con la informacion del usuario obtenida de la base de datos
+	 * Contiene la informacion del usuario
 	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
 	 */
-	public UsuarioVO loguearUsuario(UsuarioVO usuario) throws SQLException{
+	public void loguearUsuario(UsuarioVO usuario) throws SQLException{
 		ResultSet resultSet = null;
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
-		StringBuilder selectQuery = new StringBuilder();
-		selectQuery.append("SELECT * FROM USERS ");
-		selectQuery.append("WHERE Username='"+ usuario.getNombreUsuario()+"';");
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT * FROM USERS ");
+		query.append("WHERE Username='"+ usuario.getNombreUsuario()+"';");
 		
 		logger.trace("Query lista para ser lanzada");
-		resultSet = statement.executeQuery(selectQuery.toString());
+		resultSet = statement.executeQuery(query.toString());
 		logger.trace("Query ejecutada con exito");
-		if(resultSet.next()) {
+		if(resultSet.next()) {			
 			switch(resultSet.getString("Type")) {
 				case "Padre":
 					logger.trace("Usuario padre obtenido de la base de datos");
-					PadreVO padre = new PadreVO();
-					padre.setNombreUsuario(resultSet.getString("Username"));
-					padre.setContrasena(resultSet.getString("UserPassword"));
-					padre.setNombre(resultSet.getString("FirstName"));
-					padre.setTipo(TipoUsuario.PADRE);
-					conexion.closeConnection();
-					return padre;
+					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.PADRE);
+					break;
 				case "Hijo":
 				    logger.trace("Usuario hijo obtenido de la base de datos");
-					HijoVO hijo = new HijoVO();
-					hijo.setNombreUsuario(resultSet.getString("Username"));
-					hijo.setContrasena(resultSet.getString("UserPassword"));
-					hijo.setNombre(resultSet.getString("FirstName"));
-					hijo.setTipo(TipoUsuario.HIJO);
-					conexion.closeConnection();
-					return hijo;
+					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.HIJO);
+					break;
 				case "Monitor":
 					logger.trace("Usuario monitor obtenido de la base de datos");
-					MonitorVO monitor = new MonitorVO();
-					monitor.setNombreUsuario(resultSet.getString("Username"));
-					monitor.setContrasena(resultSet.getString("UserPassword"));
-					monitor.setNombre(resultSet.getString("FirstName"));
-					monitor.setTipo(TipoUsuario.MONITOR);
-					conexion.closeConnection();
-					return monitor;
+					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.MONITOR);
+					break;
 				default:
 					conexion.closeConnection();
 					throw new SQLException("Contraseña o usuarios desconocidos");
@@ -135,5 +126,51 @@ public class UsuarioDAO {
 			conexion.closeConnection();
 			throw new SQLException("Contraseña o usuarios desconocidos");
 		}
+		conexion.closeConnection();
+	}
+	
+	private void setDatosBasicosUsuario(UsuarioVO usuario, ResultSet resultSet, TipoUsuario tipo) throws SQLException {
+		usuario.setNombreUsuario(resultSet.getString("Username"));
+		usuario.setContrasena(resultSet.getString("UserPassword"));
+		usuario.setNombre(resultSet.getString("FirstName"));
+		usuario.setTipo(tipo);
+	}
+
+	/**
+	 * Comprueba si la contrasena y el usuario introducidos son correctos
+	 * @param usuario
+	 * Contiene la contrasena y el usuario introducidos
+	 * @return
+	 * true si las credenciales son correctas
+	 * @throws SQLException
+	 * Si hay algun error al ejecutar la query
+	 */
+	public boolean credencialesCorrectas(UsuarioVO usuario) throws SQLException {
+		ResultSet resultSet = null;
+		conexion.openConnection();
+		statement = conexion.getSt();
+		boolean credencialesCorrectas = false;
+		
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT * FROM USERS ");
+		query.append("WHERE Username='"+ usuario.getNombreUsuario()+"';");
+		
+		logger.trace("Query lista para ser lanzada");
+		resultSet = statement.executeQuery(query.toString());
+		logger.trace("Query ejecutada con exito");
+		if(resultSet.next()) {
+			if(usuario.getContrasena().equals(resultSet.getString("UserPassword"))) {
+				logger.info("El usuario y la contrasena introducidos son correctos");
+				credencialesCorrectas = true;
+			}else {
+				logger.error("Se ha introducido una contrasena incorrecta");
+				credencialesCorrectas = false;
+			}
+		}else {
+			logger.error("El usuario introducido no existe");
+			credencialesCorrectas = false;
+		}
+		
+		return credencialesCorrectas;
 	}	
 }
