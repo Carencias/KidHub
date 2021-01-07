@@ -1,5 +1,5 @@
-package modelo;
 
+import modelo.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -228,26 +228,26 @@ public class LogicaTests {
 		
 	}
 	
-	/*@Test NO SE POR QUE NO SE METEN LOS HIJOS AL ARRAY (ESTA VACIO)
+	@Test
 	public void getHijosTest() throws SQLException, KidHubException {
 		this.registrarHijoTest();
 		
-		//logica.setUsuarioActual(padre);
+		logica.setUsuarioActual(padre);
 				
 		ArrayList<HijoVO> hijos = logica.getHijos();
 		
 		int i = 0;
 		boolean hijoEncontrado = false;
 		
-		while(hijos.get(i)!=null && !hijoEncontrado) {
-			if(hijos.get(i).getNombreUsuario() == hijo.getNombreUsuario()) {
+		while(i<hijos.size() && !hijoEncontrado) {
+			if(hijos.get(i).getNombreUsuario().equals(hijo.getNombreUsuario())) {
 				hijoEncontrado = true;
 			}
+			i++;
 		}
 		
-		assertTrue(hijoEncontrado);
-		
-	}*/
+		assertTrue(hijoEncontrado);		
+	}
 	
 	@Test
 	public void getUsuarioActualTest() {
@@ -361,6 +361,26 @@ public class LogicaTests {
 		
 	}
 	
+	@Test (expected = KidHubException.class)
+	public void conflictoHorarioActividadTest() throws SQLException, KidHubException{
+		ActividadVO actividadMal = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 18, 0), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Deportiva");
+		this.registrarMonitorTest();
+		
+		logica.setUsuarioActual(monitor);
+		logica.borrarActividad(actividad);
+		logica.crearActividad(actividad);
+		logica.crearActividad(actividadMal);
+	}
+	
+	@Test (expected = KidHubException.class)
+	public void conflictoHorarioTrayectoTest() throws SQLException, KidHubException{
+		TrayectoVO trayectoMal = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		this.apuntarHijoAActividadTest();
+		
+		logica.crearTrayecto(trayecto);
+		logica.crearTrayecto(trayectoMal);
+	}
+	
 	private boolean existeTrayecto(ArrayList<TrayectoVO> trayectos) {
 		int i = 0;
 		boolean trayectoEncontrado = false;
@@ -373,7 +393,5 @@ public class LogicaTests {
 		
 		return trayectoEncontrado;
 	}
-	
-
 }
 
