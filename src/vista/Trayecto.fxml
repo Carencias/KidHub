@@ -56,7 +56,7 @@
          </toggleGroup>
       </JFXRadioButton>
       <JFXRadioButton fx:id="vuelta" layoutX="103.0" layoutY="146.0" style="-jfx-selected-color: #175084; -jfx-unselected-color: #bcf4fc;" text="Vuelta" textFill="#bef0ff" toggleGroup="$grupo1" />
-      <JFXTextField fx:id="aforo" focusColor="#bef0ff" layoutX="230.0" layoutY="124.0" prefHeight="30.0" prefWidth="62.0" promptText="Aforo" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      <JFXTextField fx:id="aforo" focusColor="#bef0ff" layoutX="213.0" layoutY="124.0" prefHeight="30.0" prefWidth="45.0" promptText="Aforo" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
@@ -172,7 +172,7 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <Label fx:id="nombreActividad" layoutX="322.0" layoutY="124.0" prefHeight="30.0" prefWidth="170.0" text="NombreActividad" textFill="#bef0ff" visible="false">
+      <Label fx:id="nombreActividad" layoutX="291.0" layoutY="124.0" prefHeight="30.0" prefWidth="202.0" text="NombreActividad" textFill="#bef0ff" visible="false">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>

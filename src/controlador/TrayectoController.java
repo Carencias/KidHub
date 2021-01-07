@@ -177,8 +177,10 @@ public class TrayectoController extends Controller{
 	    		error.append("Campos sin rellenar\n");	    		
 	    	}
 	    	
-	    	if(this.actividad.getSelectionModel().getSelectedItem() == null) {
-	    		error.append("Seleccione la actividad relacionada con el trayecto.\n");
+	    	if(!modificacion) {
+		    	if(this.actividad.getSelectionModel().getSelectedItem() == null) {
+		    		error.append("Seleccione la actividad relacionada con el trayecto.\n");
+		    	}
 	    	}
 	    	
 	    	try {
@@ -230,6 +232,9 @@ public class TrayectoController extends Controller{
 	    @FXML
 	    void setDatosActividad(ActionEvent event) throws SQLException{
 	    	//TODO este es el evento del combobox, pero como gestiono al cambiar luego lo de ida y vuelta??
+	    	
+	    	this.ida.setDisable(true);
+	    	this.vuelta.setDisable(true);
 	    	
 	    	ActividadVO actividad = this.getActividad();
 	    	
