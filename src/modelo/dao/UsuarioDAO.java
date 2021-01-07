@@ -179,7 +179,7 @@ public class UsuarioDAO {
 		return credencialesCorrectas;
 	}
 
-	public void borrarUsuario(PadreVO padre) throws SQLException {
+	public void borrarUsuario(UsuarioVO usuario) throws SQLException {
 		Statement statement;
 		
 		conexion.openConnection();
@@ -187,7 +187,7 @@ public class UsuarioDAO {
 		
 		StringBuilder query = new StringBuilder();
 		query.append("DELETE FROM USERS WHERE ");
-		query.append("Username='" + padre.getNombreUsuario() + "'; ");
+		query.append("Username='" + usuario.getNombreUsuario() + "'; ");
 		
 		logger.trace("Query lista para ser lanzada");
 		statement.executeUpdate(query.toString());

@@ -87,7 +87,7 @@ public class Logica {
 	 * @return
 	 * true si alguno de los campos esta vacio
 	 */
-	public boolean camposRegistroUsuarioIncompletos(UsuarioVO usuario) {
+	private boolean camposRegistroUsuarioIncompletos(UsuarioVO usuario) {
 		return usuario.getNombre().equals("") || usuario.getApellidos().equals("") || 
 				usuario.getContrasena().equals("") || usuario.getNombreUsuario().equals("") || 
 				usuario.getFechaNacimiento().equals("") || usuario.getDni().equals("") || usuario.getEmail().equals("");
@@ -205,7 +205,7 @@ public class Logica {
 	}
 
 	/**
-	 * Metodo que se comunica con el modelo para obtener los datos de la actividad
+	 * Metodo que se comunica con el modelo para obtener los datos de la actividad sabiendo su ID
 	 * @param actividad
 	 *  ActividadVO con la actividad para rellenar
 	 */
@@ -243,7 +243,7 @@ public class Logica {
 	/**
 	 * Metodo que se comunica con el modelo para obtener todas las actividades de un usuario
 	 * @param usuario
-	 *  Usuario del que se obtendrar las actividades
+	 *  Usuario del que se obtendran las actividades
 	 * @return
 	 *  Devuelve una lista con las actividades de ese usuario
 	 */
@@ -360,8 +360,8 @@ public class Logica {
 		new TrayectoDAO().desapuntarHijoDeTrayecto(hijo,trayecto);		
 	}
 
-	public void borrarUsuario(PadreVO padre) throws SQLException {
-		logger.trace("Borrando el usuario: " + padre.getNombreUsuario());
-		new UsuarioDAO().borrarUsuario(padre);
+	public void borrarUsuario(UsuarioVO usuario) throws SQLException {
+		logger.trace("Borrando el usuario: " + usuario.getNombreUsuario());
+		new UsuarioDAO().borrarUsuario(usuario);
 	}
 }
