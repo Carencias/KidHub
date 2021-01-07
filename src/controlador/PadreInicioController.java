@@ -58,8 +58,8 @@ public class PadreInicioController extends Controller{
 						 email, telefono, contra1, ano, mes, dia;
     
     @FXML
-    private JFXButton inicio, actividades, actividadesHijo, trayectos, trayectosHijo, registrarHijo,
-    				  cerrarSesion, apuntarActividad, desapuntarActividad, apuntarTrayecto, desapuntarTrayecto, crear, modificar;
+    private JFXButton inicio, actividades, actividadesHijo, trayectos, trayectosHijo, registrarHijo, cerrarSesion,
+    				  apuntarActividad, desapuntarActividad, apuntarTrayecto, desapuntarTrayecto, borrarTrayecto, crear, modificar;
     
     @FXML
     private Pane panoInicio, panoActividades, panoTrayectos, panoRegistrarHijo, panoCerrar;
@@ -441,15 +441,15 @@ public class PadreInicioController extends Controller{
     	
     	if(usuario.getNombreUsuario().equals("TODOS")) {
     		
-    		mostrarBotones(true, false, false, false);
+    		mostrarBotones(true, false, false, false, false);
     		
     	}else if(usuario.getNombreUsuario().equals("PROPIOS")){	
 
-    		mostrarBotones(true, true, true, false);
+    		mostrarBotones(false, true, true, false, true);
 
     	}else {
     		//hijo
-    		mostrarBotones(false, false, false, true);
+    		mostrarBotones(false, false, false, true, false);
 
     	}
     	//TODO IMPORTANTE gestionar el tipo del VO que se manda
@@ -468,15 +468,17 @@ public class PadreInicioController extends Controller{
 	 * @param desapuntar
 	 * True para mostrar el boton Desapuntar
 	 */
-	private void mostrarBotones(boolean trayecto, boolean crear, boolean modificar, boolean desapuntar) {
-		this.apuntarTrayecto.setDisable(!trayecto);
-		this.apuntarTrayecto.setVisible(trayecto);
+	private void mostrarBotones(boolean apuntar, boolean crear, boolean modificar, boolean desapuntar, boolean borrar) {
+		this.apuntarTrayecto.setDisable(!apuntar);
+		this.apuntarTrayecto.setVisible(apuntar);
 		this.crear.setDisable(!crear);
 		this.crear.setVisible(crear);
 		this.modificar.setDisable(!modificar);
 		this.modificar.setVisible(modificar);
 		this.desapuntarTrayecto.setDisable(!desapuntar);
 		this.desapuntarTrayecto.setVisible(desapuntar);
+		this.borrarTrayecto.setDisable(!borrar);
+		this.borrarTrayecto.setVisible(borrar);
 	}
     
     /**
@@ -548,12 +550,8 @@ public class PadreInicioController extends Controller{
     	
     	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
-			
-		//Si no estan seleccionados los trayectos del padre
-		}else if(!this.getUsuarioTrayecto().getNombreUsuario().equals(Logica.getLogica().getUsuarioActual().getNombreUsuario())) {
-			this.muestraError("ERROR", "Actividades", "Solo puede borrar los trayectos que haya creado usted.");
 		}else {
-			
+			//Los trayectos seleccionados siempre van a ser creados por el padre, si no no tendria disponible el boton
 			TrayectoTabla trayectoTabla;
 			TrayectoVO trayecto = new TrayectoVO();
 			trayectoTabla = this.trayectosTree.getSelectionModel().getSelectedItem().getValue();
