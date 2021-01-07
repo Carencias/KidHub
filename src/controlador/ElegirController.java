@@ -16,7 +16,6 @@ import modelo.vo.HijoVO;
 /**
  * Clase controladora de la ventana que permite apuntar un hijo a una actividad
  * @version 1.0
- *
  */
 public class ElegirController extends Controller{
 
@@ -69,7 +68,8 @@ public class ElegirController extends Controller{
 			HijoVO hijo = new HijoVO();
 			hijo.setNombreUsuario(nombre);
 			try {
-				Logica.getLogica().apuntarHijoAActividad(hijo, this.actividad);
+				Logica.getLogica().rellenarActividad(actividad);
+				Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
 			} catch (SQLException e) {
 				logger.error("Error al apuntar al hijo a la actividad: "+e.getMessage());
 				muestraError("ERROR","Se produjo un error.", "Error al apuntar al hijo a la actividad");

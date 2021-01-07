@@ -1,9 +1,14 @@
 package modelo.vo;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
+/**
+ * Clase Value Object que sirve de almacen para la informacion de una actividad
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class ActividadVO {
 	
 	
@@ -17,15 +22,16 @@ public class ActividadVO {
 	private ArrayList<HijoVO> hijos;
 	private MonitorVO monitor;
 	private String tipo;
+	static Logger logger = Logger.getLogger(ActividadVO.class);
 	
 	public ActividadVO(String nombre, LocalDateTime inicio, LocalDateTime fin, int capacidad, Direccion direccion, String tipo) {
+		logger.trace("Creando actividadVO");
 		this.nombre = nombre;
 		this.inicio = inicio;
 		this.fin = fin;
 		this.capacidad = capacidad;
 		this.direccion = direccion;
 		this.tipo = tipo;
-		
 		this.setDuracion();
 	}
 	

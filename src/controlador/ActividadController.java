@@ -12,6 +12,7 @@ import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
+import modelo.vo.UsuarioVO;
 
 /**
  * Clase controladora de las ventanas de creacion de actividades
@@ -82,9 +83,6 @@ public class ActividadController extends Controller {
 	    		logger.trace("Boton de confirmar creacion de actividad pulsado");
     			Logica.getLogica().crearActividad(actividad);
 	    	}
-	    	
-	    	//TODO para refrescar se usa la linea de abajo, pero da warnings por classcast exception
-			//controladorMonitor.inicializarTablaActividades(Logica.getLogica().getActividades(Logica.getLogica().getUsuarioActual()));
     	}catch(KidHubException e) {
 			logger.error(e.getMessage());
 			muestraError("ERROR","Se produjo un error.", e.getMessage());
@@ -97,7 +95,6 @@ public class ActividadController extends Controller {
     	
     	this.cerrarVentana(event);
     	this.mostrarVentana("MonitorInicio");
-    	//this.recuperarVentana(this.stage);
     }
         
     /**

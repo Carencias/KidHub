@@ -1,6 +1,13 @@
 package modelo.vo;
 import java.time.LocalDateTime;
 
+import org.apache.log4j.Logger;
+
+/**
+ * Clase Value Object que sirve de almacen para la informacion de una parada
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class ParadaVO {
 	
 	public enum TipoParada{
@@ -10,8 +17,10 @@ public class ParadaVO {
 	private LocalDateTime fecha;
 	private TipoParada tipo;
 	private Direccion direccion;
+	static Logger logger = Logger.getLogger(ParadaVO.class);
 	
 	public ParadaVO(LocalDateTime fecha, TipoParada tipo, Direccion direccion) {
+		logger.trace("Creando ParadaVO");
 		this.fecha = fecha;
 		this.tipo = tipo;
 		this.direccion = direccion;

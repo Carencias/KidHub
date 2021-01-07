@@ -3,6 +3,8 @@ package controlador;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.jfoenix.controls.JFXComboBox;
 
 import javafx.fxml.FXML;
@@ -14,6 +16,10 @@ import modelo.Logica;
 import modelo.vo.HijoVO;
 import modelo.vo.TrayectoVO;
 
+/**
+ * Clase controladora de la ventana que permite apuntar un hijo a un trayecto
+ * @version 1.0
+ */
 public class ElegirTrayectoController extends Controller{
 	@FXML
 	private Button confirmar, cancelar;
@@ -25,6 +31,17 @@ public class ElegirTrayectoController extends Controller{
 	
 	private Stage stage;
 	
+	static Logger logger = Logger.getLogger(ElegirTrayectoController.class);
+	
+	/**
+	 * Metodo que inicializa la ventana con los hijos del usuario y el trayecto
+	 * @param hijos
+	 *  Hijos del usuario
+	 * @param trayecto
+	 *  ActividadVO con la informacion del trayecto
+	 * @param stage
+	 *  Stage
+	 */
 	void initData(ArrayList<HijoVO> hijos, TrayectoVO trayecto, Stage stage) {
 
 		this.trayecto = trayecto;
@@ -35,18 +52,25 @@ public class ElegirTrayectoController extends Controller{
 		}
     }
 	
+	/**
+	 * Metodo que escucha el boton de confirmar y apunta un hijo a el trayecto
+	 * @param event
+	 *  Pulsado boton de confirmar
+	 */
 	@FXML
 	void confirmar(MouseEvent event) {
-		
+		logger.trace("Boton de confirmar apuntar a hijo a trayecto pulsado");
 		String nombre = this.selectHijo.getSelectionModel().getSelectedItem();
 		
 		if(nombre == null) {
+			logger.error("Hijo no seleccionado");
 			this.muestraError("ERROR", "Hijo", "Debe seleccionar uno de sus hijos.");
 			
 		}else {		
 			HijoVO hijo = new HijoVO();
 			hijo.setNombreUsuario(nombre);
 			try {
+				Logica.getLogica().rellenarTrayecto(trayecto);
 				Logica.getLogica().apuntarHijoATrayecto(hijo, this.trayecto);
 				this.cerrarVentana(event);
 				this.recuperarVentana(this.stage);
@@ -62,7 +86,7 @@ public class ElegirTrayectoController extends Controller{
 	
 	@FXML
     void cancelar(MouseEvent event) {
-
+		logger.trace("Cancelado apuntar hijo a trayecto");
     	this.cerrarVentana(event);
     	this.recuperarVentana(this.stage);
     }

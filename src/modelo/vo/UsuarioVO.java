@@ -1,5 +1,12 @@
 package modelo.vo;
 
+import org.apache.log4j.Logger;
+
+/**
+ * Clase Value Object que sirve de almacen para la informacion de un usuario
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class UsuarioVO {
 	
 	public enum TipoUsuario{
@@ -15,7 +22,11 @@ public class UsuarioVO {
 	private String fechaNacimiento;
 	private int edad;
 	private TipoUsuario tipo;
+	static Logger logger = Logger.getLogger(UsuarioVO.class);
 	
+	public UsuarioVO() {
+		logger.trace("Creando UsuarioVO");
+	}
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}

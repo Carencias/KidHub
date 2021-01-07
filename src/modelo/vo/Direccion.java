@@ -1,5 +1,12 @@
 package modelo.vo;
 
+import org.apache.log4j.Logger;
+
+/**
+ * Clase Value Object que sirve de almacen para la informacion de una direccion
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class Direccion {
 
 	private String calle;
@@ -12,7 +19,10 @@ public class Direccion {
 	
 	private String direccionCompleta;
 	
+	static Logger logger = Logger.getLogger(Direccion.class);
+	
 	public Direccion(String calle, int numero, String codigoPostal, String ciudad ) {
+		logger.trace("Creando direccionVO");
 		this.calle = calle;
 		this.numero = numero;
 		this.codigoPostal = codigoPostal;

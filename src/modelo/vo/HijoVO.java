@@ -1,16 +1,22 @@
 package modelo.vo;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-import modelo.vo.UsuarioVO.TipoUsuario;
+import org.apache.log4j.Logger;
 
+/**
+ * Clase Value Object que sirve de almacen para la informacion de un hijo
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class HijoVO extends UsuarioVO{
 	
 	private ArrayList<ActividadVO> actividades;
 	private ArrayList<TrayectoVO> trayectos;
+	static Logger logger = Logger.getLogger(Direccion.class);
 	
 	public HijoVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, String fechaNacimiento, TipoUsuario tipo) {
+		logger.trace("Creando HijoVO");
 		this.setNombreUsuario(nombreUsuario);
 		this.setDni(dni);
 		this.setContrasena(contrasena);
@@ -22,6 +28,7 @@ public class HijoVO extends UsuarioVO{
 	}
 	
 	public HijoVO() {
+		logger.trace("Creando HijoVO");
 		this.setTipo(TipoUsuario.HIJO);
 	}
 

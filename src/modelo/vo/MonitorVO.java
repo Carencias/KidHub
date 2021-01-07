@@ -1,17 +1,23 @@
 package modelo.vo;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-import modelo.vo.UsuarioVO.TipoUsuario;
+import org.apache.log4j.Logger;
 
+/**
+ * Clase Value Object que sirve de almacen para la informacion de un monitor
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class MonitorVO extends UsuarioVO{
 	
 	private String telefono;
 	private String especialidad;
 	private ArrayList<ActividadVO> actividades;
+	static Logger logger = Logger.getLogger(MonitorVO.class);
 	
 	public MonitorVO(String nombreUsuario, String dni, String contrasena, String email, String nombre, String apellidos, String fechaNacimiento, TipoUsuario tipo, String telefono, String especialidad) {
+		logger.trace("Creando MonitorVO");
 		this.setNombreUsuario(nombreUsuario);
 		this.setDni(dni);
 		this.setContrasena(contrasena);

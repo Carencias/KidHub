@@ -36,7 +36,7 @@ public class HijoInicioController extends Controller{
 
 	@FXML
     private Button cerrar;
-    
+     
     @FXML
     private JFXButton inicio, actividades, trayectos, cerrarSesion, crear;
     
@@ -54,6 +54,9 @@ public class HijoInicioController extends Controller{
     
     static Logger logger = Logger.getLogger(HijoInicioController.class);
     
+    /**
+	 * Metodo que inicializa la ventana
+	 */
     @FXML
     public void initialize() {
     	nombre.setText(Logica.getLogica().getUsuarioActual().getNombre());
@@ -63,7 +66,11 @@ public class HijoInicioController extends Controller{
     	
     }
     
-    
+    /**
+     * Elige el panel que mostrar en la ventana
+     * @param actionEvent
+     *  Pulsado boton barra lateral
+     */
     @FXML
     public void elegirPanel(ActionEvent actionEvent) {
     	
@@ -103,6 +110,10 @@ public class HijoInicioController extends Controller{
     	
     }
 
+    /**
+     * Muestra las actividades del hijo
+     * @param event
+     */
     @FXML
     public void mostrarActividadTablas(MouseEvent event) {
     	logger.trace("Intentando mostrar actividades del hijo");
@@ -116,7 +127,11 @@ public class HijoInicioController extends Controller{
         }
     }
 
-
+	/**
+	 * Inicializa la tabla de actividades del hijo
+	 * @param actividades
+	 *  Actividades del hijo
+	 */
 	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
 		
 		/**
@@ -188,6 +203,11 @@ public class HijoInicioController extends Controller{
 	}
 
 
+	/**
+	 * Inicializa la tabla del trayecto del hijo
+	 * @param trayectos
+	 *  Trayectos del hijo
+	 */
 	private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
 		
 		/**
@@ -247,7 +267,5 @@ public class HijoInicioController extends Controller{
 	    trayectosTree.setVisible(true);
 	    
 	    logger.trace("Tabla de trayectos del hijo inicializada");
-
-	}
-    
+	}    
 }

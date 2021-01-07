@@ -4,8 +4,15 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import modelo.vo.ParadaVO.TipoParada;
 
+/**
+ * Clase Value Object que sirve de almacen para la informacion de un trayecto
+ * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ */
 public class TrayectoVO {
 	
 	public enum TipoTrayecto{
@@ -21,8 +28,10 @@ public class TrayectoVO {
 	private ArrayList<HijoVO> hijos;
 	private ParadaVO origen;
 	private ParadaVO destino;
+	static Logger logger = Logger.getLogger(TrayectoVO.class);
 	
 	public TrayectoVO(ActividadVO actividad, int capacidad, TipoTrayecto tipo, LocalDateTime fecha, Direccion direccion) {
+		logger.trace("Creando TrayectoVO");
 		this.actividad = actividad;
 		this.capacidad = capacidad;
 		this.tipo = tipo;
@@ -37,7 +46,7 @@ public class TrayectoVO {
 	}
 	
 	public TrayectoVO() {
-		
+		logger.trace("Creando TrayectoVO");
 	}
 	
 	public void crearTrayectoIda(LocalDateTime fecha, Direccion direccion) {

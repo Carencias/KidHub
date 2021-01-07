@@ -1,16 +1,12 @@
 package controlador;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import javax.imageio.plugins.tiff.GeoTIFFTagSet;
-
+import org.apache.log4j.Logger;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,12 +18,15 @@ import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
-import modelo.vo.PadreVO;
 import modelo.vo.ParadaVO;
 import modelo.vo.TrayectoVO;
 import modelo.vo.ParadaVO.TipoParada;
 import modelo.vo.TrayectoVO.TipoTrayecto;
 
+/**
+ * Clase controladora de la ventana que permite gestionar los trayectos
+ * @version 1.0
+ */
 public class TrayectoController extends Controller{
 	   	@FXML
 	    private JFXTextField dia, mes, ano, aforo, codPostal, ciudad, calle, num, diaDestino, mesDestino, anoDestino, ciudadDestino,
@@ -54,14 +53,19 @@ public class TrayectoController extends Controller{
 	    
 	    private boolean modificacion;
 	    
-	    
+		static Logger logger = Logger.getLogger(TrayectoController.class);
+		
+		/**
+		 * Inicializa los datos
+		 * @param actividades
+		 * @param trayecto
+		 * @param stage
+		 * @param modificacion
+		 */
 	    void initData(ArrayList<ActividadVO> actividades, TrayectoVO trayecto, Stage stage, boolean modificacion) {
-	    	
-	    	System.out.println("Estoy iniciando datos");
 	    	this.trayecto = trayecto;
 	    	this.modificacion = modificacion;
-	    	this.stage = stage;	    	
-	    	
+	    	this.stage = stage;	    	  	
 	    	this.setDatosCombo(actividades);
 	    	
 	    	if(modificacion) {
@@ -70,6 +74,9 @@ public class TrayectoController extends Controller{
 	    	
 	    }
 	    
+	    /**
+	     * Setea los datos del trayecto
+	     */
 	    private void setDatosTrayecto() {
 	    	
 	    	ActividadVO actividad = this.trayecto.getActividad();

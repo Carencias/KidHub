@@ -26,7 +26,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.MouseEvent;
@@ -415,7 +414,7 @@ public class PadreInicioController extends Controller{
      * Usuario del que se quieren ver los trayectos
      */
     private UsuarioVO getUsuarioTrayecto() {
-    	
+    	logger.trace("Obteniendo usuario del que visualizar los traeyctos");
 		String nombre = this.selectHijoTrayecto.getSelectionModel().getSelectedItem();
 		UsuarioVO usuario = new UsuarioVO();
 		
@@ -488,14 +487,11 @@ public class PadreInicioController extends Controller{
      */
     @FXML
     public void crearTrayecto(MouseEvent event) {
-    	System.out.println("Creando trayecto");
+    	logger.trace("Creando trayecto");
     	Stage stage = this.esconderVentana(event);
     	
     	ArrayList<ActividadVO> actividades = new ArrayList<>();
     	HijoVO hijo = new HijoVO();
-    	
-    	//TODO A Santi no le gusta esto, comprobar otras maneras
-    	//TODO de esta manera cogemos todos las actividades, no solo aquellas a las que esten apuntados sus hijos
     	hijo.setNombreUsuario("TODOS");
     	try {
     		actividades = Logica.getLogica().getActividades(hijo);
@@ -513,12 +509,12 @@ public class PadreInicioController extends Controller{
      */
     @FXML
     public void modificarTrayecto(MouseEvent event) {
-    	System.out.println("Modificando trayecto");
+    	logger.trace("Modificando trayecto");
     	TrayectoTabla trayectoTabla;
     	TrayectoVO trayecto = new TrayectoVO();
     	
-    	
     	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+    		logger.error("No hay ningun trayecto seleccionado");
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionado");
     	}else {
     		trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
@@ -531,8 +527,8 @@ public class PadreInicioController extends Controller{
 		    	actividades = Logica.getLogica().getActividades(hijo);
 		    	Logica.getLogica().rellenarTrayecto(trayecto);
 	    	}catch(SQLException e) {
-	    		logger.error("Error al obtener la actividad: "+e.getMessage());
-				this.muestraError("ERROR", "Actividades", "Error al obtener datos/");
+	    		logger.error("Error al obtener el trayecto: "+e.getMessage());
+				this.muestraError("ERROR", "Actividades", "Error al obtener datos");
 	    	}
 	    	this.mostrarVentanaTrayecto(actividades, trayecto, stage, true);
     	}
@@ -545,10 +541,10 @@ public class PadreInicioController extends Controller{
      */
     @FXML
     public void borrarTrayecto(MouseEvent event) {
-    	//TODO esta sin probar
-    	System.out.println("Borrando trayecto");
+    	logger.trace("Borrando trayecto");
     	
     	if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+    		logger.error("No hay ningun trayecto seleccionada");
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
 		}else {
 			//Los trayectos seleccionados siempre van a ser creados por el padre, si no no tendria disponible el boton
@@ -558,7 +554,6 @@ public class PadreInicioController extends Controller{
 			trayecto.setIdTrayecto(trayectoTabla.getId());
 			
 			try {
-				//TODO ese metodo en TrayectoDAO esta vacio
 				Logica.getLogica().borrarTrayecto(trayecto);
 				this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(Logica.getLogica().getUsuarioActual()));
 			} catch (SQLException e) {
@@ -575,11 +570,10 @@ public class PadreInicioController extends Controller{
      */
     @FXML
 	public void apuntarHijoTrayecto(MouseEvent event) {
-		System.out.println("Apuntando hijo a trayecto");
+		logger.trace("Apuntando hijo a trayecto");
 		if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
+			logger.error("No hay ningun trayecto seleccionada");
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
-			
-			//No hago comprobacioens del usuario porque los botones desaparecen, no hace falta
 		}else {
     		TrayectoTabla trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
     		TrayectoVO trayecto = new TrayectoVO();
@@ -596,7 +590,6 @@ public class PadreInicioController extends Controller{
      */
 	@FXML
 	public void desapuntarHijoTrayecto(MouseEvent event) {
-		//TODO esta sin probar
 		logger.trace("Desapuntando hijo de trayecto");
 		
 		TrayectoTabla trayectoTabla;
@@ -605,17 +598,16 @@ public class PadreInicioController extends Controller{
 		TrayectoVO trayecto = new TrayectoVO();
 		
 		if(trayectosTree.getSelectionModel().getSelectedItem() == null) {
-			
+			logger.error("No hay ningun trayecto seleccionada");
 			this.muestraError("ERROR", "Actividades", "No hay ningun trayecto seleccionada");
 		
 		}else if(hijoSinSeleccionar()) {
-			
+			logger.error("Seleccione el hijo que quiere desapuntar");
 			this.muestraError("ERROR", "Actividades", "Seleccione el hijo que quiere desapuntar");
 		}else {
 			//Solo cuando sea un hijo lo que este en el combo se va a poder desapuntar, luego uso un objeto hijoVO
 			usuario = this.getUsuarioTrayecto();
 			hijo.setNombreUsuario(usuario.getNombreUsuario());
-			//TODO esto para que si ya es un objeto hijo no???
 			hijo.setTipo(TipoUsuario.HIJO);
 			trayectoTabla = trayectosTree.getSelectionModel().getSelectedItem().getValue();
 			trayecto.setIdTrayecto(trayectoTabla.getId());		
@@ -651,8 +643,7 @@ public class PadreInicioController extends Controller{
 		
 		FXMLLoader loader = mostrarGenerico("Elegir");
     	ElegirController controller = loader.getController();
-    	controller.initData(hijos, actividad, stage2);
-    	
+    	controller.initData(hijos, actividad, stage2);	
     }
 	
 	/**
@@ -666,7 +657,6 @@ public class PadreInicioController extends Controller{
 	 * True si se esta modificando el trayecto, false si se esta creando
 	 */
 	private void mostrarVentanaTrayecto(ArrayList<ActividadVO> actividades, TrayectoVO trayecto, Stage stage2, boolean modificacion) {
-
 		FXMLLoader loader = mostrarGenerico("Trayecto");
 		
     	TrayectoController controller = loader.getController();    	
@@ -689,7 +679,6 @@ public class PadreInicioController extends Controller{
     		stage.setScene(new Scene(root));
     		stage.setResizable(false);
     	}catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	stage.show();
@@ -706,12 +695,10 @@ public class PadreInicioController extends Controller{
 	 * Contiene los datos del trayecto al que se va a apuntar un hijo
 	 * @param stage2
 	 */
-	private void mostrarDialogo(ArrayList<HijoVO> hijos, TrayectoVO trayecto, Stage stage2) {
-    	
+	private void mostrarDialogo(ArrayList<HijoVO> hijos, TrayectoVO trayecto, Stage stage2) {   	
     	FXMLLoader loader = mostrarGenerico("ElegirTrayecto");
     	ElegirTrayectoController controller = loader.getController();
-    	controller.initData(hijos, trayecto, stage2);
-    	
+    	controller.initData(hijos, trayecto, stage2);  	
     }
 	
 	/**
