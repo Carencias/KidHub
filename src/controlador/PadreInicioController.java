@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -99,24 +100,42 @@ public class PadreInicioController extends Controller{
 		
 		if(!contra1.getText().equals(contra2.getText())) {
 			muestraError("ERROR","Se produjo un error.", "Las contrasenas no coinciden.");
-		}else {
+		}else if(esUsuarioReservado(usuario.getText())) {
+			logger.error("El nombre de usuario elegido esta reservado");
+			muestraError("ERROR","Se produjo un error.", "El nombre de usuario elegido esta reservado.");
+    	}else {
 			
 			try {
 				Logica.getLogica().registrarUsuario(rellenarHijo());
 				logger.info("Se ha registrado el usuario de tipo hijo con exito");
 				this.muestraInfo("Registro", "Registro realizado", "Se ha asignado su hijo correctamente.");
-			}catch(Exception e) {
-				if(e instanceof KidHubException) {
-					muestraError("ERROR","Se produjo un error.", e.getMessage());
-				}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062)
+			}catch(KidHubException e) {
+				muestraError("ERROR","Se produjo un error.", e.getMessage());
+			}catch(SQLException e) {
+				if(e.getErrorCode() == 1062) {
+					logger.error("Se intenta registrar un hijo ya existente");
 					muestraError("ERROR","Se produjo un error.", "El hijo ya existe, prueba a registrar hijo ya existente.");
-				else if(e instanceof SQLException){
-					System.out.println(((SQLException) e).getErrorCode());
+				}else {
+					logger.error("Los campos introducidos en el registro del hijo son invalidos");
 					muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
 				}
-			}	
+					
+			}catch(DateTimeParseException e) {
+				logger.error("Se ha introducido una fecha invalida en el registro del hijo");
+				muestraError("ERROR","Se produjo un error.", ".");
+			}
+
 		}
 	}
+    
+    /**
+     * Comprueba si el nombre de usuario introducido esta reservado
+     * @return
+     * True si el nombre de usuario esta reservado
+     */
+    private boolean esUsuarioReservado(String usuario) {
+    	return (usuario.toLowerCase().equals("propios") || usuario.toLowerCase().equals("propios"));
+    }
     
     /**
      * Relena los datos del contenedor de informacion del hijo
@@ -631,29 +650,11 @@ public class PadreInicioController extends Controller{
 	 * @param stage2
 	 */
 	private void mostrarDialogo(ArrayList<HijoVO> hijos, ActividadVO actividad, Stage stage2) {
-
-    	/*AnchorPane root;
-    	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/Elegir.fxml"));
-    	
-    	Stage stage = new Stage();
-    	
-    	try {
-    		root = loader.load();
-    		stage.setScene(new Scene(root));
-    		stage.setResizable(false);
-    	}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
-
 		FXMLLoader loader = mostrarGenerico("Elegir");
     	ElegirController controller = loader.getController();
     	controller.initData(hijos, actividad, stage2);
     	
-    	//stage.show();
-
     }
 	
 	/**
@@ -709,25 +710,10 @@ public class PadreInicioController extends Controller{
 	 */
 	private void mostrarDialogo(ArrayList<HijoVO> hijos, TrayectoVO trayecto, Stage stage2) {
     	
-    	/*AnchorPane root;
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("../vista/ElegirTrayecto.fxml"));
-    	Stage stage = new Stage();
-    	
-    	try {
-    		root = loader.load();
-    		stage.setScene(new Scene(root));
-    		stage.setResizable(false);
-    	}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-    	
     	FXMLLoader loader = mostrarGenerico("ElegirTrayecto");
     	ElegirTrayectoController controller = loader.getController();
     	controller.initData(hijos, trayecto, stage2);
     	
-    	//stage.show();
-
     }
 	
 	/**

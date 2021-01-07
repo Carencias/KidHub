@@ -359,4 +359,9 @@ public class Logica {
 		logger.trace("Despauntando hijo a trayecto");
 		new TrayectoDAO().desapuntarHijoDeTrayecto(hijo,trayecto);		
 	}
+
+	public void borrarUsuario(PadreVO padre) throws SQLException {
+		logger.trace("Borrando el usuario: " + padre.getNombreUsuario());
+		new UsuarioDAO().borrarUsuario(padre);
+	}
 }

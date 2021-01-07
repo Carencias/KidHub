@@ -177,7 +177,7 @@ public class TrayectoController extends Controller{
 	    		error.append("Campos sin rellenar\n");	    		
 	    	}
 	    	
-	    	if(this.actividad.getSelectionModel().getSelectedItem() != null) {
+	    	if(this.actividad.getSelectionModel().getSelectedItem() == null) {
 	    		error.append("Seleccione la actividad relacionada con el trayecto.\n");
 	    	}
 	    	
@@ -383,13 +383,13 @@ public class TrayectoController extends Controller{
 				if(e instanceof KidHubException) {
 					logger.error(e.getMessage());
 					muestraError("ERROR","Se produjo un error.", e.getMessage());
-				}else if(e instanceof SQLException) {
+				}/*else if(e instanceof SQLException) {
 					logger.error("Formato de algun campo introducido invalido");
 					muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-				}else {
+				}*/else {
 					logger.error("Error desconocido.");
 					e.printStackTrace();
-					muestraError("ERROR","Se produjo un error.", "No se que poner aqui");
+					muestraError("ERROR","Se produjo un error.", "Error en alguno de los campos introducidos");
 				}
 			}
 	    	

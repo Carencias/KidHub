@@ -177,5 +177,23 @@ public class UsuarioDAO {
 		}
 		
 		return credencialesCorrectas;
-	}	
+	}
+
+	public void borrarUsuario(PadreVO padre) throws SQLException {
+		Statement statement;
+		
+		conexion.openConnection();
+		statement = conexion.getSt();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("DELETE FROM USERS WHERE ");
+		query.append("Username='" + padre.getNombreUsuario() + "'; ");
+		
+		logger.trace("Query lista para ser lanzada");
+		statement.executeUpdate(query.toString());
+		logger.trace("Query ejecutada con exito");
+		conexion.closeConnection();
+		
+		
+	}
 }

@@ -109,10 +109,10 @@ public class TrayectoDAO {
 		//TODO QUITAR LA DURACION DE LA TABLA STOPS
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO STOPS");
-		query.append("(RideID, StopDate, Duration, Address, Town, Type) ");
+		query.append("(RideID, StopDate, Address, Town, Type) ");
 		query.append("VALUES(");
 		query.append("'" + trayecto.getIdTrayecto() + "', '" + parada.getTextoFecha() + "', '");
-		query.append(trayecto.getDuracion() + "', '" + parada.getDireccion().getTextoDireccion() + "', '" + parada.getDireccion().getCiudad() + "', '");
+		query.append(parada.getDireccion().getTextoDireccion() + "', '" + parada.getDireccion().getCiudad() + "', '");
 		query.append(parada.getTextoTipo() + "');");
 		
 		logger.trace("Query lista para ser lanzada");
