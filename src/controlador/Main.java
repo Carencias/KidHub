@@ -138,6 +138,8 @@ public class Main extends Application {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}catch(KidHubException e){
+			
 		}
     }
     
@@ -151,7 +153,7 @@ public class Main extends Application {
     	
     	try {
 			logica.modificarActividad(actividad);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -171,7 +173,7 @@ public class Main extends Application {
     	Logica.getLogica().setUsuarioActual(padre);
     	try {
 			Logica.getLogica().apuntarHijoAActividad(hijo, actividad);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -196,6 +198,8 @@ public class Main extends Application {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}catch(KidHubException e) {
+			
 		}
     }
     
@@ -209,7 +213,7 @@ public class Main extends Application {
     	
     	try {
 			logica.modificarTrayecto(trayecto);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -219,7 +223,7 @@ public class Main extends Application {
     	Logica.getLogica().setUsuarioActual(padre);
     	try {
 			Logica.getLogica().apuntarHijoATrayecto(hijo, trayecto);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.HijoVO;
 import modelo.vo.TrayectoVO;
@@ -52,7 +53,10 @@ public class ElegirTrayectoController extends Controller{
 			} catch (SQLException e) {
 				logger.error("Error al apuntar a "+nombre+" en el trayecto");
 				this.muestraError("ERROR", "Actividades", "Error al apuntar a "+nombre+" en el trayecto");
-			}					
+			} catch (KidHubException e) {
+				logger.error("Error al apuntar a "+nombre+" en el trayecto");
+				this.muestraError("ERROR", "Actividades", "Error al apuntar a "+nombre+" en el trayecto");
+			}
 		}
 	}
 	

@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-
-import controlador.MonitorInicioController;
 import modelo.vo.*;
 import modelo.dao.*;
 import modelo.vo.UsuarioVO.TipoUsuario;
@@ -174,23 +172,30 @@ public class Logica {
 	 *  ActividadVO con los datos de la actividad para crear
 	 * @throws SQLException
 	 */
-	public void crearActividad(ActividadVO actividadVO) throws SQLException{
+	public void crearActividad(ActividadVO actividadVO) throws SQLException, KidHubException{
 		logger.trace("Creando  actividad");
 		actividadVO.setMonitor((MonitorVO) this.usuarioActual);
-		new ActividadDAO().crearActividad(actividadVO);
+		if(comprobarDisponibilidadActividad(actividadVO, this.usuarioActual)) {
+			new ActividadDAO().crearActividad(actividadVO);
+		}else {
+			throw new KidHubException("Ya tiene programada una actividad en ese horario");
+		}
 	}
-	
-	
+
 	/**
 	 * Metodo que agrega el nombre de usuario del monitor a la actividad, y se comunica con el modelo para crear la actividad
 	 * @param actividadVO
 	 *  ActividadVO con los datos de la actividad para modificar
 	 * @throws SQLException
 	 */
-	public void modificarActividad(ActividadVO actividadVO) throws SQLException{
+	public void modificarActividad(ActividadVO actividadVO) throws SQLException, KidHubException{
 		logger.trace("Modificando actividad");
 		actividadVO.setMonitor((MonitorVO) this.usuarioActual);
-		new ActividadDAO().modificarActividad(actividadVO);
+		if(comprobarDisponibilidadActividad(actividadVO,this.usuarioActual)) {
+			new ActividadDAO().modificarActividad(actividadVO);
+		}else {
+			throw new KidHubException("Ya tiene programada una actividad en ese horario");
+		}
 	}
 	
 	/**
@@ -222,9 +227,13 @@ public class Logica {
 	 *  ActividadVO con la informacion de la actividad
 	 * @throws SQLException
 	 */
-	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
-		new ActividadDAO().apuntarHijoAActividad(hijo, actividad);
-		logger.trace("Hijo apuntado correctamente");
+	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) throws SQLException, KidHubException{
+		logger.trace("Apuntando hijo a actividad");	
+		if(comprobarDisponibilidadActividad(actividad, hijo)) {
+			new ActividadDAO().apuntarHijoAActividad(hijo, actividad);
+		}else {
+			throw new KidHubException("Ya tiene programada una actividad en ese horario");
+		}
 	}
 	
 	/**
@@ -291,10 +300,14 @@ public class Logica {
 	 *  TrayectoVO con los datos del trayecto
 	 * @throws SQLException
 	 */
-	public void crearTrayecto(TrayectoVO trayecto) throws SQLException {
+	public void crearTrayecto(TrayectoVO trayecto) throws SQLException, KidHubException {
 		logger.trace("Creando trayectos");
 		trayecto.setPadre((PadreVO) this.usuarioActual);
-		new TrayectoDAO().crearTrayecto(trayecto);
+		if(comprobarDisponibilidadTrayecto(trayecto, this.usuarioActual)) {
+			new TrayectoDAO().crearTrayecto(trayecto);
+		}else {
+			throw new KidHubException("Ya tiene programada una actividad en ese horario");
+		}			
 	}
 	
 	/**
@@ -303,10 +316,14 @@ public class Logica {
 	 *  TrayectoVO con los datos del trayecto
 	 * @throws SQLException
 	 */
-	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException {
+	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException, KidHubException{
 		logger.trace("modificando trayectos");
 		trayecto.setPadre((PadreVO) this.usuarioActual);
-		new TrayectoDAO().modificarTrayecto(trayecto);
+		if(comprobarDisponibilidadTrayecto(trayecto, this.usuarioActual)) {
+			new TrayectoDAO().modificarTrayecto(trayecto);
+		}else {
+			throw new KidHubException("Ya tiene programada una actividad en ese horario");
+		}	
 	}
 	
 	/**
@@ -341,10 +358,13 @@ public class Logica {
 	 *  TrayectoVO con los datos del trayecto
 	 * @throws SQLException
 	 */
-	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException{
+	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException, KidHubException{
 		logger.trace("Apuntando hijo a trayecto");
-		new TrayectoDAO().apuntarHijoATrayecto(hijo,trayecto);
-		
+		if(comprobarDisponibilidadTrayecto(trayecto, hijo)) {
+			new TrayectoDAO().apuntarHijoATrayecto(hijo,trayecto);
+		}else {
+			throw new KidHubException("Ya tiene programada una actividad en ese horario");
+		}		
 	}
 
 	/**
@@ -363,5 +383,59 @@ public class Logica {
 	public void borrarUsuario(UsuarioVO usuario) throws SQLException {
 		logger.trace("Borrando el usuario: " + usuario.getNombreUsuario());
 		new UsuarioDAO().borrarUsuario(usuario);
+	}
+	
+	/**
+	 * Metodo privado que comprueba que la actividad que se quiere crear no coincide con alguna actividad existente
+	 * @param actividadVO
+	 *  Actividad a la que se quiere apuntar el hijo, o que quiere ser creada/modificada
+	 * @param usuario
+	 *  Usuario del que se quiere comprobar la disponibilidad
+	 * @return
+	 *  Falso si hay una actividad en ese horario, verdadero si no hay conflictos de horario
+	 * @throws SQLException
+	 */
+	private boolean comprobarDisponibilidadActividad(ActividadVO actividadVO, UsuarioVO usuario) throws SQLException{
+		boolean result = true;
+		int i = 0;
+		logger.trace("Comprobando disponibilidad horaria de la actividad");
+		ArrayList<ActividadVO> actividades = this.getActividades(usuario);
+		while(result && i<actividades.size()) {
+			if(actividadVO.getInicio().isAfter(actividades.get(i).getInicio()) && actividadVO.getInicio().isBefore(actividades.get(i).getFin())) {
+				result = false;
+			}
+			if(actividadVO.getFin().isAfter(actividades.get(i).getInicio()) && actividadVO.getFin().isBefore(actividades.get(i).getFin())) {
+				result = false;
+			}
+			i++;
+		}
+		return result;
+	}
+	
+	/**
+	 * Metodo privado que comprueba que el trayecto que se quiere crear no coincide con algun trayecto existente
+	 * @param actividadVO
+	 *  Trayecto a la que se quiere apuntar el hijo, o que quiere ser creada/modificada
+	 * @param usuario
+	 *  Usuario del que se quiere comprobar la disponibilidad
+	 * @return
+	 *  Falso si hay un trayecto en ese horario, verdadero si no hay conflictos de horario
+	 * @throws SQLException
+	 */
+	private boolean comprobarDisponibilidadTrayecto(TrayectoVO trayectoVO, UsuarioVO usuario) throws SQLException{
+		boolean result = true;
+		int i = 0;
+		logger.trace("Comprobando disponibilidad horaria del trayecto");
+		ArrayList<TrayectoVO> trayectos = this.getTrayectos(usuario);
+		while(result && i<trayectos.size()) {
+			if(trayectoVO.getOrigen().getFecha().isAfter(trayectos.get(i).getOrigen().getFecha()) && trayectoVO.getOrigen().getFecha().isBefore(trayectos.get(i).getDestino().getFecha())) {
+				result = false;
+			}
+			if(trayectoVO.getDestino().getFecha().isAfter(trayectos.get(i).getOrigen().getFecha()) && trayectoVO.getDestino().getFecha().isBefore(trayectos.get(i).getDestino().getFecha())) {
+				result = false;
+			}
+			i++;
+		}
+		return result;
 	}
 }

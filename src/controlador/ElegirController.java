@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.HijoVO;
@@ -72,7 +73,10 @@ public class ElegirController extends Controller{
 			} catch (SQLException e) {
 				logger.error("Error al apuntar al hijo a la actividad: "+e.getMessage());
 				muestraError("ERROR","Se produjo un error.", "Error al apuntar al hijo a la actividad");
-			}		
+			} catch(KidHubException e) {
+				logger.error("Error al apuntar al hijo a la actividad: "+e.getMessage());
+				muestraError("ERROR","Se produjo un error.", "Error al apuntar al hijo a la actividad");
+			}
 			this.cerrarVentana(event);
 			this.recuperarVentana(this.stage);
 		}
