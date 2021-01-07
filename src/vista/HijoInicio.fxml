@@ -78,7 +78,7 @@
          </children></VBox>
       <StackPane layoutX="171.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
          <children>
-            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0" visible="true">
                <children>
                   <Label layoutX="198.0" layoutY="140.0" text="¡Bienvenido a la zona de hijos!" textFill="#bcf4fc">
                      <font>
@@ -113,7 +113,7 @@
                   <JFXTreeTableView fx:id="actividadesTree" layoutX="17.0" layoutY="81.0" prefHeight="398.0" prefWidth="730.0" stylesheets="@application.css" visible="false" />                  
                </children>
              </Pane>
-            <Pane fx:id="panoTrayectos" prefHeight="200.0" prefWidth="200.0">  
+            <Pane fx:id="panoTrayectos" visible="false" prefHeight="200.0" prefWidth="200.0">  
               <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE TRAYECTOS" textFill="#bcf4fc">
                      <font>
