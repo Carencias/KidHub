@@ -25,10 +25,10 @@ import modelo.vo.UsuarioVO.TipoUsuario;
 public class LogicaTests {
 
 	PadreVO padre;
-	MonitorVO monitor;
+	MonitorVO monitor, monitor2;
 	HijoVO hijo;
-	ActividadVO actividad;
-	TrayectoVO trayecto;
+	ActividadVO actividad, actividad2;
+	TrayectoVO trayecto, trayecto2;
 	Logica logica;
 	
 	
@@ -39,6 +39,10 @@ public class LogicaTests {
 		hijo = new HijoVO("usuario3", "01816654Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
 		actividad = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 30), LocalDateTime.of(2021, 1, 1, 18, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Deportiva");
 		trayecto = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 00), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		actividad2 = new ActividadVO("Parchis", LocalDateTime.of(2021, 1, 1, 19, 30), LocalDateTime.of(2021, 1, 1, 20, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Recreativa");
+		trayecto2 = new TrayectoVO(actividad2, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 19, 00), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		monitor2 = new MonitorVO("usuario4", "03372694B", "passwd","monitor2@kidhub.com", "Alfredo", "Montes", "12/12/2000" ,TipoUsuario.MONITOR, "727416552", "Deporte");
+
 		
 		logica = Logica.getLogica();
 	}
@@ -166,6 +170,23 @@ public class LogicaTests {
 	}
 	
 	@Test
+	(expected = KidHubException.class)
+	public void modificarActividadErrorTest() throws SQLException, KidHubException {
+		
+		this.crearActividadTest();
+		
+		logica.borrarActividad(actividad2);
+				
+		logica.crearActividad(actividad2);
+		
+		actividad2.setInicio(LocalDateTime.of(2021, 1, 1, 18, 00));
+				
+		logica.modificarActividad(actividad2);
+		
+		
+	}
+	
+	@Test
 	public void rellenarActividadTest() throws SQLException, KidHubException {
 		ActividadVO actividadVacia = new ActividadVO();
 		
@@ -202,6 +223,35 @@ public class LogicaTests {
 		
 		assertTrue(actividadEncontrada);
 		
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void apuntarHijoAActividadErrorHorarioTest() throws KidHubException, SQLException {
+		try {
+			this.apuntarHijoAActividadTest();
+	
+			logica.borrarUsuario(monitor2);
+			logica.registrarUsuario(monitor2);
+			
+			logica.setUsuarioActual(monitor2);
+			
+			logica.borrarActividad(actividad2);
+			
+			actividad2.setInicio(LocalDateTime.of(2021, 1, 1, 18, 00));
+			
+			actividad2.setFin(LocalDateTime.of(2021, 1, 1, 19, 00));
+			
+			logica.crearActividad(actividad2);
+			
+			logica.setUsuarioActual(padre);
+			
+			logica.apuntarHijoAActividad(hijo, actividad2);
+		}finally {
+			logica.setUsuarioActual(monitor2);
+			logica.borrarActividad(actividad2);
+		}
 		
 	}
 	
@@ -257,7 +307,13 @@ public class LogicaTests {
 	
 	@Test
 	public void crearTrayectoTest() throws KidHubException, SQLException {
-		this.apuntarHijoAActividadTest();
+		//this.apuntarHijoAActividadTest();
+		this.crearActividadTest();
+		this.registrarPadreTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		logica.borrarTrayecto(trayecto);
 		
 		logica.crearTrayecto(trayecto);
 		
@@ -305,6 +361,37 @@ public class LogicaTests {
 	}
 	
 	@Test
+	(expected = KidHubException.class)
+	public void modificarTrayectoErrorHorarioTest() throws SQLException, KidHubException {
+		try {
+			this.crearTrayectoTest();
+			
+			logica.setUsuarioActual(monitor);
+			
+			logica.borrarActividad(actividad2);
+			
+			logica.crearActividad(actividad2);
+			
+			logica.setUsuarioActual(padre);
+			
+			logica.borrarTrayecto(trayecto2);
+			
+			logica.crearTrayecto(trayecto2);
+			
+			trayecto2.getOrigen().setFecha(LocalDateTime.of(2021, 1, 1, 17, 15));
+			
+			logica.modificarTrayecto(trayecto2);
+		}finally {
+			logica.setUsuarioActual(padre);
+			logica.borrarTrayecto(trayecto2);
+			logica.setUsuarioActual(monitor);
+			logica.borrarActividad(actividad2);
+
+		}
+		
+	}
+	
+	@Test
 	public void rellenarTrayectoTest() throws SQLException, KidHubException {
 		TrayectoVO trayectoVacio = new TrayectoVO();
 		
@@ -343,8 +430,53 @@ public class LogicaTests {
 		
 		ArrayList<TrayectoVO> trayectos = logica.getTrayectos(hijo);
 		
-		assertTrue(existeTrayecto(trayectos));
+		assertTrue(existeTrayecto(trayectos));		
 		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void apuntarHijoATrayectoErrorHorarioTest() throws KidHubException, SQLException {
+		ActividadVO actividad3 = new ActividadVO("Bolos", LocalDateTime.of(2021, 1, 1, 18, 35), LocalDateTime.of(2021, 1, 1, 18, 45), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Recreativa");
+		TrayectoVO trayecto3 = new TrayectoVO(actividad3, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		PadreVO padre2 = new PadreVO("usuario5", "03229694B", "passwd","padre2@kidhub.com", "Pepa", "Martinez", "12/12/2000" ,TipoUsuario.PADRE, "792976552");
+
+		try {	
+			this.apuntarHijoATrayectoTest();
+			
+			logica.borrarUsuario(monitor2);
+			logica.registrarUsuario(monitor2);
+			
+			logica.setUsuarioActual(monitor2);
+			
+		
+			logica.crearActividad(actividad3);
+			
+	
+			logica.borrarUsuario(padre2);
+			logica.registrarUsuario(padre2);
+			
+			logica.setUsuarioActual(padre2);
+			
+			
+			logica.crearTrayecto(trayecto3);
+			
+			logica.setUsuarioActual(padre);
+			
+			logica.apuntarHijoAActividad(hijo, actividad3);
+			
+			logica.apuntarHijoATrayecto(hijo, trayecto3);
+		}finally {
+			logica.setUsuarioActual(padre2);
+			logica.borrarTrayecto(trayecto3);
+			
+			logica.borrarUsuario(padre2);
+			
+			logica.setUsuarioActual(monitor2);
+			logica.borrarActividad(actividad3);
+			
+			logica.borrarUsuario(monitor2);
+		}
 		
 	}
 	
@@ -376,8 +508,8 @@ public class LogicaTests {
 	public void conflictoHorarioTrayectoTest() throws SQLException, KidHubException{
 		TrayectoVO trayectoMal = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
 		this.apuntarHijoAActividadTest();
+		this.crearTrayectoTest();
 		
-		logica.crearTrayecto(trayecto);
 		logica.crearTrayecto(trayectoMal);
 	}
 	
