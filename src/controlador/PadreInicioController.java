@@ -368,6 +368,9 @@ public class PadreInicioController extends Controller{
 			}catch(SQLException e) {
 				logger.error("Error en la base de datos: "+e.getMessage());
 				muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
+			}catch(KidHubException e) {
+				logger.error("No hay plazas disponibles en la actividad");
+				muestraError("ERROR","Se produjo un error.", "No hay plazas disponibles en la actividad");
 			}
 		}
 	}
@@ -617,6 +620,9 @@ public class PadreInicioController extends Controller{
 			} catch (SQLException e) {
 	    		logger.error("Error al desapuntar hijo de trayecto");
 				this.muestraError("ERROR", "Actividades", "Error al desapuntar hijo de trayecto");
+			} catch (KidHubException e) {
+	    		logger.error("Error al desapuntar hijo de trayecto: " + e.getMessage());
+				this.muestraError("ERROR", "Actividades", e.getMessage());
 			}	
 		}	
 	}

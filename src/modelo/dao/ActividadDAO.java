@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
+
+import modelo.KidHubException;
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
@@ -45,10 +47,11 @@ public class ActividadDAO {
 		
 		StringBuilder insertQuery = new StringBuilder();
 		insertQuery.append("INSERT INTO ACTIVITIES");
-		insertQuery.append("(MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, Address, Town, Type) ");
+		insertQuery.append("(MonitorUsername, Name, StartDate, Duration, EndDate, Capacity, PlacesAvailable, Address, Town, Type) ");
 		insertQuery.append("VALUES(");
 		insertQuery.append("'" + actividad.getMonitor().getNombreUsuario() + "', '" + actividad.getNombre() + "', '" + actividad.getTextoInicio() + "', '" + actividad.getDuracion() + "', '" );
-		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getDireccion().getTextoDireccion() + "', '" + actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
+		insertQuery.append(actividad.getTextoFin() + "', '" + actividad.getCapacidad() + "', '" + actividad.getCapacidad() + "', '"  + actividad.getDireccion().getTextoDireccion() + "', '");
+		insertQuery.append(actividad.getDireccion().getCiudad() + "', '" + actividad.getTipo() + "');");
 		logger.trace("Query lista para ser lanzada");
 		statement.executeUpdate(insertQuery.toString(), Statement.RETURN_GENERATED_KEYS);
 		logger.trace("Query ejecutada con exito");
@@ -139,10 +142,17 @@ public class ActividadDAO {
 	 * @param actividad
 	 *  ActividadVO con la informacion de la actividad
 	 * @throws SQLException
+	 * @throws KidHubException 
 	 */
-	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
+	public void apuntarHijoAActividad(HijoVO hijo, ActividadVO actividad) throws SQLException, KidHubException{
 		conexion.openConnection();
 		statement = conexion.getSt();
+		
+		int plazas = this.getPlazas(actividad);
+		
+		if(plazas == 0) {
+			throw new KidHubException("No hay plazas disponibles"); 
+		}
 		
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO ActivityKid");
@@ -153,6 +163,9 @@ public class ActividadDAO {
 		logger.trace("Query lista para ser lanzada");
 		statement.executeUpdate(query.toString());
 		logger.trace("Query ejecutada con exito");
+		
+		this.setPlazas(actividad, plazas-1);
+		
 		conexion.closeConnection();
 	}
 
@@ -163,8 +176,9 @@ public class ActividadDAO {
 	 * @param actividad
 	 *  ActividadVO con la informacion de la actividad
 	 * @throws SQLException
+	 * @throws KidHubException 
 	 */
-	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
+	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) throws SQLException, KidHubException{
 		conexion.openConnection();
 		Statement statement = conexion.getSt();
 		
@@ -175,7 +189,41 @@ public class ActividadDAO {
 		logger.trace("Query lista para ser lanzada");
 		statement.executeUpdate(query.toString());
 		logger.trace("Query ejecutada con exito");
+		
+		this.setPlazas(actividad, this.getPlazas(actividad)+1);
+		
 		conexion.closeConnection();
+	}
+	
+	
+	private int getPlazas(ActividadVO actividad) throws SQLException, KidHubException {
+		int plazas=0;
+		statement = conexion.getSt();
+				
+		String query = "SELECT PlacesAvailable FROM ACTIVITIES WHERE ActivityID='"+ actividad.getIdActividad()+"';";
+				
+		ResultSet resultSet = statement.executeQuery(query);
+		
+		if(resultSet.next()) {
+			plazas = resultSet.getInt("PlacesAvailable");
+		}
+
+		logger.info("Quedan: " + plazas + " en la actividad " + actividad.getIdActividad());
+				
+		return plazas;
+		
+	}
+	
+
+	private void setPlazas(ActividadVO actividad, int plazas) throws SQLException {
+		StringBuilder query = new StringBuilder();
+		
+		query.append("UPDATE ACTIVITIES SET ");
+		query.append("PlacesAvailable='" + plazas + "'");
+		query.append(" WHERE ActivityID='" + actividad.getIdActividad()+"';");
+		
+		statement.executeUpdate(query.toString());
+		logger.info("Ahora quedan: " + plazas + " en la actividad " + actividad.getIdActividad());
 	}
 
 	/**
@@ -290,5 +338,6 @@ public class ActividadDAO {
 		
 		return new Direccion(calle, Integer.parseInt(numero), codigoPostal, ciudad);		
 	}
+
 	
 }

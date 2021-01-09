@@ -187,6 +187,9 @@ public class Main extends Application {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (KidHubException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     }
   
@@ -234,7 +237,12 @@ public class Main extends Application {
     	//TODO aqui se le pasa TrayectoID=0, no se si es porque trayecto es estatico
     	trayecto.setIdTrayecto(1);
     	try {
-			Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
+			try {
+				Logica.getLogica().desapuntarHijoDeTrayecto(hijo, trayecto);
+			} catch (KidHubException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

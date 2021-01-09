@@ -80,6 +80,7 @@ CREATE TABLE ACTIVITIES(
 	StartDate NVARCHAR(16) not null,
 	Duration int not null,
 	EndDate NVARCHAR(16) not null,
+	PlacesAvailable int not null,
 	Capacity int not null,
 	Address NVARCHAR(50) not null,
 	Town NVARCHAR(20) not null,
@@ -91,6 +92,7 @@ CREATE TABLE RIDES(
 	ActivityID int not null,
 	RideID int not null AUTO_INCREMENT,
 	ParentUsername NVARCHAR(30) not null,
+	PlacesAvailable int not null,
 	Capacity int not null,
 	Type NVARCHAR(6) not null, /*Ida o vuelta*/
 	constraint PK_RIDES PRIMARY KEY(RideID/*ActivityID, ParentUsername, Type*/));

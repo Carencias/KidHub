@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import modelo.KidHubException;
 import modelo.Logica;
 import modelo.conexion.Conexion;
 import modelo.vo.ActividadVO;
@@ -51,10 +52,10 @@ public class TrayectoDAO {
 		
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO RIDES");
-		query.append("(ActivityID, ParentUsername, Capacity, Type) ");
+		query.append("(ActivityID, ParentUsername, Capacity, PlacesAvailable, Type) ");
 		query.append("VALUES(");
 		query.append("'" + trayecto.getActividad().getIdActividad() + "', '" + trayecto.getPadre().getNombreUsuario() + "', '");
-		query.append(trayecto.getCapacidad() + "', '" + trayecto.getTipo() + "');");
+		query.append(trayecto.getCapacidad() + "', '" + trayecto.getCapacidad() + "', '" + trayecto.getTipo() + "');");
 		
 		logger.trace("Query lista para ser lanzada");
 		statement.executeUpdate(query.toString(), Statement.RETURN_GENERATED_KEYS);
@@ -128,10 +129,17 @@ public class TrayectoDAO {
 	 *  Objeto HijoVO con la informacion del hijo a apuntar
 	 * @param trayecto
 	 *  Objeto TrayectoVO con la informacion del trayecto
+	 * @throws KidHubException 
 	 */
-	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException{
+	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException, KidHubException{
 		conexion.openConnection();
 		statement = conexion.getSt();
+		
+		int plazas = this.getPlazas(trayecto);
+		
+		if(plazas == 0) {
+			throw new KidHubException("No hay plazas disponibles"); 
+		}
 		
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO RideKid");
@@ -143,6 +151,8 @@ public class TrayectoDAO {
 		statement.executeUpdate(query.toString());
 		logger.trace("Query ejecutada con exito");
 		
+		this.setPlazas(trayecto, plazas-1);
+		
 		conexion.closeConnection();	
 	}
 
@@ -152,8 +162,9 @@ public class TrayectoDAO {
 	 *  Objeto HijoVO con la informacion del hijo a apuntar
 	 * @param trayecto
 	 *  Objeto TrayectoVO con la informacion del trayecto
+	 * @throws KidHubException 
 	 */
-	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException{		
+	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException, KidHubException{		
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
@@ -165,7 +176,39 @@ public class TrayectoDAO {
 		statement.executeUpdate(query.toString());
 		logger.trace("Query ejecutada con exito");
 		
+		this.setPlazas(trayecto, this.getPlazas(trayecto)+1);
+		
 		conexion.closeConnection();			
+	}
+	
+	private int getPlazas(TrayectoVO trayecto) throws SQLException, KidHubException {
+		int plazas=0;
+		statement = conexion.getSt();
+				
+		String query = "SELECT PlacesAvailable FROM RIDES WHERE RideID='"+ trayecto.getIdTrayecto()+"';";
+				
+		ResultSet resultSet = statement.executeQuery(query);
+		
+		if(resultSet.next()) {
+			plazas = resultSet.getInt("PlacesAvailable");
+		}
+
+		logger.info("Quedan: " + plazas + " en el trayecto " + trayecto.getIdTrayecto());
+				
+		return plazas;
+		
+	}
+	
+
+	private void setPlazas(TrayectoVO trayecto, int plazas) throws SQLException {
+		StringBuilder query = new StringBuilder();
+		
+		query.append("UPDATE RIDES SET ");
+		query.append("PlacesAvailable='" + plazas + "'");
+		query.append(" WHERE RideID='" + trayecto.getIdTrayecto() +"';");
+		
+		statement.executeUpdate(query.toString());
+		logger.info("Ahora quedan: " + plazas + " en el trayecto " + trayecto.getIdTrayecto());
 	}
 	
 	/**

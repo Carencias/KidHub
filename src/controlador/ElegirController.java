@@ -75,7 +75,7 @@ public class ElegirController extends Controller{
 				muestraError("ERROR","Se produjo un error.", "Error al apuntar al hijo a la actividad");
 			} catch(KidHubException e) {
 				logger.error("Error al apuntar al hijo a la actividad: "+e.getMessage());
-				muestraError("ERROR","Se produjo un error.", "Error al apuntar al hijo a la actividad");
+				muestraError("ERROR","Se produjo un error.", e.getMessage());
 			}
 			this.cerrarVentana(event);
 			this.recuperarVentana(this.stage);

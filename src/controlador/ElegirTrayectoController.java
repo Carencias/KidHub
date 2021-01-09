@@ -60,7 +60,7 @@ public class ElegirTrayectoController extends Controller{
 	@FXML
 	void confirmar(MouseEvent event) {
 		logger.trace("Boton de confirmar apuntar a hijo a trayecto pulsado");
-		String nombre = this.selectHijo.getSelectionModel().getSelectedItem();
+		String nombre = this.selectHijo.getSelectionModel().getSelectedItem(); 
 		
 		if(nombre == null) {
 			logger.error("Hijo no seleccionado");
@@ -79,7 +79,7 @@ public class ElegirTrayectoController extends Controller{
 				this.muestraError("ERROR", "Actividades", "Error al apuntar a "+nombre+" en el trayecto");
 			} catch (KidHubException e) {
 				logger.error("Error al apuntar a "+nombre+" en el trayecto");
-				this.muestraError("ERROR", "Actividades", "Error al apuntar a "+nombre+" en el trayecto");
+				this.muestraError("ERROR", "Actividades", e.getMessage());
 			}
 		}
 	}

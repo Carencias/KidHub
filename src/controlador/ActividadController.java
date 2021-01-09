@@ -155,7 +155,7 @@ public class ActividadController extends Controller {
 			numero = Integer.parseInt(this.num.getText());
 			aforo = Integer.parseInt(this.aforo.getText());
 		}catch(Exception e) {
-			error.append("Numero o aforo invalidos\n");
+			error.append("Numero o aforo invalidos\n"); 
 		}
 		if(aforo <= 0 || numero < 0) {
 			error.append("Aforo <= 0, o numero < 0\n");

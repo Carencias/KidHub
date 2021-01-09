@@ -161,7 +161,7 @@ public class TrayectoController extends Controller{
 	    private void setDatosCombo(ArrayList<ActividadVO> actividades) {
 	    	//TODO
 	    	String nombreActividad;
-	    	for(ActividadVO actividad: actividades) {
+	    	for(ActividadVO actividad: actividades) { 
 	    		nombreActividad = actividad.getIdActividad() + "-" + actividad.getNombre();
 	    		this.actividad.getItems().add(nombreActividad);
 	    	}

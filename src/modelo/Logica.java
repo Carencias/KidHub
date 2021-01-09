@@ -243,8 +243,9 @@ public class Logica {
 	 * @param actividad
 	 *  ActividadVO con la informacion de la actividad
 	 * @throws SQLException
+	 * @throws KidHubException 
 	 */
-	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) throws SQLException{
+	public void desapuntarHijoDeActividad(HijoVO hijo, ActividadVO actividad) throws SQLException, KidHubException{
 		new ActividadDAO().desapuntarHijoDeActividad(hijo, actividad);
 		logger.trace("Hijo desapuntado correctamente");
 	}
@@ -374,8 +375,9 @@ public class Logica {
 	 * @param trayecto
 	 *  TrayectoVO con los datos del trayecto
 	 * @throws SQLException
+	 * @throws KidHubException 
 	 */
-	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException{
+	public void desapuntarHijoDeTrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException, KidHubException{
 		logger.trace("Despauntando hijo a trayecto");
 		new TrayectoDAO().desapuntarHijoDeTrayecto(hijo,trayecto);		
 	}
