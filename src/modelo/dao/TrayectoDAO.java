@@ -107,7 +107,6 @@ public class TrayectoDAO {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
-		//TODO QUITAR LA DURACION DE LA TABLA STOPS
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO STOPS");
 		query.append("(RideID, StopDate, Address, Town, Type) ");

@@ -438,7 +438,7 @@ public class PadreInicioController extends Controller{
      */
 	@FXML
     void hijoElegidoTrayecto(ActionEvent  event) {
-    	
+    	//TODO aqui da null pointer 
     	UsuarioVO usuario = this.getUsuarioTrayecto();
     	
     	if(usuario.getNombreUsuario().equals("TODOS")) {

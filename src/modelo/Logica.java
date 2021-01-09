@@ -345,7 +345,6 @@ public class Logica {
 	 *  TrayectoVO con los datos del trayecto
 	 * @throws SQLException
 	 */
-	//TODO
 	public void borrarTrayecto(TrayectoVO trayecto) throws SQLException{
 		logger.trace("Borrando trayecto");
 		new TrayectoDAO().borrarTrayecto(trayecto);
@@ -361,11 +360,40 @@ public class Logica {
 	 */
 	public void apuntarHijoATrayecto(HijoVO hijo, TrayectoVO trayecto) throws SQLException, KidHubException{
 		logger.trace("Apuntando hijo a trayecto");
-		if(comprobarDisponibilidadTrayecto(trayecto, hijo)) {
-			new TrayectoDAO().apuntarHijoATrayecto(hijo,trayecto);
-		}else {
-			throw new KidHubException("Ya tiene programada una actividad en ese horario");
-		}		
+		StringBuilder mensaje = new StringBuilder();
+		if(!comprobarDisponibilidadTrayecto(trayecto, hijo)) {
+			mensaje.append("Ya tiene programado un trayecto en ese horario\n");
+		}if(!comprobarHijoApuntadoAActividad(hijo, trayecto.getActividad())){
+			mensaje.append("Su hijo no puede apuntarse al trayecto, ya que no tiene la actividad asociada programada\n");
+		}
+		if(mensaje.length() != 0) {
+			throw new KidHubException(mensaje.toString());
+		}
+		new TrayectoDAO().apuntarHijoATrayecto(hijo, trayecto);		
+	}
+
+	/**
+	 * Comprueba si un hijo esta apuntado a una actividad concreta
+	 * @param hijo
+	 *  HijoVO con la informacion del hijo
+	 * @param actividadComprobar
+	 *  ActividadVO a la que comprobar si esta apuntado
+	 * @return
+	 *   Verdadero si esta apuntado o falso si no lo esta
+	 * @throws SQLException
+	 * @throws KidHubException
+	 */
+	private boolean comprobarHijoApuntadoAActividad(HijoVO hijo, ActividadVO actividadComprobar) throws SQLException, KidHubException{
+		ArrayList<ActividadVO> actividades = getActividades(hijo);
+		logger.trace("Comprobando si esta apuntado a la actividad");
+		for(ActividadVO actividad: actividades) {
+			if(actividad.getIdActividad() == actividadComprobar.getIdActividad()) {
+				logger.trace("Esta apuntado a la actividad");
+				return true;
+			}
+		}
+		logger.trace("No esta apuntado a la actividad");
+		return false;
 	}
 
 	/**
