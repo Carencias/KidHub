@@ -138,16 +138,18 @@ public class HijoInicioController extends Controller{
 		 * CREACION DE LOS HEADERS DE LA TABLA
 		 */
 		JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
-		nameCol.setPrefWidth(145);
+		nameCol.setPrefWidth(138);
 		nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-	            return param.getValue().getValue().getNombre();
+	            System.out.println("El nombre es " + param.getValue().getValue().getNombre());
+	            System.out.println("La id es " + param.getValue().getValue().getIdString());
+	        	return param.getValue().getValue().getNombre();
 	        }
 	    });
 	
 	    JFXTreeTableColumn<ActividadTabla, String> inicioCol = new JFXTreeTableColumn<>("Inicio");
-	    inicioCol.setPrefWidth(145);
+	    inicioCol.setPrefWidth(138);
 	    inicioCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -156,7 +158,7 @@ public class HijoInicioController extends Controller{
 	    });
 	
 	    JFXTreeTableColumn<ActividadTabla, String> finCol = new JFXTreeTableColumn<>("Fin");
-	    finCol.setPrefWidth(145);
+	    finCol.setPrefWidth(138);
 	    finCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -165,7 +167,7 @@ public class HijoInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<ActividadTabla, String> lugarCol = new JFXTreeTableColumn<>("Lugar");
-	    lugarCol.setPrefWidth(145);
+	    lugarCol.setPrefWidth(138);
 	    lugarCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -174,11 +176,20 @@ public class HijoInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-	    aforoCol.setPrefWidth(145);
+	    aforoCol.setPrefWidth(138);
 	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
 	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<ActividadTabla, String> idCol = new JFXTreeTableColumn<>("Id");
+	    idCol.setPrefWidth(60);
+	    idCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getIdString();
 	        }
 	    });
 	    
@@ -193,7 +204,7 @@ public class HijoInicioController extends Controller{
 	    }
 	
 	    final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
-	    actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
+	    actividadesTree.getColumns().setAll(nameCol, idCol, inicioCol, finCol, lugarCol, aforoCol);
 	    actividadesTree.setRoot(root);
 	    actividadesTree.setShowRoot(false);
 	    
@@ -214,7 +225,7 @@ public class HijoInicioController extends Controller{
 		 * CREACION DE LOS HEADERS DE LA TABLA
 		 */
 		JFXTreeTableColumn<TrayectoTabla, String> actividadCol = new JFXTreeTableColumn<>("Actividad");
-		actividadCol.setPrefWidth(145);
+		actividadCol.setPrefWidth(140);
 		actividadCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
@@ -223,7 +234,7 @@ public class HijoInicioController extends Controller{
 	    });
 	
 	    JFXTreeTableColumn<TrayectoTabla, String> tipoCol = new JFXTreeTableColumn<>("Tipo");
-	    tipoCol.setPrefWidth(145);
+	    tipoCol.setPrefWidth(140);
 	    tipoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
@@ -232,7 +243,7 @@ public class HijoInicioController extends Controller{
 	    });
 	
 	    JFXTreeTableColumn<TrayectoTabla, String> padreCol = new JFXTreeTableColumn<>("Padre");
-	    padreCol.setPrefWidth(145);
+	    padreCol.setPrefWidth(140);
 	    padreCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
@@ -241,7 +252,7 @@ public class HijoInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<TrayectoTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-	    aforoCol.setPrefWidth(145);
+	    aforoCol.setPrefWidth(140);
 	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {

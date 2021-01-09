@@ -756,11 +756,20 @@ public class PadreInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-	    aforoCol.setPrefWidth(138);
+	    aforoCol.setPrefWidth(122);
 	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
 	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<ActividadTabla, String> idCol = new JFXTreeTableColumn<>("Id");
+	    idCol.setPrefWidth(65);
+	    idCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getIdString();
 	        }
 	    });
 	    
@@ -775,7 +784,7 @@ public class PadreInicioController extends Controller{
 	    }
 	
 	    final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
-	    actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
+	    actividadesTree.getColumns().setAll(nameCol, idCol, inicioCol, finCol, lugarCol, aforoCol);
 	    actividadesTree.setRoot(root);
 	    actividadesTree.setShowRoot(false);
 	    

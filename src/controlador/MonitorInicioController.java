@@ -205,20 +205,22 @@ public class MonitorInicioController extends Controller{
      *  Actividades del monitor que se mostraran
      */
 	void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
-		//Inicializacion de los headers de las tablas
-		logger.trace("Inicializando headers de las tablas de actividades");
-		//TODO incluir el tipo de la actividad
+		/**
+		 * CREACION DE LOS HEADERS DE LA TABLA
+		 */
 		JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
 		nameCol.setPrefWidth(138);
 		nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-	            return param.getValue().getValue().getNombre();
+	            System.out.println("El nombre es " + param.getValue().getValue().getNombre());
+	            System.out.println("La id es " + param.getValue().getValue().getIdString());
+	        	return param.getValue().getValue().getNombre();
 	        }
 	    });
 	
 	    JFXTreeTableColumn<ActividadTabla, String> inicioCol = new JFXTreeTableColumn<>("Inicio");
-	    inicioCol.setPrefWidth(138);
+	    inicioCol.setPrefWidth(142);
 	    inicioCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -227,7 +229,7 @@ public class MonitorInicioController extends Controller{
 	    });
 	
 	    JFXTreeTableColumn<ActividadTabla, String> finCol = new JFXTreeTableColumn<>("Fin");
-	    finCol.setPrefWidth(138);
+	    finCol.setPrefWidth(142);
 	    finCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -236,7 +238,7 @@ public class MonitorInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<ActividadTabla, String> lugarCol = new JFXTreeTableColumn<>("Lugar");
-	    lugarCol.setPrefWidth(140);
+	    lugarCol.setPrefWidth(138);
 	    lugarCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -245,7 +247,7 @@ public class MonitorInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-	    aforoCol.setPrefWidth(138);
+	    aforoCol.setPrefWidth(65);
 	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -253,8 +255,18 @@ public class MonitorInicioController extends Controller{
 	        }
 	    });
 	    
-	   //Creando lista de actividades para incluir en la tabla
-	    logger.trace("Agragando actividades a la tabla");
+	    JFXTreeTableColumn<ActividadTabla, String> idCol = new JFXTreeTableColumn<>("Id");
+	    idCol.setPrefWidth(65);
+	    idCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
+	            return param.getValue().getValue().getIdString();
+	        }
+	    });
+	    
+	    /**
+	     * LISTA DE ACTIVIDADES PARA INCLUIR EN LA TABLA
+	     */
 	    ObservableList<ActividadTabla> obsActividades = FXCollections.observableArrayList();
 	    ActividadTabla actividad;
 	    for(ActividadVO act:actividades) {
@@ -263,10 +275,12 @@ public class MonitorInicioController extends Controller{
 	    }
 	
 	    final TreeItem<ActividadTabla> root = new RecursiveTreeItem<ActividadTabla>(obsActividades, RecursiveTreeObject::getChildren);
-	    actividadesTree.getColumns().setAll(nameCol, inicioCol, finCol, lugarCol, aforoCol);
+	    actividadesTree.getColumns().setAll(nameCol, idCol, inicioCol, finCol, lugarCol, aforoCol);
 	    actividadesTree.setRoot(root);
 	    actividadesTree.setShowRoot(false);
+	    
 	    actividadesTree.setVisible(true);
-	    logger.trace("Tabla inicializada correctamente");
+	    
+	    logger.trace("Tabla de actividades del hijo inicializada");
 	}
 }

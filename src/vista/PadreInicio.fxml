@@ -124,7 +124,7 @@
                      </font>
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="127.0" />
-                  <JFXTreeTableView fx:id="trayectosTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="696.0" stylesheets="@application.css" visible="false" />
+                  <JFXTreeTableView fx:id="trayectosTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="745.0" stylesheets="@application.css" visible="false" />
                   <JFXButton fx:id="apuntarTrayecto" disable="true" layoutX="462.0" layoutY="29.0" onMouseClicked="#apuntarHijoTrayecto" prefHeight="45.0" prefWidth="122.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
                      <font>
                         <Font size="15.0" />
@@ -323,7 +323,7 @@
                      </font>
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="150.0" />
-                  <JFXTreeTableView fx:id="actividadesTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="696.0" stylesheets="@application.css" visible="false" />
+                  <JFXTreeTableView fx:id="actividadesTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="745.0" stylesheets="@application.css" visible="false" />
                   <JFXButton fx:id="apuntarActividad" disable="true" layoutX="233.0" layoutY="29.0" onMouseClicked="#apuntarHijoActividad" prefHeight="45.0" prefWidth="122.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5">
                      <font>
                         <Font size="15.0" />

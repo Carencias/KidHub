@@ -13,6 +13,7 @@ public class ActividadTabla extends RecursiveTreeObject<ActividadTabla> {
     StringProperty lugar;
     StringProperty aforo;
     StringProperty tipo;
+    StringProperty idString;
     private int id;
 
     public ActividadTabla(ActividadVO actividad) {
@@ -23,11 +24,16 @@ public class ActividadTabla extends RecursiveTreeObject<ActividadTabla> {
     	this.lugar = new SimpleStringProperty(actividad.getDireccion().toString());
     	this.aforo = new SimpleStringProperty(Integer.toString(actividad.getCapacidad()));
     	this.tipo = new SimpleStringProperty(actividad.getTipo());
+    	this.idString = new SimpleStringProperty(Integer.toString(actividad.getIdActividad()));
     	this.id = actividad.getIdActividad();
     }
     
 	public int getId() {
 		return id;
+	}
+	
+	public StringProperty getIdString() {
+		return idString;
 	}
 
 	public StringProperty getNombre() {
