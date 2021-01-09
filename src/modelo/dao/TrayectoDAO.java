@@ -334,9 +334,17 @@ public class TrayectoDAO {
 	 * Contiene los nuevos valores a insertar en la tabla
 	 * @throws SQLException
 	 * Si hay algun error al ejecutar la query
+	 * @throws KidHubException 
 	 */
-	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException {
+	public void modificarTrayecto(TrayectoVO trayecto) throws SQLException, KidHubException {
 		conexion.openConnection();
+		
+		int plazasOcupadas = this.getPlazasOcupadas(trayecto);
+		
+		if(trayecto.getCapacidad() < plazasOcupadas) {
+			throw new KidHubException("Se ha seleccionado un aforo menor a las plazas ya ocupadas");
+		}
+		
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
@@ -348,11 +356,29 @@ public class TrayectoDAO {
 		
 		logger.trace("Query para modificar trayecto lista para ser lanzada");
 		statement.executeUpdate(query.toString());
+		this.setPlazas(trayecto, trayecto.getCapacidad()-plazasOcupadas);
 		logger.trace("Query para modificar trayecto ejecutada con exito");
 		this.modificarParada(trayecto, trayecto.getOrigen());
 		this.modificarParada(trayecto, trayecto.getDestino());		
 		
 		conexion.closeConnection();
+	}
+	
+	private int getPlazasOcupadas(TrayectoVO trayecto) throws SQLException {
+		int ocupadas = 0;
+		statement = conexion.getSt();
+				
+		String query = "SELECT Capacity, PlacesAvailable FROM RIDES WHERE RideID='"+ trayecto.getIdTrayecto() +"';";
+				
+		ResultSet resultSet = statement.executeQuery(query);
+		
+		if(resultSet.next()) {
+			ocupadas = resultSet.getInt("Capacity") - resultSet.getInt("PlacesAvailable");
+		}
+
+		logger.info("Hay " + ocupadas + " plazas ocupadas en el trayecto " + trayecto.getIdTrayecto());
+				
+		return ocupadas;
 	}
 	
 	/**

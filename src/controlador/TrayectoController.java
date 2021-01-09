@@ -370,14 +370,12 @@ public class TrayectoController extends Controller{
 	    
 	    @FXML
 	    void cancelar(MouseEvent event) {
-	    	System.out.println("Cancelando");
 	    	this.recuperarVentana(stage);
 	    	this.cerrarVentana(event);
 	    }
 
 	    @FXML
 	    void confirmar(MouseEvent event) {
-	    	System.out.println("Confirmando");
 	    	//TODO
 	    	try {
 	    		
@@ -391,22 +389,18 @@ public class TrayectoController extends Controller{
 	    			Logica.getLogica().crearTrayecto(trayecto);
 	    		}
 	    	
+	    	}catch(KidHubException e) {
+				logger.error(e.getMessage());
+				muestraError("ERROR","Se produjo un error.", e.getMessage());
+	    		
+	    	}catch(SQLException e) {
+				logger.error("Formato de algun campo introducido invalido: " + e.getMessage());
+				muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
 	    	}catch(Exception e) {
-				if(e instanceof KidHubException) {
-					logger.error(e.getMessage());
-					muestraError("ERROR","Se produjo un error.", e.getMessage());
-				}/*else if(e instanceof SQLException) {
-					logger.error("Formato de algun campo introducido invalido");
-					muestraError("ERROR","Se produjo un error.", "Formato de algun campo introducido invalido");
-				}*/else {
-					logger.error("Error desconocido.");
-					e.printStackTrace();
-					muestraError("ERROR","Se produjo un error.", "Error en alguno de los campos introducidos");
-				}
-			}
-	    	
-	    	
-	    	
+				logger.error("Error: " + e.getMessage());
+				muestraError("ERROR","Se produjo un error.", "Error en alguno de los campos introducidos");
+	    	} 	
+	    		    	
 	    	//TODO recargar la tabla de trayectos a traves de un objeto controller que se reciba en el initData.
 	    	this.mostrarVentana("PadreInicio");
 	    	this.cerrarVentana(event);

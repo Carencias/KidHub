@@ -67,9 +67,17 @@ public class ActividadDAO {
 	 * Metodo que lanza la query para modificar una actividad a la base de datos
 	 * @param actividad
 	 *  ActividadVO con los datos de la actividad
+	 * @throws KidHubException 
 	 */
-	public void modificarActividad(ActividadVO actividad) throws SQLException{
+	public void modificarActividad(ActividadVO actividad) throws SQLException, KidHubException{
 		conexion.openConnection();
+		
+		int plazasOcupadas = this.getPlazasOcupadas(actividad);
+		
+		if(actividad.getCapacidad() < plazasOcupadas) {
+			throw new KidHubException("Se ha seleccionado un aforo menor a las plazas ya ocupadas");
+		}
+		
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
@@ -86,6 +94,7 @@ public class ActividadDAO {
 		
 		logger.trace("Query lista para ser lanzada");	
 		statement.executeUpdate(query.toString());
+		this.setPlazas(actividad, actividad.getCapacidad()-plazasOcupadas);
 		logger.trace("Query ejecutada con exito");
 		conexion.closeConnection();
 	}
@@ -148,7 +157,7 @@ public class ActividadDAO {
 		conexion.openConnection();
 		statement = conexion.getSt();
 		
-		int plazas = this.getPlazas(actividad);
+		int plazas = this.getPlazasLibres(actividad);
 		
 		if(plazas == 0) {
 			throw new KidHubException("No hay plazas disponibles"); 
@@ -190,13 +199,13 @@ public class ActividadDAO {
 		statement.executeUpdate(query.toString());
 		logger.trace("Query ejecutada con exito");
 		
-		this.setPlazas(actividad, this.getPlazas(actividad)+1);
+		this.setPlazas(actividad, this.getPlazasLibres(actividad)+1);
 		
 		conexion.closeConnection();
 	}
 	
 	
-	private int getPlazas(ActividadVO actividad) throws SQLException, KidHubException {
+	private int getPlazasLibres(ActividadVO actividad) throws SQLException, KidHubException {
 		int plazas=0;
 		statement = conexion.getSt();
 				
@@ -224,6 +233,23 @@ public class ActividadDAO {
 		
 		statement.executeUpdate(query.toString());
 		logger.info("Ahora quedan: " + plazas + " en la actividad " + actividad.getIdActividad());
+	}
+	
+	private int getPlazasOcupadas(ActividadVO actividad) throws SQLException {
+		int ocupadas = 0;
+		statement = conexion.getSt();
+				
+		String query = "SELECT Capacity, PlacesAvailable FROM ACTIVITIES WHERE ActivityID='"+ actividad.getIdActividad()+"';";
+				
+		ResultSet resultSet = statement.executeQuery(query);
+		
+		if(resultSet.next()) {
+			ocupadas = resultSet.getInt("Capacity") - resultSet.getInt("PlacesAvailable");
+		}
+
+		logger.info("Hay " + ocupadas + " plazas ocupadas en la actividad " + actividad.getIdActividad());
+				
+		return ocupadas;
 	}
 
 	/**

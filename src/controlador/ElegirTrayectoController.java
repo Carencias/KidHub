@@ -76,10 +76,10 @@ public class ElegirTrayectoController extends Controller{
 				this.recuperarVentana(this.stage);
 			} catch (SQLException e) {
 				logger.error("Error al apuntar a "+nombre+" en el trayecto");
-				this.muestraError("ERROR", "Actividades", "Error al apuntar a "+nombre+" en el trayecto");
+				this.muestraError("ERROR", "Trayectos", "Error al apuntar a "+nombre+" en el trayecto");
 			} catch (KidHubException e) {
 				logger.error("Error al apuntar a "+nombre+" en el trayecto");
-				this.muestraError("ERROR", "Actividades", e.getMessage());
+				this.muestraError("ERROR", "Trayectos", e.getMessage());
 			}
 		}
 	}
