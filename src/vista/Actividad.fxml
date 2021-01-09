@@ -22,56 +22,6 @@
             <Image url="@../../etc/logo.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="nombreAct" focusColor="#bef0ff" layoutX="14.0" layoutY="109.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="tipo" focusColor="#bef0ff" layoutX="257.0" layoutY="109.0" promptText="Tipo" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="aforo" focusColor="#bef0ff" layoutX="14.0" layoutY="245.0" prefHeight="30.0" prefWidth="170.0" promptText="Aforo" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="diaInicio" focusColor="#bef0ff" layoutX="14.0" layoutY="321.0" prefHeight="29.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="codPostal" focusColor="#bef0ff" layoutX="365.0" layoutY="189.0" promptText="Cod. Postal" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <Button fx:id="confirmar" layoutX="46.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#confirmar" style="-fx-background-color: #175084;" text="Confirmar" textFill="#bcf4fc">
-         <font>
-            <Font name="Monospaced Regular" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="cancelar" layoutX="311.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#cancelar" style="-fx-background-color: #175084;" text="Cancelar" textFill="#bcf4fc">
-         <font>
-            <Font name="Monospaced Regular" size="18.0" />
-         </font>
-      </Button>
-      <JFXTextField fx:id="ciudad" focusColor="#bef0ff" layoutX="14.0" layoutY="188.0" prefHeight="31.0" prefWidth="71.0" promptText="Ciudad" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="calle" focusColor="#bef0ff" layoutX="107.0" layoutY="188.0" prefHeight="31.0" prefWidth="178.0" promptText="Calle" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="num" focusColor="#bef0ff" layoutX="304.0" layoutY="188.0" prefHeight="31.0" prefWidth="35.0" promptText="Nº" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
       <Label layoutX="14.0" layoutY="157.0" prefHeight="30.0" prefWidth="101.0" text="Direccion:" textFill="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
@@ -87,12 +37,62 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </Label>
+      <JFXTextField fx:id="nombreAct" focusColor="#bef0ff" layoutX="14.0" layoutY="109.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="tipo" focusColor="#bef0ff" layoutX="257.0" layoutY="109.0" promptText="Tipo" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="ciudad" focusColor="#bef0ff" layoutX="14.0" layoutY="188.0" prefHeight="31.0" prefWidth="71.0" promptText="Ciudad" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="calle" focusColor="#bef0ff" layoutX="107.0" layoutY="188.0" prefHeight="31.0" prefWidth="178.0" promptText="Calle" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="num" focusColor="#bef0ff" layoutX="304.0" layoutY="188.0" prefHeight="31.0" prefWidth="35.0" promptText="Nº" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="codPostal" focusColor="#bef0ff" layoutX="365.0" layoutY="189.0" promptText="Cod. Postal" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="aforo" focusColor="#bef0ff" layoutX="14.0" layoutY="245.0" prefHeight="30.0" prefWidth="170.0" promptText="Aforo" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="diaInicio" focusColor="#bef0ff" layoutX="14.0" layoutY="321.0" prefHeight="29.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
       <JFXTextField fx:id="mesInicio" focusColor="#bef0ff" layoutX="65.0" layoutY="321.0" prefHeight="29.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
       <JFXTextField fx:id="anoInicio" focusColor="#bef0ff" layoutX="115.0" layoutY="321.0" prefHeight="29.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="horaInicio" focusColor="#bef0ff" layoutX="22.0" layoutY="373.0" prefHeight="29.0" prefWidth="35.0" promptText="Hora" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="minInicio" focusColor="#bef0ff" layoutX="77.0" layoutY="373.0" prefHeight="29.0" prefWidth="61.0" promptText="Minuto" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
@@ -112,16 +112,6 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="horaInicio" focusColor="#bef0ff" layoutX="22.0" layoutY="373.0" prefHeight="29.0" prefWidth="35.0" promptText="Hora" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="minInicio" focusColor="#bef0ff" layoutX="77.0" layoutY="373.0" prefHeight="29.0" prefWidth="61.0" promptText="Minuto" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXTextField>
       <JFXTextField fx:id="horaFin" focusColor="#bef0ff" layoutX="263.0" layoutY="373.0" prefHeight="29.0" prefWidth="35.0" promptText="Hora" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
@@ -132,5 +122,15 @@
             <Font name="Monospaced Regular" size="15.0" />
          </font>
       </JFXTextField>
+      <Button fx:id="confirmar" layoutX="46.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#confirmar" style="-fx-background-color: #175084;" text="Confirmar" textFill="#bcf4fc">
+         <font>
+            <Font name="Monospaced Regular" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="cancelar" layoutX="311.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#cancelar" style="-fx-background-color: #175084;" text="Cancelar" textFill="#bcf4fc">
+         <font>
+            <Font name="Monospaced Regular" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

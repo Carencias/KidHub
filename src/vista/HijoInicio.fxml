@@ -24,7 +24,7 @@
             </ImageView>
             <Label fx:id="nombre" text="Nombre del guaje" textFill="#bcf4fc">
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </Label>
             <JFXButton fx:id="inicio" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Inicio" textFill="#bcf4fc">
@@ -36,7 +36,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
             <JFXButton fx:id="actividades" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Actividades" textFill="#bcf4fc">
@@ -48,7 +48,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
             <JFXButton fx:id="trayectos" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Trayectos" textFill="#bcf4fc">
@@ -60,10 +60,10 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="cerrarSesion" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Cerrar Sesion" textFill="#bcf4fc">
+            <JFXButton fx:id="cerrarSesion" alignment="BASELINE_LEFT" onAction="#elegirPanel" prefHeight="40.0" prefWidth="220.0" stylesheets="@application.css" text="Cerrar Sesion" textFill="#bcf4fc">
               <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -72,52 +72,57 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="14.0" />
                </font>
             </JFXButton>
          </children></VBox>
       <StackPane layoutX="171.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
          <children>
-            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0" visible="true">
+            <Pane fx:id="panoInicio" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="198.0" layoutY="140.0" text="¡Bienvenido a la zona de hijos!" textFill="#bcf4fc">
+                  <Label layoutX="169.0" layoutY="150.0" text="¡Bienvenido a la zona de hijos!" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="82.0" layoutY="175.0" text="Desde aqui podras visualizar todas tus actividades y trayectos." textFill="#bcf4fc">
+                  <Label layoutX="14.0" layoutY="178.0" text="Desde aqui podras visualizar todas tus actividades y trayectos." textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Monospaced Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="121.0" layoutY="205.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
+                  <Label layoutX="80.0" layoutY="202.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Monospaced Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="243.0" layoutY="235.0" text="¡Gracias por usar KidHub!" textFill="#bcf4fc">
+                  <Label layoutX="242.0" layoutY="226.0" text="¡Gracias por usar KidHub!" textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Monospaced Regular" size="20.0" />
                      </font>
                   </Label>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="327.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <Pane fx:id="panoActividades" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE ACTIVIDADES" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="275.0" />
                   <JFXTreeTableView fx:id="actividadesTree" layoutX="17.0" layoutY="81.0" prefHeight="398.0" prefWidth="735.0" stylesheets="@application.css" visible="false" />                  
                </children>
              </Pane>
-            <Pane fx:id="panoTrayectos" visible="false" prefHeight="200.0" prefWidth="200.0">  
+            <Pane fx:id="panoTrayectos" prefHeight="200.0" prefWidth="200.0" visible="false">  
               <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE TRAYECTOS" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" /> 
@@ -127,19 +132,19 @@
             
                               <Pane fx:id="panoCerrar" prefHeight="200.0" prefWidth="200.0" visible="false">
             	<children>
-                  <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion?" textFill="#bcf4fc">
+                  <Label layoutX="67.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion?" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="88.0" layoutY="181.0" text="Al pulsar el boton, regresara a la ventana principal." textFill="#bcf4fc">
+                  <Label layoutX="14.0" layoutY="166.0" text="Al pulsar el boton, regresara a la ventana principal." textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#logOut" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
+                  <Button fx:id="cerrar" layoutX="291.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#logOut" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Monospaced Regular" size="18.0" />
                      </font>
                   </Button>
                </children>

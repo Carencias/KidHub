@@ -12,16 +12,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="688.0" style="-fx-background-color: #045ccc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.LoginController">
    <children>
-      <JFXPasswordField fx:id="textoContrasena" layoutX="284.0" layoutY="215.0" prefHeight="30.0" prefWidth="112.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         <font>
-            <Font name="Monospaced Regular" size="15.0" />
-         </font>
-      </JFXPasswordField>
       <JFXTextField fx:id="textoUsuario" focusColor="#bef0ff" layoutX="287.0" layoutY="165.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>
-      </JFXTextField>     
+      </JFXTextField>
+      <JFXPasswordField fx:id="textoContrasena" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" prefHeight="30.0" prefWidth="112.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         <font>
+            <Font name="Monospaced Regular" size="15.0" />
+         </font>
+      </JFXPasswordField>     
       <JFXTextField fx:id="contrasenaVisible" focusColor="#bef0ff" layoutX="284.0" layoutY="215.0" prefHeight="30.0" prefWidth="112.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff" visible="false">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
@@ -51,12 +51,12 @@
             <Image url="@../../etc/padlock.png" />
          </image>
       </ImageView>
-      <Button fx:id="botonLogin" layoutX="315.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: #175084;" text="Acceder" textFill="#bcf4fc">
+      <Button fx:id="botonLogin" layoutX="278.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: #175084;" text="Acceder" textFill="#bcf4fc">
          <font>
             <Font name="Monospaced Regular" size="22.0" />
          </font>
       </Button>      
-      <JFXCheckBox fx:id="mostrar" checkedColor="#175084" layoutX="284.0" layoutY="256.0" onMouseClicked="#cambiarCaracteres" text="Mostrar contrasena" textFill="#bef0ff" unCheckedColor="#bcf4fc">
+      <JFXCheckBox fx:id="mostrar" checkedColor="#175084" layoutX="252.0" layoutY="258.0" onMouseClicked="#cambiarCaracteres" text="Mostrar contrasena" textFill="#bef0ff" unCheckedColor="#bcf4fc">
          <font>
             <Font name="Monospaced Regular" size="15.0" />
          </font>

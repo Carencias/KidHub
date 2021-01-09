@@ -50,7 +50,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="15.0" />
+                  <Font name="Monospaced Regular" size="15.0" />
                </font>
             </JFXButton>
             <JFXButton fx:id="trayectos" alignment="BASELINE_LEFT" onAction="#elegirPanel" stylesheets="@application.css" text="Trayectos" textFill="#bcf4fc">
@@ -86,48 +86,53 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font name="Monospaced Regular" size="15.0" />
+                  <Font name="Monospaced Regular" size="14.0" />
                </font>
             </JFXButton>
          </children></VBox>
       <StackPane layoutX="171.0" layoutY="1.0" prefHeight="500.0" prefWidth="710.0">
          <children>
-            <Pane fx:id="panoInicio" prefHeight="500.0" prefWidth="710.0" visible="true">
+            <Pane fx:id="panoInicio" prefHeight="500.0" prefWidth="710.0">
                <children>
-                  <Label layoutX="183.0" layoutY="140.0" text="¡Bienvenido a la zona de padres!" textFill="#bcf4fc">
+                  <Label layoutX="133.0" layoutY="150.0" text="¡Bienvenido a la zona de padres!" textFill="#bcf4fc">
                      <font>
                         <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="175.0" text="Aqui podras visualizar todas tus actividades y trayectos y los de tus hijos." textFill="#bcf4fc">
+                  <Label layoutX="34.0" layoutY="178.0" text="Aqui podras visualizar toda tu informacion y la de tus hijos." textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Monospaced Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="120.0" layoutY="205.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
+                  <Label layoutX="51.0" layoutY="202.0" text="Navega por el menu lateral para acceder a todo esto." textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Monospaced Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="242.0" layoutY="235.0" text="¡Gracias por usar KidHub!" textFill="#bcf4fc">
+                  <Label layoutX="213.0" layoutY="226.0" text="¡Gracias por usar KidHub!" textFill="#bcf4fc">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Monospaced Regular" size="20.0" />
                      </font>
                   </Label>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="304.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../etc/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="panoTrayectos" visible="false" prefHeight="500.0" prefWidth="710.0">  
-              <children>
-                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="TRAYECTOS" textFill="#bcf4fc">
+            <Pane fx:id="panoActividades" prefHeight="500.0" prefWidth="710.0" visible="false">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ACTIVIDADES" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="127.0" />
-                  <JFXTreeTableView fx:id="trayectosTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="742.0" stylesheets="@application.css" visible="false" />
-                  <JFXButton fx:id="apuntarTrayecto" disable="true" layoutX="462.0" layoutY="29.0" onMouseClicked="#apuntarHijoTrayecto" prefHeight="45.0" prefWidth="122.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="164.0" />
+                  <JFXTreeTableView fx:id="actividadesTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="745.0" stylesheets="@application.css" visible="false" />
+                  <JFXButton fx:id="apuntarActividad" disable="true" layoutX="233.0" layoutY="29.0" onMouseClicked="#apuntarHijoActividad" prefHeight="45.0" prefWidth="135.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="15.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
@@ -137,9 +142,9 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>                 
-                  <JFXButton fx:id="desapuntarTrayecto" disable="true" layoutX="355.0" layoutY="29.0" onMouseClicked="#desapuntarHijoTrayecto" prefHeight="45.0" prefWidth="149.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Desapuntar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                  <JFXButton fx:id="desapuntarActividad" disable="true" layoutX="596.0" layoutY="29.0" onMouseClicked="#desapuntarHijoActividad" prefHeight="45.0" prefWidth="164.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Desapuntar" textAlignment="LEFT" textFill="#e7e5e5">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="15.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
@@ -149,15 +154,56 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXComboBox fx:id="selectHijoTrayecto" focusColor="#bcf4fc" layoutX="623.0" layoutY="39.0" onAction="#hijoElegidoTrayecto" prefHeight="25.0" prefWidth="87.0" promptText="Hijos" style="-fx-prompt-text-fill: #bcf4fc;" unFocusColor="#bcf4fc" />
-                  <Label fx:id="trayectosVacio" layoutX="66.0" layoutY="233.0" text="Selecciona el usuario del que quieres consultar los trayectos." textFill="#bcf4fc">
+                  <JFXComboBox fx:id="selectHijoActividad" focusColor="#bcf4fc" layoutX="437.0" layoutY="39.0" onAction="#hijoElegidoActividad" prefHeight="25.0" prefWidth="99.0" promptText="Hijos" style="-fx-prompt-text-fill: #bcf4fc; -fx-text-fill: #bcf4fc;" unFocusColor="#bcf4fc" />
+                  <Label fx:id="hijosVacio" layoutX="192.0" layoutY="236.0" text="Selecciona el hijo para consultar." textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
+                     </font>
+                  </Label>            
+               </children>
+             </Pane>
+            <Pane fx:id="panoTrayectos" prefHeight="500.0" prefWidth="710.0" visible="false">  
+              <children>
+                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="TRAYECTOS" textFill="#bcf4fc">
+                     <font>
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="crear" disable="true" layoutX="183.0" layoutY="29.0" onMouseClicked="#crearTrayecto" prefHeight="45.0" prefWidth="101.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Crear" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="135.0" />
+                  <JFXTreeTableView fx:id="trayectosTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="742.0" stylesheets="@application.css" visible="false" />
+                  <JFXButton fx:id="apuntarTrayecto" disable="true" layoutX="462.0" layoutY="29.0" onMouseClicked="#apuntarHijoTrayecto" prefHeight="45.0" prefWidth="135.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>                 
+                  <JFXButton fx:id="desapuntarTrayecto" disable="true" layoutX="345.0" layoutY="29.0" onMouseClicked="#desapuntarHijoTrayecto" prefHeight="45.0" prefWidth="164.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Desapuntar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/thrash.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXComboBox fx:id="selectHijoTrayecto" focusColor="#bcf4fc" layoutX="623.0" layoutY="39.0" onAction="#hijoElegidoTrayecto" prefHeight="25.0" prefWidth="109.0" promptText="Hijos" style="-fx-prompt-text-fill: #bcf4fc;" unFocusColor="#bcf4fc" />
+                  <Label fx:id="trayectosVacio" layoutX="14.0" layoutY="236.0" text="Selecciona el usuario para consultar los trayectos." textFill="#bcf4fc">
+                     <font>
+                        <Font name="Monospaced Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="crear" disable="true" layoutX="183.0" layoutY="29.0" onMouseClicked="#crearTrayecto" prefHeight="45.0" prefWidth="109.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Crear" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
@@ -167,9 +213,9 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="modificar" layoutX="312.0" layoutY="29.0" onMouseClicked="#modificarTrayecto" prefHeight="45.0" prefWidth="127.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Modificar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                  <JFXButton fx:id="modificar" layoutX="312.0" layoutY="29.0" onMouseClicked="#modificarTrayecto" prefHeight="45.0" prefWidth="145.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Modificar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="15.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="19.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
@@ -179,9 +225,9 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="borrarTrayecto" disable="true" layoutX="468.0" layoutY="29.0" onMouseClicked="#borrarTrayecto" prefHeight="45.0" prefWidth="110.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Borrar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
+                  <JFXButton fx:id="borrarTrayecto" disable="true" layoutX="468.0" layoutY="29.0" onMouseClicked="#borrarTrayecto" prefHeight="45.0" prefWidth="121.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Borrar" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="15.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
@@ -197,98 +243,98 @@
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ZONA DE REGISTRO" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
-                  
-                  <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="35.0" layoutY="128.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+      			  <Label layoutX="269.0" layoutY="159.0" prefHeight="35.0" prefWidth="206.0" text="Fecha de nacimiento:" textFill="#bef0ff">
          			<font>
-           			 <Font size="15.0" />
-         			</font>
-      			  </JFXTextField>
-      			  
-      			  <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="269.0" layoutY="128.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         			<font>
-           			 <Font size="15.0" />
-         			</font>
-      			  </JFXTextField>
-                  <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="35.0" layoutY="192.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="269.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         			<font>
-            			<Font size="15.0" />
-         			</font>
-      			  </JFXTextField>
-      			  <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="338.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         			<font>
-            			<Font size="15.0" />
-         			</font>
-      			  </JFXTextField>
-      			  <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="402.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-         			<font>
-            			<Font size="15.0" />
-         			</font>
-      			  </JFXTextField>
-      			  <Label layoutX="269.0" layoutY="159.0" prefHeight="35.0" prefWidth="149.0" text="Fecha de nacimiento:" textFill="#bef0ff">
-         			<font>
-            			<Font size="15.0" />
+            			<Font name="Monospaced Regular" size="16.0" />
          			</font>
       			  </Label>
-                  <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="35.0" layoutY="253.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  <Label layoutX="11.0" layoutY="73.0" prefHeight="55.0" prefWidth="749.0" text="Registra desde aqui a tus hijos para que puedan disfrutar de KidHub." textFill="#bcf4fc">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="18.0" />
                      </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="269.0" layoutY="253.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                  </Label>
+                  <Label layoutX="22.0" layoutY="380.0" prefHeight="55.0" prefWidth="666.0" text="¿Tu hijo ya esta en KidHub? ¡Registralo como tu hijo!" textFill="#bcf4fc">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="18.0" />
                      </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="35.0" layoutY="319.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="269.0" layoutY="319.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXTextField>
+                  </Label>
                   <ImageView fitHeight="227.0" fitWidth="286.0" layoutX="546.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../etc/father_kid.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="11.0" layoutY="73.0" prefHeight="55.0" prefWidth="666.0" text="Registra desde aqui a tus hijos para que puedan disfrutar de KidHub." textFill="#bcf4fc">
+                  
+                  <JFXTextField fx:id="nombre" focusColor="#bef0ff" layoutX="35.0" layoutY="128.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+           			 <Font name="Monospaced Regular" size="15.0" />
+         			</font>
+      			  </JFXTextField>
+      			  
+      			  <JFXTextField fx:id="apellidos" focusColor="#bef0ff" layoutX="269.0" layoutY="128.0" promptText="Apellidos" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+           			 <Font name="Monospaced Regular" size="15.0" />
+         			</font>
+      			  </JFXTextField>
+                  <JFXTextField fx:id="dni" focusColor="#bef0ff" layoutX="35.0" layoutY="192.0" promptText="DNI" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
                      <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="22.0" layoutY="380.0" prefHeight="55.0" prefWidth="666.0" text="¿Tu hijo ya esta en KidHub? ¡Registralo como tu hijo!" textFill="#bcf4fc">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <JFXTextField fx:id="nombreExistente" focusColor="#bef0ff" layoutX="35.0" layoutY="435.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="contraExistente" focusColor="#bef0ff" layoutX="254.0" layoutY="435.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
-                     <font>
-                        <Font size="15.0" />
+                        <Font name="Monospaced Regular" size="15.0" />
                      </font>
                   </JFXTextField>
-                  <Button fx:id="registrarExistente" layoutX="459.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#agregarHijo" style="-fx-background-color: #175084;" text="Registrar" textFill="#bcf4fc">
+      			  <JFXTextField fx:id="dia" focusColor="#bef0ff" layoutX="276.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Dia" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+            			<Font name="Monospaced Regular" size="15.0" />
+         			</font>
+      			  </JFXTextField>
+      			  <JFXTextField fx:id="mes" focusColor="#bef0ff" layoutX="338.0" layoutY="192.0" prefHeight="31.0" prefWidth="35.0" promptText="Mes" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+            			<Font name="Monospaced Regular" size="15.0" />
+         			</font>
+      			  </JFXTextField>
+                  <JFXTextField fx:id="ano" focusColor="#bef0ff" layoutX="402.0" layoutY="192.0" prefHeight="31.0" prefWidth="47.0" promptText="Ano" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+         			<font>
+            			<Font name="Monospaced Regular" size="15.0" />
+         			</font>
+      			  </JFXTextField>
+                  <JFXTextField fx:id="usuario" focusColor="#bef0ff" layoutX="35.0" layoutY="253.0" promptText="Usuario" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="contra1" focusColor="#bef0ff" layoutX="269.0" layoutY="253.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font name="Monospaced Regular" size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="contra2" focusColor="#bef0ff" layoutX="35.0" layoutY="319.0" prefHeight="29.0" prefWidth="164.0" promptText="Repetir contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="email" focusColor="#bef0ff" layoutX="269.0" layoutY="319.0" promptText="Email" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <Button fx:id="registrar" layoutX="459.0" layoutY="236.0" mnemonicParsing="false" onMouseClicked="#registrar" style="-fx-background-color: #175084;" text="Registrar" textFill="#bcf4fc">
                      <font>
                         <Font name="Monospaced Regular" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="registrar" layoutX="459.0" layoutY="236.0" mnemonicParsing="false" onMouseClicked="#registrar" style="-fx-background-color: #175084;" text="Registrar" textFill="#bcf4fc">
+                  <JFXTextField fx:id="nombreExistente" focusColor="#bef0ff" layoutX="35.0" layoutY="435.0" promptText="Nombre" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="contraExistente" focusColor="#bef0ff" layoutX="254.0" layoutY="435.0" promptText="Contrasena" style="-fx-prompt-text-fill: #bef0ff; -fx-text-fill: #bef0ff;" unFocusColor="#bef0ff">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <Button fx:id="registrarExistente" layoutX="459.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#agregarHijo" style="-fx-background-color: #175084;" text="Registrar" textFill="#bcf4fc">
                      <font>
                         <Font name="Monospaced Regular" size="18.0" />
                      </font>
@@ -298,64 +344,23 @@
             
             <Pane fx:id="panoCerrar" prefHeight="500.0" prefWidth="710.0" visible="false">
             	<children>
-                  <Label layoutX="136.0" layoutY="138.0" text="¿Esta seguro de que desea cerrar sesion?" textFill="#bcf4fc">
+                  <Label layoutX="95.0" layoutY="142.0" text="¿Esta seguro de que desea cerrar sesion?" textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="88.0" layoutY="181.0" text="Al pulsar el boton, regresara a la ventana principal." textFill="#bcf4fc">
+                  <Label layoutX="9.0" layoutY="170.0" text="Si pulsa el boton, regresara a la ventana principal." textFill="#bcf4fc">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#logOut" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
+                  <Button fx:id="cerrar" layoutX="291.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#logOut" prefWidth="170.0" style="-fx-background-color: #175084;" text="Cerrar sesion" textFill="#bcf4fc">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Monospaced Regular" size="18.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="panoActividades" prefHeight="500.0" prefWidth="710.0" visible="false">
-               <children>
-                  <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ACTIVIDADES" textFill="#bcf4fc">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="150.0" />
-                  <JFXTreeTableView fx:id="actividadesTree" layoutX="8.0" layoutY="88.0" prefHeight="406.0" prefWidth="745.0" stylesheets="@application.css" visible="false" />
-                  <JFXButton fx:id="apuntarActividad" disable="true" layoutX="233.0" layoutY="29.0" onMouseClicked="#apuntarHijoActividad" prefHeight="45.0" prefWidth="122.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Apuntar" textAlignment="LEFT" textFill="#e7e5e5">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="33.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../etc/add.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>                 
-                  <JFXButton fx:id="desapuntarActividad" disable="true" layoutX="611.0" layoutY="29.0" onMouseClicked="#desapuntarHijoActividad" prefHeight="45.0" prefWidth="149.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Desapuntar" textAlignment="LEFT" textFill="#e7e5e5">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../etc/thrash.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXComboBox fx:id="selectHijoActividad" focusColor="#bcf4fc" layoutX="437.0" layoutY="39.0" onAction="#hijoElegidoActividad" prefHeight="25.0" prefWidth="99.0" promptText="Hijos" style="-fx-prompt-text-fill: #bcf4fc; -fx-text-fill: #bcf4fc;" unFocusColor="#bcf4fc" />
-                  <Label fx:id="hijosVacio" layoutX="66.0" layoutY="233.0" text="Selecciona el hijo del que quieres consultar las actividades." textFill="#bcf4fc">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>            
-               </children>
-             </Pane>
          </children>
       </StackPane>
       <Separator layoutX="170.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="12.0" />
