@@ -176,7 +176,7 @@ public class HijoInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<ActividadTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-	    aforoCol.setPrefWidth(138);
+	    aforoCol.setPrefWidth(120);
 	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
@@ -225,7 +225,7 @@ public class HijoInicioController extends Controller{
 		 * CREACION DE LOS HEADERS DE LA TABLA
 		 */
 		JFXTreeTableColumn<TrayectoTabla, String> actividadCol = new JFXTreeTableColumn<>("Actividad");
-		actividadCol.setPrefWidth(140);
+		actividadCol.setPrefWidth(115);
 		actividadCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
@@ -234,7 +234,7 @@ public class HijoInicioController extends Controller{
 	    });
 	
 	    JFXTreeTableColumn<TrayectoTabla, String> tipoCol = new JFXTreeTableColumn<>("Tipo");
-	    tipoCol.setPrefWidth(140);
+	    tipoCol.setPrefWidth(100);
 	    tipoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
@@ -243,7 +243,7 @@ public class HijoInicioController extends Controller{
 	    });
 	
 	    JFXTreeTableColumn<TrayectoTabla, String> padreCol = new JFXTreeTableColumn<>("Padre");
-	    padreCol.setPrefWidth(140);
+	    padreCol.setPrefWidth(115);
 	    padreCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
@@ -252,11 +252,29 @@ public class HijoInicioController extends Controller{
 	    });
 	    
 	    JFXTreeTableColumn<TrayectoTabla, String> aforoCol = new JFXTreeTableColumn<>("Aforo");
-	    aforoCol.setPrefWidth(140);
+	    aforoCol.setPrefWidth(60);
 	    aforoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
 	            return param.getValue().getValue().getAforo();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<TrayectoTabla, String> origenCol = new JFXTreeTableColumn<>("Origen");
+	    origenCol.setPrefWidth(175);
+	    origenCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getOrigenTexto();
+	        }
+	    });
+	    
+	    JFXTreeTableColumn<TrayectoTabla, String> destinoCol = new JFXTreeTableColumn<>("Destino");
+	    destinoCol.setPrefWidth(175);
+	    destinoCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<TrayectoTabla, String>, ObservableValue<String>>() {
+	        @Override
+	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<TrayectoTabla, String> param) {
+	            return param.getValue().getValue().getDestinoTexto();
 	        }
 	    });
 	    
@@ -271,7 +289,7 @@ public class HijoInicioController extends Controller{
 	    }
 	
 	    final TreeItem<TrayectoTabla> root = new RecursiveTreeItem<TrayectoTabla>(obsTrayectos, RecursiveTreeObject::getChildren);
-	    trayectosTree.getColumns().setAll(actividadCol, tipoCol, padreCol, aforoCol);
+	    trayectosTree.getColumns().setAll(actividadCol, tipoCol, padreCol, aforoCol, origenCol, destinoCol);
 	    trayectosTree.setRoot(root);
 	    trayectosTree.setShowRoot(false);
 	    

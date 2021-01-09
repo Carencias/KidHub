@@ -110,7 +110,7 @@
                      </font>
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" />
-                  <JFXTreeTableView fx:id="actividadesTree" layoutX="17.0" layoutY="81.0" prefHeight="398.0" prefWidth="730.0" stylesheets="@application.css" visible="false" />                  
+                  <JFXTreeTableView fx:id="actividadesTree" layoutX="17.0" layoutY="81.0" prefHeight="398.0" prefWidth="735.0" stylesheets="@application.css" visible="false" />                  
                </children>
              </Pane>
             <Pane fx:id="panoTrayectos" visible="false" prefHeight="200.0" prefWidth="200.0">  
@@ -121,7 +121,7 @@
                      </font>
                   </Label>
                   <Separator layoutX="14.0" layoutY="65.0" prefHeight="8.0" prefWidth="255.0" /> 
-                  <JFXTreeTableView fx:id="trayectosTree" layoutX="17.0" layoutY="81.0" prefHeight="398.0" prefWidth="730.0" stylesheets="@application.css" visible="false" />                 
+                  <JFXTreeTableView fx:id="trayectosTree" layoutX="17.0" layoutY="81.0" prefHeight="398.0" prefWidth="745.0" stylesheets="@application.css" visible="false" />                 
                </children>          
             </Pane>
             
