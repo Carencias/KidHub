@@ -147,7 +147,7 @@ public class ActividadController extends Controller {
 		StringBuffer error = new StringBuffer();
 		int numero = 1, aforo = 1;
 		
-		if(hayCamposVacios(this.nombreAct, this.tipo, this.calle, this.codPostal, this.ciudad, this.diaInicio, this.mesInicio, this.anoInicio, this.horaInicio, this.minInicio, this.diaFin, this.mesFin, this.anoFin, this.horaFin, this.minFin)) {
+		if(hayCamposVacios(this.nombreAct, this.tipo, this.calle, this.codPostal, this.ciudad, this.num, this.aforo, this.diaInicio, this.mesInicio, this.anoInicio, this.horaInicio, this.minInicio, this.diaFin, this.mesFin, this.anoFin, this.horaFin, this.minFin)) {
 			error.append("Campos sin rellenar\n");
 		}
 		
