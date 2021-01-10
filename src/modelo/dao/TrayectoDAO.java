@@ -234,7 +234,9 @@ public class TrayectoDAO {
 				query.append("INNER JOIN RideKid ON RideKid.RideID = RIDES.RideID ");
 				query.append("WHERE RideKid.KidUsername='"+ usuario.getNombreUsuario()+"';");
 			}
-		}	
+		}else if(usuario.getTipo() == TipoUsuario.PADRE) {
+			query.append("WHERE ParentUsername='" + usuario.getNombreUsuario() + "';");
+		}
 		
 		logger.trace("Query lista para ser lanzada");
 		resultSet = statement.executeQuery(query.toString());
