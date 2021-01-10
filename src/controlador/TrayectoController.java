@@ -26,6 +26,7 @@ import modelo.vo.TrayectoVO.TipoTrayecto;
 /**
  * Clase controladora de la ventana que permite gestionar los trayectos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class TrayectoController extends Controller{
 	   	@FXML

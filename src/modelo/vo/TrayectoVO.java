@@ -92,7 +92,6 @@ public class TrayectoVO {
 		this.actividad = actividad;
 	}
 	
-	//TODO Bayon cree que esto sobra
 	public PadreVO getPadre() {
 		return padre;
 	}
@@ -101,13 +100,10 @@ public class TrayectoVO {
 		this.padre = padre;
 	}
 	
-	
-	//TODO Bayon cree que no se usa nunca
 	public ArrayList<HijoVO> getHijos() {
 		return hijos;
 	}
 	
-	//TODO yo creo que no se usa nunca
 	public void setHijos(ArrayList<HijoVO> hijos) {
 		this.hijos = hijos;
 	}

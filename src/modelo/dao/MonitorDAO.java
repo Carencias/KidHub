@@ -7,6 +7,7 @@ import modelo.vo.MonitorVO;
 /**
  * Clase encargada de terminar el registro de los monitores en la base de datos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class MonitorDAO extends UsuarioDAO{
 	

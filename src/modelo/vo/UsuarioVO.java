@@ -77,7 +77,7 @@ public class UsuarioVO {
 	
 	public String getFechaNacimiento() {
 		return fechaNacimiento;
-	} //TODO cuidado con lo que devuelve esto al meterlo en la BBDD
+	}
 	
 	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;

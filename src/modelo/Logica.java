@@ -12,6 +12,7 @@ import modelo.vo.UsuarioVO.TipoUsuario;
  * Clase que implementa el patron Singleton, encargada de la logica de kidhub, actuando de intermediaria entre el modelo y los controladores,
  * realizando las comprobaciones necesaria en cada operacion.
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class Logica {
 	

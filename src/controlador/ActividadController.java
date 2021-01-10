@@ -12,11 +12,11 @@ import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
-import modelo.vo.UsuarioVO;
 
 /**
  * Clase controladora de las ventanas de creacion de actividades
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class ActividadController extends Controller {
 

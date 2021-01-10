@@ -13,6 +13,7 @@ import modelo.vo.UsuarioVO;
 /**
  * Clase encargada de lanzar las querys de registrar, agregarHijos, mostrarHijos, obtenerHijos de la base de datos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class PadreDAO extends UsuarioDAO{
 	

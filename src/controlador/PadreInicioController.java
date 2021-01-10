@@ -46,6 +46,7 @@ import vista.TrayectoTabla;
 /**
  * Clase controladora de la ventana del padre
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class PadreInicioController extends Controller{
 

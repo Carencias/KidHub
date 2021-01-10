@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
  * Clase Value Object que sirve de almacen para la informacion de una direccion
  * @version 1.0
  * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez y Santiago Valbuena Rubio
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class Direccion {
 
@@ -16,8 +17,6 @@ public class Direccion {
 	private String codigoPostal;
 	
 	private String ciudad;
-	
-	private String direccionCompleta;
 	
 	static Logger logger = Logger.getLogger(Direccion.class);
 	

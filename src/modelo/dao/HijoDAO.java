@@ -9,6 +9,7 @@ import modelo.vo.HijoVO;
 /**
  * Clase encargada de terminar el registro de los hijos en la base de datos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class HijoDAO extends UsuarioDAO{
 	

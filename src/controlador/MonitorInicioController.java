@@ -32,6 +32,7 @@ import vista.ActividadTabla;
 /**
  *Clase controladora de los usuarios de tipo Monitor, que controla su ventana, y escucha sus acciones comunicandose con la Logica.
  *@version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class MonitorInicioController extends Controller{
 	

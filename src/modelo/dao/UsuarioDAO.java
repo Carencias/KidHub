@@ -16,6 +16,7 @@ import modelo.vo.UsuarioVO.TipoUsuario;
 /**
  * Clase encargada de registrar usuarios y obtener usuarios en la base de datos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class UsuarioDAO {
 	

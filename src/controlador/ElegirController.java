@@ -16,6 +16,7 @@ import modelo.vo.HijoVO;
 /**
  * Clase controladora de la ventana que permite apuntar un hijo a una actividad
  * @version 1.0
+ * * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class ElegirController extends Controller{
 

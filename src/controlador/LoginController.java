@@ -19,6 +19,7 @@ import modelo.vo.UsuarioVO.TipoUsuario;
 /**
  * Clase controladora de la ventana de login
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class LoginController extends Controller{
 	

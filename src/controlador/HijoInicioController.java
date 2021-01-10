@@ -30,7 +30,7 @@ import vista.TrayectoTabla;
 /**
  * Clase controladora de la ventana del hijo
  * @version 1.0
- *
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class HijoInicioController extends Controller{
 

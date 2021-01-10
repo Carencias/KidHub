@@ -10,7 +10,7 @@ import modelo.KidHubException;
 import modelo.Logica;
 import modelo.vo.*;
 import modelo.vo.UsuarioVO.TipoUsuario;
-
+import modelo.vo.PadreVO;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 /**
  * Clase controladora de la ventana de registro
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class RegistroController extends Controller{
 
@@ -73,11 +74,10 @@ public class RegistroController extends Controller{
 				if(padre.isSelected()) {
 					usuarioVO = new PadreVO();
 					usuarioVO.setTipo(TipoUsuario.PADRE);
-					//TODO set telefono
+					((PadreVO) usuarioVO).setTelefono(telefono.getText());
 				}else{
 					usuarioVO = new MonitorVO();
 					usuarioVO.setTipo(TipoUsuario.MONITOR);
-					//TODO set especialidad
 				}
 				
 				registrarUsuario(event, usuarioVO);

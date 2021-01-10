@@ -18,6 +18,7 @@ import modelo.vo.UsuarioVO.TipoUsuario;
 /**
  * Clase encargada de lanzar las querys de crear, modificar, borrar, apuntarHijoAActividad y desapuntarHijoAActivida a la base de datos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class ActividadDAO {
 	

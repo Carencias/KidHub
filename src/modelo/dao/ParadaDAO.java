@@ -17,6 +17,7 @@ import modelo.vo.ParadaVO.TipoParada;
 /**
  * Clase encargada de registrar paradas y obtener paradas en la base de datos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class ParadaDAO {
 private Conexion conexion;

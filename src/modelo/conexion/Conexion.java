@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 /**
  * Clase que se encarga de establecer la conexion con la base de datos.
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class Conexion {
 	

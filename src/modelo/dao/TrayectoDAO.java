@@ -23,6 +23,7 @@ import modelo.vo.UsuarioVO;
 /**
  * Clase encargada de manejar los trayectos
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class TrayectoDAO {
 
@@ -223,7 +224,6 @@ public class TrayectoDAO {
 		statement = conexion.getSt();
 		
 		StringBuilder query = new StringBuilder();
-		//TODO comprobar lo de TODOS Y PROPIOS EN TODOS LOS SITIOS
 		query.append("SELECT * FROM RIDES ");
 		
 		if(usuario.getNombreUsuario().equals("PROPIOS")) {

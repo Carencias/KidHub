@@ -19,6 +19,7 @@ import modelo.Logica;
  * Controlador principal que se encarga de mostrar ventanas, cerrar ventanas, esconder ventanas, recuperar ventanas y mostrar errores
  * del que heredan el resto de controladores.
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class Controller {
 	

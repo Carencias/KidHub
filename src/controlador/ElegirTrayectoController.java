@@ -19,6 +19,7 @@ import modelo.vo.TrayectoVO;
 /**
  * Clase controladora de la ventana que permite apuntar un hijo a un trayecto
  * @version 1.0
+ * @author Diego Simon Gonzalez, Pablo Bayon Gutierrez, Santiago Valbuena Rubio
  */
 public class ElegirTrayectoController extends Controller{
 	@FXML
@@ -84,6 +85,11 @@ public class ElegirTrayectoController extends Controller{
 		}
 	}
 	
+	/**
+	 * Cancelado apuntar hijo a trayecto
+	 * @param event
+	 *  Boton de cancelar pulsado
+	 */
 	@FXML
     void cancelar(MouseEvent event) {
 		logger.trace("Cancelado apuntar hijo a trayecto");
