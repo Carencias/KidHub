@@ -122,14 +122,11 @@ public class UsuarioDAO {
 					logger.trace("Usuario monitor obtenido de la base de datos");
 					this.setDatosBasicosUsuario(usuario, resultSet, TipoUsuario.MONITOR);
 					break;
-				default:
-					conexion.closeConnection();
-					throw new SQLException("Contraseña o usuarios desconocidos");
 			}
-		}else {
+		}/*else {
 			conexion.closeConnection();
 			throw new SQLException("Contraseña o usuarios desconocidos");
-		}
+		}*/
 		conexion.closeConnection();
 		return usuario;
 	}

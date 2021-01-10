@@ -270,14 +270,15 @@ public class ActividadDAO {
 		if(usuariovo.getTipo() == TipoUsuario.MONITOR) {
 			query.append("SELECT * FROM ACTIVITIES ");
 			query.append("WHERE MonitorUsername='"+ usuariovo.getNombreUsuario()+"';");
-		}else if(usuariovo.getTipo() == TipoUsuario.HIJO) {
+		}else /*if(usuariovo.getTipo() == TipoUsuario.HIJO)*/ { 
 			query.append("SELECT * FROM ACTIVITIES ");
 			if(!usuariovo.getNombreUsuario().equals("TODOS")) {
 				query.append("INNER JOIN ActivityKid ON ActivityKid.ActivityID = ACTIVITIES.ActivityID ");
 				query.append("WHERE ActivityKid.KidUsername='"+ usuariovo.getNombreUsuario()+"';");
 			}
 		
-		}				
+		}//NO SE LE DEBERIA PASAR UN PADRE PARA NADA
+		
 		logger.trace("Query lista para ser lanzada");
 		resultSet = statement.executeQuery(query.toString());
 		logger.trace("Query ejecutada con exito");

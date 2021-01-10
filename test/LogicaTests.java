@@ -1,5 +1,8 @@
 
 import modelo.*;
+import modelo.dao.ActividadDAO;
+import modelo.dao.TrayectoDAO;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -307,8 +310,8 @@ public class LogicaTests {
 	
 	@Test
 	public void crearTrayectoTest() throws KidHubException, SQLException {
-		//this.apuntarHijoAActividadTest();
-		this.crearActividadTest();
+		this.apuntarHijoAActividadTest();
+		//this.crearActividadTest();
 		this.registrarPadreTest();
 		
 		logica.setUsuarioActual(padre);
@@ -331,6 +334,49 @@ public class LogicaTests {
 		}
 		
 		assertTrue(trayectoEncontrado);
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void crearTrayectoSolapadoTest() throws KidHubException, SQLException {
+		this.crearTrayectoTest();
+		
+		logica.borrarUsuario(monitor2);
+		logica.registrarUsuario(monitor2);
+		logica.setUsuarioActual(monitor2);
+		
+		actividad2.setInicio(LocalDateTime.of(2021, 1, 1, 17, 15));
+		actividad2.setFin(LocalDateTime.of(2021, 1, 1, 18, 00));
+		logica.borrarActividad(actividad2);
+		logica.crearActividad(actividad2);
+		
+		logica.setUsuarioActual(padre);
+		
+		TrayectoVO trayecto3 = new TrayectoVO(actividad2, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 16, 45), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		
+		logica.crearTrayecto(trayecto3);	
+
+	}
+	
+	@Test
+	public void crearTrayectoNoSolapadoTest() throws KidHubException, SQLException {
+		this.crearTrayectoTest();
+		
+		logica.borrarUsuario(monitor2);
+		logica.registrarUsuario(monitor2);
+		logica.setUsuarioActual(monitor2);
+		
+		actividad2.setInicio(LocalDateTime.of(2021, 1, 1, 16, 45));
+		actividad2.setFin(LocalDateTime.of(2021, 1, 1, 19, 00));
+		logica.borrarActividad(actividad2);
+		logica.crearActividad(actividad2);
+		
+		logica.setUsuarioActual(padre);
+		
+		TrayectoVO trayecto3 = new TrayectoVO(actividad2, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 16, 30), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		
+		logica.crearTrayecto(trayecto3);	
+
 	}
 	
 	@Test
@@ -421,7 +467,6 @@ public class LogicaTests {
 	
 	@Test
 	public void apuntarHijoATrayectoTest() throws KidHubException, SQLException {
-		this.apuntarHijoAActividadTest();
 		this.crearTrayectoTest();
 		
 		logica.setUsuarioActual(padre);
@@ -436,9 +481,128 @@ public class LogicaTests {
 	
 	@Test
 	(expected = KidHubException.class)
+	public void apuntarHijoATrayectoSinPlazasTest() throws KidHubException, SQLException {
+		
+		trayecto.setCapacidad(1);
+		this.crearTrayectoTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		HijoVO hijo2 = new HijoVO("usuario7", "03466654Z", "passwd","hijo2@kidhub.com", "ALberto", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+		
+		logica.borrarUsuario(hijo2);
+		logica.registrarUsuario(hijo2);
+		
+		logica.apuntarHijoAActividad(hijo2, actividad);
+		
+		logica.apuntarHijoATrayecto(hijo, trayecto);
+		
+		logica.apuntarHijoATrayecto(hijo2, trayecto);	
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void apuntarHijoATrayectoNoActividadTest() throws KidHubException, SQLException {
+		this.crearTrayectoTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		logica.desapuntarHijoDeActividad(hijo, actividad);
+		
+		logica.apuntarHijoATrayecto(hijo, trayecto);	
+		
+	}
+	
+	@Test
+	(expected=KidHubException.class)
+	public void apuntarHijoATrayectoYaTieneTest() throws KidHubException, SQLException {
+		this.crearTrayectoTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		logica.apuntarHijoATrayecto(hijo, trayecto);
+		
+		ActividadVO actividad3 = new ActividadVO("Bolos", LocalDateTime.of(2021, 1, 1, 16, 00), LocalDateTime.of(2021, 1, 1, 16, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Recreativa");
+
+		logica.setUsuarioActual(monitor);
+		
+		logica.borrarActividad(actividad3);
+
+		logica.crearActividad(actividad3);
+		
+		PadreVO padre2 = new PadreVO("usuario5", "03229694B", "passwd","padre2@kidhub.com", "Pepa", "Martinez", "12/12/2000" ,TipoUsuario.PADRE, "792976552");
+		
+		logica.borrarUsuario(padre2);
+		
+		logica.registrarUsuario(padre2);
+		
+		logica.setUsuarioActual(padre2);
+		
+		TrayectoVO trayecto3 = new TrayectoVO(actividad3, 4, TipoTrayecto.VUELTA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		
+		logica.crearTrayecto(trayecto3);
+		
+		logica.setUsuarioActual(padre);
+		
+		logica.apuntarHijoATrayecto(hijo, trayecto3);
+		
+		
+	
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
 	public void apuntarHijoATrayectoErrorHorarioTest() throws KidHubException, SQLException {
 		ActividadVO actividad3 = new ActividadVO("Bolos", LocalDateTime.of(2021, 1, 1, 18, 35), LocalDateTime.of(2021, 1, 1, 18, 45), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Recreativa");
 		TrayectoVO trayecto3 = new TrayectoVO(actividad3, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		PadreVO padre2 = new PadreVO("usuario5", "03229694B", "passwd","padre2@kidhub.com", "Pepa", "Martinez", "12/12/2000" ,TipoUsuario.PADRE, "792976552");
+
+		try {	
+			this.apuntarHijoATrayectoTest();
+			
+			logica.borrarUsuario(monitor2);
+			logica.registrarUsuario(monitor2);
+			
+			logica.setUsuarioActual(monitor2);
+			
+		
+			logica.crearActividad(actividad3);
+			
+	
+			logica.borrarUsuario(padre2);
+			logica.registrarUsuario(padre2);
+			
+			logica.setUsuarioActual(padre2);
+			
+			
+			logica.crearTrayecto(trayecto3);
+			
+			logica.setUsuarioActual(padre);
+			
+			logica.apuntarHijoAActividad(hijo, actividad3);
+			
+			logica.apuntarHijoATrayecto(hijo, trayecto3);
+		}finally {
+			logica.setUsuarioActual(padre2);
+			logica.borrarTrayecto(trayecto3);
+			
+			logica.borrarUsuario(padre2);
+			
+			logica.setUsuarioActual(monitor2);
+			logica.borrarActividad(actividad3);
+			
+			logica.borrarUsuario(monitor2);
+		}
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void apuntarHijoATrayectoErrorHorario2Test() throws KidHubException, SQLException {
+		ActividadVO actividad3 = new ActividadVO("Bolos", LocalDateTime.of(2021, 1, 1, 16, 00), LocalDateTime.of(2021, 1, 1, 16, 30), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Recreativa");
+		TrayectoVO trayecto3 = new TrayectoVO(actividad3, 4, TipoTrayecto.VUELTA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
 		PadreVO padre2 = new PadreVO("usuario5", "03229694B", "passwd","padre2@kidhub.com", "Pepa", "Martinez", "12/12/2000" ,TipoUsuario.PADRE, "792976552");
 
 		try {	
@@ -505,12 +669,72 @@ public class LogicaTests {
 	}
 	
 	@Test (expected = KidHubException.class)
+	public void conflictoHorarioActividadTest2() throws SQLException, KidHubException{
+		ActividadVO actividadMal = new ActividadVO("Ajedrez", LocalDateTime.of(2021, 1, 1, 17, 00), LocalDateTime.of(2021, 1, 1, 18, 00), 5, new Direccion("Calle Ancha", 3, "24007", "Leon"), "Deportiva");
+		this.registrarMonitorTest();
+		
+		logica.setUsuarioActual(monitor);
+		logica.borrarActividad(actividad);
+		logica.crearActividad(actividad);
+		logica.crearActividad(actividadMal);
+	}
+	
+	@Test (expected = KidHubException.class)
 	public void conflictoHorarioTrayectoTest() throws SQLException, KidHubException{
 		TrayectoVO trayectoMal = new TrayectoVO(actividad, 4, TipoTrayecto.IDA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
 		this.apuntarHijoAActividadTest();
 		this.crearTrayectoTest();
 		
 		logica.crearTrayecto(trayectoMal);
+	}
+	
+	@Test
+	public void mostrarTrayectosTest() throws SQLException {
+		PadreVO padre2 = new PadreVO("PROPIOS", "03562394B", "passwd","padre2@kidhub.com", "Pepa", "Martinez", "12/12/2000" ,TipoUsuario.PADRE, "718256552");
+		HijoVO hijo2 = new HijoVO("TODOS", "01817872Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+		MonitorVO monitor3 = new MonitorVO("usuario9", "03325634B", "passwd","monitor3@kidhub.com", "Alfredo", "Montes", "12/12/2000" ,TipoUsuario.MONITOR, "722963552", "Deporte");
+
+		TrayectoDAO trayectoDAO = new TrayectoDAO();
+		
+		Logica.getLogica().setUsuarioActual(padre);
+		
+		trayectoDAO.mostrarTrayectos(padre2);
+		trayectoDAO.mostrarTrayectos(hijo2);
+		trayectoDAO.mostrarTrayectos(monitor3);
+		
+	}
+	
+	@Test
+	public void rellenarTrayecto2Test() throws KidHubException, SQLException {
+		this.apuntarHijoAActividadTest();
+		//this.crearActividadTest();
+		this.registrarPadreTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		TrayectoVO trayecto3 = new TrayectoVO(actividad, 4, TipoTrayecto.VUELTA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		
+		logica.borrarTrayecto(trayecto3);
+		
+		logica.crearTrayecto(trayecto3);
+		
+		TrayectoVO trayectoVacio = new TrayectoVO();
+				
+		trayectoVacio.setIdTrayecto(trayecto3.getIdTrayecto());
+		
+		logica.rellenarTrayecto(trayectoVacio);
+		
+		assertEquals(trayecto.getCapacidad(), trayectoVacio.getCapacidad());
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void modificarTrayectoErrorCapacidad() throws KidHubException, SQLException {
+		this.apuntarHijoATrayectoTest();
+		trayecto.setCapacidad(0);
+		Logica.getLogica().setUsuarioActual(padre);
+		Logica.getLogica().modificarTrayecto(trayecto);
 	}
 	
 	private boolean existeTrayecto(ArrayList<TrayectoVO> trayectos) {
@@ -524,6 +748,46 @@ public class LogicaTests {
 		}
 		
 		return trayectoEncontrado;
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void modificarActividadPlazasOcupadasTest() throws KidHubException, SQLException {
+		this.apuntarHijoAActividadTest();	
+		actividad.setCapacidad(0);
+		logica.setUsuarioActual(monitor);
+		logica.modificarActividad(actividad);
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void apuntarActividadPlazasOcupadasTest() throws KidHubException, SQLException {
+		this.apuntarHijoAActividadTest();	
+		actividad.setCapacidad(1);
+		logica.setUsuarioActual(monitor);
+		logica.modificarActividad(actividad);
+		
+		logica.setUsuarioActual(padre);
+		HijoVO hijo2 = new HijoVO("usuario34", "01817872Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+		logica.borrarUsuario(hijo2);
+		logica.registrarUsuario(hijo2);
+		
+		logica.apuntarHijoAActividad(hijo2, actividad);
+	}
+	
+	@Test
+	public void mostrarActividadesTest() throws SQLException {
+		HijoVO hijo2 = new HijoVO("TODOS", "01817872Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+
+		new ActividadDAO().mostrarActividades(hijo2);
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void credencialesIncorrectas() throws KidHubException, SQLException {
+		logica.borrarUsuario(hijo);
+		logica.loguearUsuario(hijo);
 	}
 }
 
