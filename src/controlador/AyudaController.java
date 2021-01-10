@@ -37,6 +37,8 @@ public class AyudaController extends Controller{
 		}else {
 			this.ayuda.setText(trayectos);
 		}
+		
+		this.ayuda.setEditable(false);
 	}
 	
 	
