@@ -478,6 +478,28 @@ public class LogicaTests {
 	
 	@Test
 	(expected = KidHubException.class)
+	public void apuntarHijoATrayectoSinPlazasTest() throws KidHubException, SQLException {
+		
+		trayecto.setCapacidad(1);
+		this.crearTrayectoTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		HijoVO hijo2 = new HijoVO("usuario7", "03466654Z", "passwd","hijo2@kidhub.com", "ALberto", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+		
+		logica.borrarUsuario(hijo2);
+		logica.registrarUsuario(hijo2);
+		
+		logica.apuntarHijoAActividad(hijo2, actividad);
+		
+		logica.apuntarHijoATrayecto(hijo, trayecto);
+		
+		logica.apuntarHijoATrayecto(hijo2, trayecto);	
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
 	public void apuntarHijoATrayectoNoActividadTest() throws KidHubException, SQLException {
 		this.crearTrayectoTest();
 		
