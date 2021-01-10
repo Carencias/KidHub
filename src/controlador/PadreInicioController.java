@@ -307,15 +307,22 @@ public class PadreInicioController extends Controller{
 		
 		HijoVO hijo = this.getHijo();
 		
-		if(hijo.getNombreUsuario().equals("TODOS")) {
-			this.apuntarActividad.setDisable(false);
-			this.desapuntarActividad.setDisable(true);
+		if(hijo.getNombreUsuario() == null) {
+			this.actividadesTree.setVisible(false);
+			this.hijosVacio.setVisible(true);
 		}else {
-			this.apuntarActividad.setDisable(true);
-			this.desapuntarActividad.setDisable(false);
+			
+			if(hijo.getNombreUsuario().equals("TODOS")) {
+				this.apuntarActividad.setDisable(false);
+				this.desapuntarActividad.setDisable(true);
+			}else {
+				this.apuntarActividad.setDisable(true);
+				this.desapuntarActividad.setDisable(false);
+			}
+		
+			this.cargarActividades(hijo);
 		}
-	
-		this.cargarActividades(hijo);
+
 	}
 
 	/**
@@ -421,13 +428,16 @@ public class PadreInicioController extends Controller{
 		String nombre = this.selectHijoTrayecto.getSelectionModel().getSelectedItem();
 		UsuarioVO usuario = new UsuarioVO();
 		
-		if(nombre.equals("PROPIOS") || nombre.equals("TODOS")) {		
-			usuario.setTipo(TipoUsuario.PADRE);
-		}else {
-			usuario.setTipo(TipoUsuario.HIJO);
+		if(nombre != null) {
+			
+			if(nombre.equals("PROPIOS") || nombre.equals("TODOS")) {		
+				usuario.setTipo(TipoUsuario.PADRE);
+			}else {
+				usuario.setTipo(TipoUsuario.HIJO);
+			}
+			
+			usuario.setNombreUsuario(nombre);
 		}
-		
-		usuario.setNombreUsuario(nombre);
 		return usuario;
 	}
 
@@ -438,25 +448,32 @@ public class PadreInicioController extends Controller{
      */
 	@FXML
     void hijoElegidoTrayecto(ActionEvent  event) {
-    	//TODO aqui da null pointer 
+    	
     	UsuarioVO usuario = this.getUsuarioTrayecto();
     	
-    	if(usuario.getNombreUsuario().equals("TODOS")) {
+    	if(usuario.getNombreUsuario() == null) {
     		
-    		mostrarBotones(true, false, false, false, false);
+    		this.trayectosTree.setVisible(false);
+    		this.trayectosVacio.setVisible(true);
     		
-    	}else if(usuario.getNombreUsuario().equals("PROPIOS")){	
-
-    		mostrarBotones(false, true, true, false, true);
-
     	}else {
-    		//hijo
-    		mostrarBotones(false, false, false, true, false);
-
+    	
+	    	if(usuario.getNombreUsuario().equals("TODOS")) {
+	    		
+	    		mostrarBotones(true, false, false, false, false);
+	    		
+	    	}else if(usuario.getNombreUsuario().equals("PROPIOS")){	
+	
+	    		mostrarBotones(false, true, true, false, true);
+	
+	    	}else {
+	    		//hijo
+	    		mostrarBotones(false, false, false, true, false);
+	
+	    	}
+	    	this.trayectosVacio.setVisible(false);
+	    	this.cargarTrayectos(usuario);
     	}
-    	//TODO IMPORTANTE gestionar el tipo del VO que se manda
-    	this.trayectosVacio.setVisible(false);
-    	this.cargarTrayectos(usuario);
     }
 	
 	/**
@@ -718,7 +735,6 @@ public class PadreInicioController extends Controller{
 		 * CREACION DE LOS HEADERS DE LA TABLA
 		 */
 		
-		//TODO incluir el tipo de la actividad
 		JFXTreeTableColumn<ActividadTabla, String> nameCol = new JFXTreeTableColumn<>("Name");
 		nameCol.setPrefWidth(138);
 		nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
