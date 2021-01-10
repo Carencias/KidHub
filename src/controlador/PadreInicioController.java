@@ -58,7 +58,7 @@ public class PadreInicioController extends Controller{
 						 email, telefono, contra1, ano, mes, dia;
     
     @FXML
-    private JFXButton inicio, actividades, actividadesHijo, trayectos, trayectosHijo, registrarHijo, cerrarSesion,
+    private JFXButton inicio, actividades, actividadesHijo, trayectos, trayectosHijo, registrarHijo, cerrarSesion, ayuda, ayudaTrayectos,
     				  apuntarActividad, desapuntarActividad, apuntarTrayecto, desapuntarTrayecto, borrarTrayecto, crear, modificar;
     
     @FXML
@@ -285,6 +285,7 @@ public class PadreInicioController extends Controller{
        		this.muestraError("ERROR", "Actividades", "No se han podido obtener las actividades");
        	}
 		this.hijosVacio.setVisible(false);
+		this.ayuda.setVisible(false);
 	}
 
     /**
@@ -311,6 +312,7 @@ public class PadreInicioController extends Controller{
 		if(hijo.getNombreUsuario() == null) {
 			this.actividadesTree.setVisible(false);
 			this.hijosVacio.setVisible(true);
+			this.ayuda.setVisible(true);
 		}else {
 			
 			if(hijo.getNombreUsuario().equals("TODOS")) {
@@ -383,7 +385,6 @@ public class PadreInicioController extends Controller{
 		}
 	}
 
-
 	//Trayectos
 	
 	/**
@@ -413,6 +414,7 @@ public class PadreInicioController extends Controller{
     	try {
 	    	this.inicializarTablaTrayectos(Logica.getLogica().getTrayectos(usuario));
 	    	this.trayectosVacio.setVisible(false);
+	    	this.ayudaTrayectos.setVisible(false);
     	}catch(SQLException e) {
     		logger.error("No se han podido obtener los trayectos");
        		this.muestraError("ERROR", "Actividades", "No se han podido obtener los trayectos");
@@ -456,6 +458,7 @@ public class PadreInicioController extends Controller{
     		
     		this.trayectosTree.setVisible(false);
     		this.trayectosVacio.setVisible(true);
+    		this.ayudaTrayectos.setVisible(true);
     		
     	}else {
     	
@@ -710,6 +713,22 @@ public class PadreInicioController extends Controller{
     	return loader;
 
 	}
+	
+	@FXML
+    void mostrarAyudaActividad(MouseEvent event) {
+		this.cerrarVentana(event);
+		FXMLLoader loader = mostrarGenerico("Ayuda");
+    	AyudaController controller = loader.getController();
+    	controller.initData(true);  	
+    }
+	
+	@FXML
+    void mostrarAyudaTrayectos(MouseEvent event) {
+		this.cerrarVentana(event);
+		FXMLLoader loader = mostrarGenerico("Ayuda");
+    	AyudaController controller = loader.getController();
+    	controller.initData(false);  	
+    }
 	
 	/**
 	 * Muestra el cuadro de dialogo para la eleccion del hijo que apuntar al trayecto

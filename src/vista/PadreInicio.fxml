@@ -121,7 +121,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="panoActividades" prefHeight="500.0" prefWidth="710.0" visible="false">
+            <Pane fx:id="panoActividades" visible="false" prefHeight="500.0" prefWidth="710.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="286.0" text="ACTIVIDADES" textFill="#bcf4fc">
                      <font>
@@ -159,7 +159,19 @@
                      <font>
                         <Font name="Monospaced Regular" size="24.0" />
                      </font>
-                  </Label>            
+                  </Label>
+                  <JFXButton fx:id="ayuda" layoutX="370.0" layoutY="269.0" onMouseClicked="#mostrarAyudaActividad" prefHeight="45.0" prefWidth="135.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Ayuda" textAlignment="LEFT" textFill="#e7e5e5">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/ayuda.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>            
                </children>
              </Pane>
             <Pane fx:id="panoTrayectos" prefHeight="500.0" prefWidth="710.0" visible="false">  
@@ -201,6 +213,18 @@
                         <Font name="Monospaced Regular" size="24.0" />
                      </font>
                   </Label>
+                  <JFXButton fx:id="ayudaTrayectos" layoutX="370.0" layoutY="269.0" onMouseClicked="#mostrarAyudaTrayectos" prefHeight="45.0" prefWidth="135.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Ayuda" textAlignment="LEFT" textFill="#e7e5e5">
+                     <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../etc/ayuda.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                   <JFXButton fx:id="crear" disable="true" layoutX="183.0" layoutY="29.0" onMouseClicked="#crearTrayecto" prefHeight="45.0" prefWidth="109.0" style="-fx-border-color: #adadad; -fx-border-radius: 2em;" stylesheets="@application.css" text="Crear" textAlignment="LEFT" textFill="#e7e5e5" visible="false">
                      <font>
                         <Font name="Monospaced Regular" size="15.0" />
