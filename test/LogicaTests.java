@@ -1,5 +1,8 @@
 
 import modelo.*;
+import modelo.dao.ActividadDAO;
+import modelo.dao.TrayectoDAO;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -685,6 +688,55 @@ public class LogicaTests {
 		logica.crearTrayecto(trayectoMal);
 	}
 	
+	@Test
+	public void mostrarTrayectosTest() throws SQLException {
+		PadreVO padre2 = new PadreVO("PROPIOS", "03562394B", "passwd","padre2@kidhub.com", "Pepa", "Martinez", "12/12/2000" ,TipoUsuario.PADRE, "718256552");
+		HijoVO hijo2 = new HijoVO("TODOS", "01817872Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+		MonitorVO monitor3 = new MonitorVO("usuario9", "03325634B", "passwd","monitor3@kidhub.com", "Alfredo", "Montes", "12/12/2000" ,TipoUsuario.MONITOR, "722963552", "Deporte");
+
+		TrayectoDAO trayectoDAO = new TrayectoDAO();
+		
+		Logica.getLogica().setUsuarioActual(padre);
+		
+		trayectoDAO.mostrarTrayectos(padre2);
+		trayectoDAO.mostrarTrayectos(hijo2);
+		trayectoDAO.mostrarTrayectos(monitor3);
+		
+	}
+	
+	@Test
+	public void rellenarTrayecto2Test() throws KidHubException, SQLException {
+		this.apuntarHijoAActividadTest();
+		//this.crearActividadTest();
+		this.registrarPadreTest();
+		
+		logica.setUsuarioActual(padre);
+		
+		TrayectoVO trayecto3 = new TrayectoVO(actividad, 4, TipoTrayecto.VUELTA, LocalDateTime.of(2021, 1, 1, 17, 15), new Direccion("Calle Santos", 9, "24008", "Leon"));
+		
+		logica.borrarTrayecto(trayecto3);
+		
+		logica.crearTrayecto(trayecto3);
+		
+		TrayectoVO trayectoVacio = new TrayectoVO();
+				
+		trayectoVacio.setIdTrayecto(trayecto3.getIdTrayecto());
+		
+		logica.rellenarTrayecto(trayectoVacio);
+		
+		assertEquals(trayecto.getCapacidad(), trayectoVacio.getCapacidad());
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void modificarTrayectoErrorCapacidad() throws KidHubException, SQLException {
+		this.apuntarHijoATrayectoTest();
+		trayecto.setCapacidad(0);
+		Logica.getLogica().setUsuarioActual(padre);
+		Logica.getLogica().modificarTrayecto(trayecto);
+	}
+	
 	private boolean existeTrayecto(ArrayList<TrayectoVO> trayectos) {
 		int i = 0;
 		boolean trayectoEncontrado = false;
@@ -696,6 +748,46 @@ public class LogicaTests {
 		}
 		
 		return trayectoEncontrado;
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void modificarActividadPlazasOcupadasTest() throws KidHubException, SQLException {
+		this.apuntarHijoAActividadTest();	
+		actividad.setCapacidad(0);
+		logica.setUsuarioActual(monitor);
+		logica.modificarActividad(actividad);
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void apuntarActividadPlazasOcupadasTest() throws KidHubException, SQLException {
+		this.apuntarHijoAActividadTest();	
+		actividad.setCapacidad(1);
+		logica.setUsuarioActual(monitor);
+		logica.modificarActividad(actividad);
+		
+		logica.setUsuarioActual(padre);
+		HijoVO hijo2 = new HijoVO("usuario34", "01817872Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+		logica.borrarUsuario(hijo2);
+		logica.registrarUsuario(hijo2);
+		
+		logica.apuntarHijoAActividad(hijo2, actividad);
+	}
+	
+	@Test
+	public void mostrarActividadesTest() throws SQLException {
+		HijoVO hijo2 = new HijoVO("TODOS", "01817872Z", "passwd","hijo@kidhub.com", "Pablo", "Iglesias", "12/12/2000" ,TipoUsuario.HIJO);
+
+		new ActividadDAO().mostrarActividades(hijo2);
+		
+	}
+	
+	@Test
+	(expected = KidHubException.class)
+	public void credencialesIncorrectas() throws KidHubException, SQLException {
+		logica.borrarUsuario(hijo);
+		logica.loguearUsuario(hijo);
 	}
 }
 
