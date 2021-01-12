@@ -196,7 +196,7 @@ public class MonitorInicioController extends Controller{
 		}
     
     	ActividadController controller = loader.getController();
-    	controller.initData(actividad, modificacion, stage2, this);
+    	controller.initData(actividad, modificacion, stage2);
     	stage.show();
     }
 
@@ -205,6 +205,7 @@ public class MonitorInicioController extends Controller{
      * @param actividades
      *  Actividades del monitor que se mostraran
      */
+	@SuppressWarnings("unchecked")
 	void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
 		/**
 		 * CREACION DE LOS HEADERS DE LA TABLA

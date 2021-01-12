@@ -12,10 +12,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import junit.framework.Assert;
 import modelo.vo.ActividadVO;
 import modelo.vo.Direccion;
 import modelo.vo.HijoVO;

@@ -40,7 +40,6 @@ public class ActividadController extends Controller {
     
     private Stage stage;
     
-    private MonitorInicioController controladorMonitor;
     
     static Logger logger = Logger.getLogger(ActividadController.class);
     
@@ -53,11 +52,10 @@ public class ActividadController extends Controller {
      * @param stage
      *  Stage
      */
-    void initData(ActividadVO actividad, boolean modificacion, Stage stage, MonitorInicioController controladorMonitor) {
+    void initData(ActividadVO actividad, boolean modificacion, Stage stage) {
     	this.actividad = actividad;
     	this.modificacion = modificacion;
     	this.stage = stage;
-    	this.controladorMonitor = controladorMonitor;
   	
     	if(modificacion) {
     		this.setDatosActividad(actividad);

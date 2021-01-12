@@ -132,6 +132,7 @@ public class HijoInicioController extends Controller{
 	 * @param actividades
 	 *  Actividades del hijo
 	 */
+	@SuppressWarnings("unchecked")
 	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
 		
 		/**
@@ -219,6 +220,7 @@ public class HijoInicioController extends Controller{
 	 * @param trayectos
 	 *  Trayectos del hijo
 	 */
+	@SuppressWarnings("unchecked")
 	private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
 		
 		/**

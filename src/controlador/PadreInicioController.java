@@ -749,6 +749,7 @@ public class PadreInicioController extends Controller{
 	 * @param actividades
 	 * Contiene los datos de las actividades a mostrar
 	 */
+	@SuppressWarnings("unchecked")
 	private void inicializarTablaActividades(ArrayList<ActividadVO> actividades) {
 		
 		/**
@@ -833,6 +834,7 @@ public class PadreInicioController extends Controller{
 	 * @param trayectos
 	 * Contiene los datos de los trayectos a mostrar
 	 */
+	@SuppressWarnings("unchecked")
 	private void inicializarTablaTrayectos(ArrayList<TrayectoVO> trayectos) {
 		
 		/**

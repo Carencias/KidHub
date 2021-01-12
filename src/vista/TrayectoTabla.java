@@ -4,7 +4,6 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import modelo.Logica;
 import modelo.vo.ParadaVO;
 import modelo.vo.TrayectoVO;
 
