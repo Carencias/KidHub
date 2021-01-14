@@ -81,6 +81,10 @@ public class ActividadController extends Controller {
 	    		logger.trace("Boton de confirmar creacion de actividad pulsado");
     			Logica.getLogica().crearActividad(actividad);
 	    	}
+	    	
+	    	this.cerrarVentana(event);
+	    	this.mostrarVentana("MonitorInicio");
+	    	
     	}catch(KidHubException e) {
 			logger.error(e.getMessage());
 			muestraError("ERROR","Se produjo un error.", e.getMessage());
@@ -90,9 +94,7 @@ public class ActividadController extends Controller {
 		}catch(ClassCastException e) {
 			
 		}
-    	
-    	this.cerrarVentana(event);
-    	this.mostrarVentana("MonitorInicio");
+
     }
         
     /**

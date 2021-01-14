@@ -471,7 +471,6 @@ public class PadreInicioController extends Controller{
 	    		mostrarBotones(false, true, true, false, true);
 	
 	    	}else {
-	    		//hijo
 	    		mostrarBotones(false, false, false, true, false);
 	
 	    	}

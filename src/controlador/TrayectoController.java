@@ -389,6 +389,9 @@ public class TrayectoController extends Controller{
 	    			logger.trace("Boton de confirmar creacion de actividad pulsado");
 	    			Logica.getLogica().crearTrayecto(trayecto);
 	    		}
+	    		
+		    	this.mostrarVentana("PadreInicio");
+		    	this.cerrarVentana(event);
 	    	
 	    	}catch(KidHubException e) {
 				logger.error(e.getMessage());
@@ -402,8 +405,6 @@ public class TrayectoController extends Controller{
 				muestraError("ERROR","Se produjo un error.", "Error en alguno de los campos introducidos");
 	    	} 	
 	    		    	
-	    	//TODO recargar la tabla de trayectos a traves de un objeto controller que se reciba en el initData.
-	    	this.mostrarVentana("PadreInicio");
-	    	this.cerrarVentana(event);
+	    	
 	    }
 }

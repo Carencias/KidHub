@@ -228,14 +228,11 @@ public class TrayectoDAO {
 		
 		if(usuario.getNombreUsuario().equals("PROPIOS")) {
 			query.append("WHERE ParentUsername='"+ Logica.getLogica().getUsuarioActual().getNombreUsuario()+"';");
-		}else if(usuario.getTipo() == TipoUsuario.HIJO) {
 
-			if(!usuario.getNombreUsuario().equals("TODOS")) {
-				query.append("INNER JOIN RideKid ON RideKid.RideID = RIDES.RideID ");
-				query.append("WHERE RideKid.KidUsername='"+ usuario.getNombreUsuario()+"';");
-			}
-		}else if(usuario.getTipo() == TipoUsuario.PADRE) {
-			query.append("WHERE ParentUsername='" + usuario.getNombreUsuario() + "';");
+		}else if(usuario.getTipo() == TipoUsuario.HIJO) {
+			query.append("INNER JOIN RideKid ON RideKid.RideID = RIDES.RideID ");
+			query.append("WHERE RideKid.KidUsername='"+ usuario.getNombreUsuario()+"';");
+			
 		}
 		
 		logger.trace("Query lista para ser lanzada");
