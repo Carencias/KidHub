@@ -263,10 +263,8 @@ public class TrayectoController extends Controller{
 	    		nombreActividad = this.actividad.getSelectionModel().getSelectedItem();	    			
 	    	}else {
 	    		nombreActividad = this.nombreActividad.getText();
-	    		System.out.println("Antes del substirng es: " + nombreActividad);
 	    		// Siempre empieza por 'Actividad: '
 	    		nombreActividad = nombreActividad.substring(11);
-	    		System.out.println("Despues del substring es: " + nombreActividad);
 	    	}
 	    	//La actividad en el combo es id-tabla, asique hago un substring para obtener el id
 	    	

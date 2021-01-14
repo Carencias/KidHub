@@ -194,7 +194,6 @@ public class PadreInicioController extends Controller{
 			}else if(e instanceof SQLException && ((SQLException) e).getErrorCode() == 1062) {
 				muestraError("ERROR","Se produjo un error.", "El hijo no existe");
 			}else if(e instanceof SQLException){
-				System.out.println(((SQLException) e).getErrorCode());
 				muestraError("ERROR","Se produjo un error.", "Campos invalidos.");
 			}
 		}	

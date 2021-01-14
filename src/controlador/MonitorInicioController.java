@@ -215,8 +215,7 @@ public class MonitorInicioController extends Controller{
 		nameCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ActividadTabla, String>, ObservableValue<String>>() {
 	        @Override
 	        public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ActividadTabla, String> param) {
-	            System.out.println("El nombre es " + param.getValue().getValue().getNombre());
-	            System.out.println("La id es " + param.getValue().getValue().getIdString());
+	           
 	        	return param.getValue().getValue().getNombre();
 	        }
 	    });
