@@ -133,7 +133,7 @@ public class TrayectoController extends Controller{
     		this.nombreActividad.setVisible(true);
     		this.actividad.setVisible(false);
     		
-	    	if(tipo.equals(TipoTrayecto.IDA)) {
+	    	if(tipo.equals(TipoTrayecto.VUELTA)) {
 	    		this.dia.setDisable(true);
 	    		this.mes.setDisable(true);
 	    		this.ano.setDisable(true);
@@ -407,4 +407,5 @@ public class TrayectoController extends Controller{
 	    		    	
 	    	
 	    }
+	    
 }
